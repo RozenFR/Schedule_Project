@@ -16,7 +16,7 @@ int main(void){
     for(int i = 0; i<10; i++){
         v = (int*)calloc(1,sizeof(int));
         *v = rand()%51;
-        listInsertFirst(l1,v);
+        listInsertLast(l1,v);
     }
     viewList(l1);
     freeList(l1,1);

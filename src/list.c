@@ -7,22 +7,21 @@
  * Renvoie le nouveau nœud créé.
  */
 static LNode * newLNode(void * data) {
-    LNode* nouveau = calloc(1,sizeof(nouveau));
+    LNode* nouveau = (LNode*) calloc(1,sizeof(LNode));
     nouveau ->data = data;
     return nouveau;
 }
 
 List * newList(void (*viewData)(const void*), void (*freeData)(void*)) {
-    List* L = calloc(1, sizeof(List));
+    List* L = (List*)calloc(1, sizeof(List));
     L->viewData = viewData;
     L->freeData = freeData;
     return L;
 }
 
 void freeList(List * L, int deleteData) {
-    LNode* aSauver = L->head;
-    assert(L->head);
-    while(aSauver != NULL){
+    LNode* aSauver = NULL;
+    while(L->head != NULL){
         aSauver = L->head->succ;
         if(deleteData == 1) {
             (L->freeData)(L->head->data);
