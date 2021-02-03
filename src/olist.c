@@ -47,7 +47,7 @@ typedef struct OrderedList {
  * Construire et initialiser un nouveau nœud d’une liste ordonnée.
  */
 static OLNode * newOLNode (void* key , void* data ){
-    OLNode* nouveau = calloc(1,sizeof(nouveau));
+    OLNode* nouveau = calloc(1,sizeof(OLNode));
     nouveau->key = key;
     nouveau->data = data;
     return nouveau;
@@ -60,7 +60,7 @@ static OLNode * newOLNode (void* key , void* data ){
 OList * newOList(int (*preceed)(const void*, const void*),
                  void (*viewKey)(const void*), void (*viewData)(const void*),
                  void (*freeKey)(void*), void (*freeData)(void*)){
-    OList* nouveau = calloc(1,sizeof(nouveau));
+    OList* nouveau = calloc(1,sizeof(OList));
     nouveau->preceed = preceed;
     nouveau->viewKey = viewKey;
     nouveau->viewData = viewData;
@@ -87,7 +87,7 @@ OList * newOList(int (*preceed)(const void*, const void*),
  *     les éléments de la liste L.
  */
 void freeOList(OList * L, int deleteKey, int deleteData){
-    OLNode* aSauver = NULL;
+    OLNode * aSauver = NULL;
     while(L->head != NULL){
         aSauver = L->head->succ;
         if(deleteData == 1){
@@ -122,7 +122,7 @@ void viewOList(const OList * L){
  * Ajouter dans la liste ordonnée L un élément de clé key et de donnée data.
  */
 void OListInsert(OList * L, void * key, void * data){
-    OLNode* nouveau = calloc(1,sizeof(nouveau));
+    OLNode * nouveau = calloc(1,sizeof(OLNode));
     nouveau->key = key;
     nouveau->data = data;
     L->numelm++;
@@ -130,16 +130,15 @@ void OListInsert(OList * L, void * key, void * data){
         L->head = nouveau;
         L->tail = nouveau;
     }
-    else{
+    else
+    {
         OLNode* actuel = L->head;
-        while(actuel->succ != NULL || (L->preceed)(nouveau->key,actuel->succ->key)){
+        while(actuel->succ != NULL || (L->preceed)(actuel->succ->key, nouveau->key) == 1){
             actuel = actuel->succ;
         }
         nouveau->succ = actuel->succ;
         nouveau->pred = actuel;
         actuel->succ;
-
-
     }
 }
 
