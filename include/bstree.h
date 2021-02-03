@@ -1,6 +1,6 @@
 #ifndef _BSTREE_
 #define _BSTREE_
-
+#include "list.h"
 /**
  * @brief
  * Arbre binaire de recherche générique
@@ -112,7 +112,7 @@ void EBSTreeInsert(BSTree* T, void* key, void* data);
  * @brief
  * Transformer l'arbre binaire de recherche T à une liste doublement chaînée.
  */
-List* BSTreeToList(const BSTree* T);
+List * BSTreeToList(const BSTree* T);
 
 /**
  * @brief
