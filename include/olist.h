@@ -1,6 +1,6 @@
 #ifndef _OLIST_
 #define _OLIST_
-
+#include "list.h"
 /**
  * @brief
  * Liste doublement chaînée ordonnée
@@ -90,6 +90,6 @@ void OListInsert(OList * L, void * key, void * data);
  * Transformer la liste doublement chaînée ordonnée L
  * à une liste doublement chaînée classique (non-ordonnée).
  */
-List* OListToList(const OList* L);
+List * OListToList(const OList* L);
 
 #endif // _OLIST_
