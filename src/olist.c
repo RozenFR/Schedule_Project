@@ -88,14 +88,14 @@ OList * newOList(int (*preceed)(const void*, const void*),
  */
 void freeOList(OList * L, int deleteKey, int deleteData){
     OLNode * aSauver = NULL;
-    while(L->head != NULL){
+    while(L->head != NULL) {
         aSauver = L->head->succ;
-        if(deleteData == 1){
-            void (*ptrFreeKey)(void*) = L->freeKey;
-            void (*ptrFreeData)(void*) = L->freeData;
-            (L->freeKey)(L->head->key);
+        if(deleteData == 1)
             (L->freeData)(L->head->data);
-        }
+
+        if(deleteKey == 1)
+            (L->freeKey)(L->head->key);
+
         free(L->head);
         L->head = aSauver;
     }
@@ -111,11 +111,28 @@ void freeOList(OList * L, int deleteKey, int deleteData){
  * (+) viewData pour les données
  */
 void viewOList(const OList * L){
-    for(OLNode* aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ){
-        (L->viewKey)(aAfficher->key);
-        (L->viewData)(aAfficher->data);
+    printf("        VIEW ORDERED LIST\n");
+    printf("--------------------------------");
+    if(L->numelm == 0){
+        printf("[ ]\n");
     }
-}
+    else{
+        printf("\n");
+        printf("                KEYS\n[ ");
+        for(OLNode* aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ){
+            (L->viewKey)(aAfficher->key);
+        }
+        printf("]");
+        printf("\n");
+        printf("                DATA\n[ ");
+        for(OLNode* aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ){
+            (L->viewData)(aAfficher->data);
+        }
+        printf("]\n");
+        printf("--------------------------------");
+        printf("\n");
+    }
+} 
 
 /**
  * @brief
@@ -147,8 +164,7 @@ void OListInsert(OList * L, void * key, void * data){
  * Transformer la liste doublement chaînée ordonnée L
  * à une liste doublement chaînée classique (non-ordonnée).
  */
-List* OListToList(const OList* L)
-{
+List * OListToList(const OList* L) {
     List * nL = newList(L->viewData, L->freeData);
 
     nL -> freeData = L -> freeData;
@@ -156,11 +172,7 @@ List* OListToList(const OList* L)
     nL -> numelm = L -> numelm;
 
     for (LNode * iterator = L -> head; iterator != NULL; iterator = iterator -> succ)
-    {
         listInsertFirst(nL, iterator -> data);
-    }
-
-    freeOList(L, L -> freeKey, 1);
 
     return nL;
 }

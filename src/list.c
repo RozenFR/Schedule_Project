@@ -13,19 +13,20 @@ static LNode * newLNode(void * data) {
 }
 
 List * newList(void (*viewData)(const void*), void (*freeData)(void*)) {
-    List* L = (List*)calloc(1, sizeof(List));
+    List* L = (List *) calloc(1, sizeof(List));
     L->viewData = viewData;
     L->freeData = freeData;
     return L;
 }
 
 void freeList(List * L, int deleteData) {
-    LNode* aSauver = NULL;
-    while(L->head != NULL){
+    LNode* aSauver;
+    while (L->head != NULL) {
         aSauver = L->head->succ;
-        if(deleteData == 1) {
+
+        if (deleteData == 1)
             (L->freeData)(L->head->data);
-        }
+
         free(L->head);
         L->head = aSauver;
     }
