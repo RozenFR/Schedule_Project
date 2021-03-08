@@ -16,11 +16,10 @@
  */
 static BSTNode* newBSTNode(void* key, void* data)
 {
-	BSTNode * bstNode = (BSTNode *) calloc(1, sizeof(BSTNode));
+    BSTNode * bstNode = (BSTNode *) calloc(1, sizeof(BSTNode));
     bstNode->key=key;
     bstNode->data=data;
-
-    bstNode->bfactor=NULL;
+    bstNode->bfactor=1;
     bstNode->left=NULL;
     bstNode->right=NULL;
 
@@ -28,10 +27,10 @@ static BSTNode* newBSTNode(void* key, void* data)
 }
 
 BSTree * newBSTree(int (*preceed)(const void*, const void*),
-					void (*viewKey)(const void*), void (*viewData)(const void*),
-					void (*freeKey)(void*), void (*freeData)(void*))
+                   void (*viewKey)(const void*), void (*viewData)(const void*),
+                   void (*freeKey)(void*), void (*freeData)(void*))
 {
-	BSTree * E = (BSTree *) calloc(1, sizeof(BSTree));
+    BSTree * E = (BSTree *) calloc(1, sizeof(BSTree));
 
     E->preceed=preceed;
     E->viewKey=viewKey;
@@ -39,12 +38,23 @@ BSTree * newBSTree(int (*preceed)(const void*, const void*),
     E->freeData=freeData;
     E->freeKey=freeKey;
 
-    E->balanced=NULL;
+    E->balanced=0;
     E->root=NULL;
 
     E->numelm=0;
 
     return E;
+}
+
+static int height(BSTNode* curr){
+    if(curr == NULL){
+        return 0;
+    }
+    else{
+        int hauteurFg = height(curr->left);
+        int hauteurFd = height(curr->right);
+        return hauteurFg > hauteurFd ? hauteurFg + 1 : hauteurFd + 1;
+    }
 }
 
 /**
@@ -56,26 +66,28 @@ BSTree * newBSTree(int (*preceed)(const void*, const void*),
  */
 static BSTNode * insertBSTNode(BSTNode* curr, void* key, void* data, int (*preceed)(const void*, const void*))
 {
-	if (curr == NULL) 
-    {
-        curr = newBSTNode(key, data);
+    if (curr == NULL)
+        return curr =  newBSTNode(key, data);
+    else{
+        BSTNode* fg = curr->left;
+        BSTNode* fd = curr->right;
+        if((preceed)(curr->key,key) == 1)
+            fg = insertBSTNode(fg, key, data, preceed);
+        else if ((preceed)(curr->key,key) == 0)
+            fd = insertBSTNode(fd, key, data, preceed);
+        //PAS DE DOUBLONS DANS UN ABR
+        else
+            error("Impossible d'insérer la même KEY");
+        return curr;
     }
-    else if (preceed(key, curr->key) == 1)
-    {
-        insertBSTNode(curr->left, key, data, preceed);
-    }
-    else
-    {
-        insertBSTNode(curr->right, key, data, preceed);
-    }
-        
 }
 
 /**
  * NB : Utiliser la fonction récursive insertBSTNode.
  */
 void BSTreeInsert(BSTree* T, void* key, void* data) {
-	insertBSTNode(T->root, key, data, T->preceed);
+     insertBSTNode(T->root, key, data, T->preceed);
+     T->numelm++;
 }
 
 /*********************************************************************
@@ -89,13 +101,28 @@ void BSTreeInsert(BSTree* T, void* key, void* data) {
  * N'oubliez pas à initialiser le facteur d'équilibre.
  */
 static BSTNode* newEBSTNode(void* key, void* data) {
-	/* A FAIRE */
+    BSTNode* nouveau = (BSTNode*)calloc(1,sizeof(BSTNode));
+    nouveau->key = key;
+    nouveau->data = data;
+    nouveau->bfactor = 1;
+    nouveau->left = NULL;
+    nouveau->right = NULL;
+    return nouveau;
 }
 
 BSTree * newEBSTree(int (*preceed)(const void*, const void*),
-					void (*viewKey)(const void*), void (*viewData)(const void*),
-					void (*freeKey)(void*), void (*freeData)(void*)) {
-	/* A FAIRE */
+                    void (*viewKey)(const void*), void (*viewData)(const void*),
+                    void (*freeKey)(void*), void (*freeData)(void*)) {
+  BSTree* nouveau = (BSTree*)calloc(1,sizeof(BSTree));
+  nouveau->root = NULL;
+  nouveau->numelm = 0;
+  nouveau->preceed = preceed;
+  nouveau->viewKey = viewKey;
+  nouveau->viewData = viewData;
+  nouveau->freeKey = freeKey;
+  nouveau->freeData = freeData;
+  nouveau->balanced = 1;
+  return nouveau;
 }
 
 /**
@@ -110,9 +137,9 @@ BSTree * newEBSTree(int (*preceed)(const void*, const void*),
  * Assurez vous que le nœud y ainsi que son fils droit existent.
  */
 static BSTNode* rotateLeft(BSTNode* y) {
-	assert(y);
-	assert(y->right);
-	/* A FAIRE */
+    assert(y);
+    assert(y->right);
+
 }
 
 /**
@@ -126,10 +153,34 @@ static BSTNode* rotateLeft(BSTNode* y) {
  * (+) bfactor(x)=1 et bfactor(x->left)=0
  * Assurez vous que le nœud x ainsi que son fils gauche existent.
  */
-static BSTNode* rotateRight(BSTNode* x) {
-	assert(x);
-	assert(x->left);
-	/* A FAIRE */
+static BSTNode * rotateRight(BSTNode* x) {
+    assert(x);
+    assert(x->left);
+
+	BSTNode * result = x->left;
+
+    if (x->bfactor == 2 && x->left->bfactor == 1) {
+
+		x->left = result->right;
+		result->right = x;
+		result->bfactor = 0;
+		x->bfactor=0;
+
+	} else if (x->bfactor == 1 && x->left->bfactor == 1) {
+
+
+
+	} else if (x->bfactor == 1 && x->left->bfactor == -1) {
+
+
+
+	} else if (x->bfactor == 1 && x->left->bfactor == 0) {
+
+
+
+	}
+
+	return result;
 }
 
 /**
@@ -142,14 +193,14 @@ static BSTNode* rotateRight(BSTNode* x) {
  * NB : fonction récursive.
  */
 static BSTNode* insertEBSTNode(BSTNode* curr, void* key, void* data, int (*preceed)(const void*, const void*)) {
-	/* A FAIRE */
+    
 }
 
 /**
  * NB : Utiliser la fonction récursive insertEBSTNode.
  */
 void EBSTreeInsert(BSTree* T, void* key, void* data) {
-	/* A FAIRE */
+    /* A FAIRE */
 }
 
 /*********************************************************************
@@ -166,7 +217,9 @@ void EBSTreeInsert(BSTree* T, void* key, void* data) {
  * NB : procédure récursive.
  */
 static void freeBSTNode(BSTNode* curr, void (*freeKey)(void*), void (*freeData)(void*)) {
-	/* A FAIRE */
+    /* A FAIRE */
+    //BSTNode* actuel;
+    //if()
 }
 
 /**
@@ -175,9 +228,9 @@ static void freeBSTNode(BSTNode* curr, void (*freeKey)(void*), void (*freeData)(
  * par rapport aux valeurs deleteKey et deleteData.
  */
 void freeBSTree(BSTree* T, int deleteKey, int deleteData) {
-	assert(deleteKey == 0 || deleteKey == 1);
-	assert(deleteData == 0 || deleteData == 1);
-	/* A FAIRE */
+    assert(deleteKey == 0 || deleteKey == 1);
+    assert(deleteData == 0 || deleteData == 1);
+    /* A FAIRE */
 }
 
 /**
@@ -187,14 +240,15 @@ void freeBSTree(BSTree* T, int deleteKey, int deleteData) {
  * NB : procédure récursive.
  */
 static void inorderView(BSTNode *curr, void (*viewKey)(const void*), void (*viewData)(const void*)) {
-	/* A FAIRE */
+    /* A FAIRE */
+    //if(c)
 }
 
 /**
  * NB : Utiliser la procédure récursive inorderView.
  */
 void viewBSTree(const BSTree* T) {
-	/* A FAIRE */
+    /* A FAIRE */
 }
 
 /**
@@ -206,24 +260,24 @@ void viewBSTree(const BSTree* T) {
  * NB : procédure récursive.
  */
 static void treetolist(BSTNode* curr, List* list) {
-	/* A FAIRE */
+    /* A FAIRE */
 }
 
 /**
  * NB : Utiliser la procédure récursive treetolist.
  */
 List* BSTreeToList(const BSTree* T) {
-	/* A FAIRE */
+    /* A FAIRE */
 }
 
 BSTNode* BSTMin(BSTNode* node) {
-	assert(node != NULL);
-	/* A FAIRE */
+    assert(node != NULL);
+    /* A FAIRE */
 }
 
 BSTNode* BSTMax(BSTNode* node) {
-	assert(node != NULL);
-	/* A FAIRE */
+    assert(node != NULL);
+    /* A FAIRE */
 }
 
 /**
@@ -234,17 +288,17 @@ BSTNode* BSTMax(BSTNode* node) {
  * NB : fonction récursive.
  */
 static BSTNode* predecessor(BSTNode* curr, void* key, int (*preceed)(const void*, const void*)) {
-	assert(curr != NULL);
-	/* A FAIRE */
+    assert(curr != NULL);
+    /* A FAIRE */
 }
 
 /**
  * NB : Utiliser la fonction récursive predecessor.
  */
 BSTNode * findPredecessor(const BSTree * T, const BSTNode* node) {
-	assert(T->root != NULL);
-	assert(node != NULL);
-	/* A FAIRE */
+    assert(T->root != NULL);
+    assert(node != NULL);
+    /* A FAIRE */
 }
 
 /**
@@ -255,15 +309,16 @@ BSTNode * findPredecessor(const BSTree * T, const BSTNode* node) {
  * NB : fonction récursive.
  */
 static BSTNode* successor(BSTNode* curr, void* key, int (*preceed)(const void*, const void*)) {
-	assert(curr != NULL);
-	/* A FAIRE */
+    assert(curr != NULL);
+    /* A FAIRE */
 }
 
 /**
  * NB : Utiliser la fonction récursive successor.
  */
 BSTNode * findSuccessor(const BSTree * T, const BSTNode* node) {
-	assert(T->root != NULL);
-	assert(node != NULL);
-	/* A FAIRE */
+    assert(T->root != NULL);
+    assert(node != NULL);
+    /* A FAIRE */
 }
+
