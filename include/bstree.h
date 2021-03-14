@@ -20,11 +20,11 @@
  * (+) la référence right vers le fils droit.
  */
 typedef struct BinarySearchTreeNode {
-	void * key;
-	void * data;
-	int bfactor;
-	struct BinarySearchTreeNode * left;
-	struct BinarySearchTreeNode * right;
+    void * key;
+    void * data;
+    int bfactor;
+    struct BinarySearchTreeNode * left;
+    struct BinarySearchTreeNode * right;
 } BSTNode;
 
 /**
@@ -40,14 +40,14 @@ typedef struct BinarySearchTreeNode {
  *     est équilibré (balanced=1) ou pas (balanced=0).
  */
 typedef struct BinarySearchTree {
-	BSTNode * root;
-	int numelm;
-	int (*preceed)(const void* a, const void* b);
-	void (*viewKey)(const void* key);
-	void (*viewData)(const void* data);
-	void (*freeKey)(void* key);
-	void (*freeData)(void* data);
-	int balanced;
+    BSTNode * root;
+    int numelm;
+    int (*preceed)(const void* a, const void* b);
+    void (*viewKey)(const void* key);
+    void (*viewData)(const void* data);
+    void (*freeKey)(void* key);
+    void (*freeData)(void* data);
+    int balanced;
 } BSTree;
 
 /**
@@ -55,16 +55,16 @@ typedef struct BinarySearchTree {
  * Construire un arbre binaire de recherche (non-équilibré) vide
  */
 BSTree * newBSTree(int (*preceed)(const void*, const void*),
-					void (*viewKey)(const void*), void (*viewData)(const void*),
-					void (*freeKey)(void*), void (*freeData)(void*));
+                   void (*viewKey)(const void*), void (*viewData)(const void*),
+                   void (*freeKey)(void*), void (*freeData)(void*));
 
 /**
  * @brief
  * Construire un arbre binaire de recherche équilibre vide
  */
 BSTree * newEBSTree(int (*preceed)(const void*, const void*),
-					void (*viewKey)(const void*), void (*viewData)(const void*),
-					void (*freeKey)(void*), void (*freeData)(void*));
+                    void (*viewKey)(const void*), void (*viewData)(const void*),
+                    void (*freeKey)(void*), void (*freeData)(void*));
 
 /**
  * @brief
