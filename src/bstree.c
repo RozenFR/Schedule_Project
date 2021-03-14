@@ -9,7 +9,7 @@
  * Arbre Binaire de Recherche (non-équilibré).
  *********************************************************************/
 
-/**
+/** FAIT
  * @brief
  * Construire et initialiser un nouveau nœud d'un arbre binaire de recherche (non-équilibré).
  * Renvoie le nouveau nœud créé.
@@ -17,12 +17,9 @@
 static BSTNode* newBSTNode(void* key, void* data)
 {
     BSTNode * bstNode = (BSTNode *) calloc(1, sizeof(BSTNode));
+    assert(bstNode!=NULL);
     bstNode->key=key;
     bstNode->data=data;
-    bstNode->bfactor=1;
-    bstNode->left=NULL;
-    bstNode->right=NULL;
-
     return bstNode;
 }
 
@@ -31,62 +28,63 @@ BSTree * newBSTree(int (*preceed)(const void*, const void*),
                    void (*freeKey)(void*), void (*freeData)(void*))
 {
     BSTree * E = (BSTree *) calloc(1, sizeof(BSTree));
-
+    assert(E!=NULL);
     E->preceed=preceed;
     E->viewKey=viewKey;
     E->viewData=viewData;
-    E->freeData=freeData;
     E->freeKey=freeKey;
-
-    E->balanced=0;
-    E->root=NULL;
-
-    E->numelm=0;
-
+    E->freeData=freeData;
     return E;
 }
 
-static int height(BSTNode* curr){
-    if(curr == NULL){
-        return 0;
-    }
-    else{
-        int hauteurFg = height(curr->left);
-        int hauteurFd = height(curr->right);
-        return hauteurFg > hauteurFd ? hauteurFg + 1 : hauteurFd + 1;
-    }
-}
-
-/**
+/** FAIT
  * @brief
  * Insérer un nouveau nœud de clé key et donnée data
  * au sous-arbre binaire de recherche (non-équilibré) raciné au nœud curr.
  * Les clés sont comparées en utilisant la fonction preceed.
  * NB : fonction récursive.
  */
-static BSTNode * insertBSTNode(BSTNode* curr, void* key, void* data, int (*preceed)(const void*, const void*))
-{
-    if (curr == NULL)
-        return curr =  newBSTNode(key, data);
-    else{
-        BSTNode* fg = curr->left;
-        BSTNode* fd = curr->right;
-        if((preceed)(curr->key,key) == 1)
-            fg = insertBSTNode(fg, key, data, preceed);
-        else if ((preceed)(curr->key,key) == 0)
-            fd = insertBSTNode(fd, key, data, preceed);
-        //PAS DE DOUBLONS DANS UN ABR
+static BSTNode * insertBSTNodeIterative(BSTNode* curr, void* key, void* data, int (*preceed)(const void*, const void*)){
+    BSTNode *nouveau=newBSTNode(key,data);
+    BSTNode *root=curr;
+    if(curr==NULL)
+        return nouveau;
+    BSTNode* pere, *actuel = curr;
+    while(curr!=NULL){
+        pere = curr;
+        if((preceed)(curr->data,data))
+            curr=curr->right;
+        else if((preceed)(key,curr->key))
+            curr=curr->left;
         else
-            error("Impossible d'insérer la même KEY");
+            error("insertBSTNodeIterative() : tentative d'insétion d'un noeud avec une \"key\" déjà présente");
+    }
+    if((preceed)(pere->data,data))
+        pere->right=nouveau;
+    else
+        pere->left=nouveau;
+    return root;
+}
+
+static BSTNode * insertBSTNode(BSTNode* curr, void* key, void* data, int (*preceed)(const void*, const void*)){
+    if(curr==NULL){
+        curr=newBSTNode(key,data);
+        return curr;
+    }else{
+        if((preceed)(curr->key,key))
+            curr->right=insertBSTNode(curr->right,key,data,preceed);
+        else if((preceed)(key,curr->key))
+            curr->left=insertBSTNode(curr->left,key,data,preceed);
+        else
+            error("insertBSTNode() : tentative d'insétion d'un noeud avec une \"key\" déjà présente");
         return curr;
     }
 }
-
-/**
+/** FAIT
  * NB : Utiliser la fonction récursive insertBSTNode.
  */
 void BSTreeInsert(BSTree* T, void* key, void* data) {
-     insertBSTNode(T->root, key, data, T->preceed);
+     T->root=insertBSTNodeIterative(T->root, key, data, T->preceed);
      T->numelm++;
 }
 
@@ -94,7 +92,7 @@ void BSTreeInsert(BSTree* T, void* key, void* data) {
  * Arbre Binaire de Recherche Équilibré
  *********************************************************************/
 
-/**
+/** FAIT
  * @brief
  * Construire et initialiser un nouveau nœud d'un arbre binaire de recherche équilibré (EBST).
  * Renvoie le nouveau nœud créé.
@@ -102,11 +100,9 @@ void BSTreeInsert(BSTree* T, void* key, void* data) {
  */
 static BSTNode* newEBSTNode(void* key, void* data) {
     BSTNode* nouveau = (BSTNode*)calloc(1,sizeof(BSTNode));
+    assert(nouveau!=NULL);
     nouveau->key = key;
     nouveau->data = data;
-    nouveau->bfactor = 1;
-    nouveau->left = NULL;
-    nouveau->right = NULL;
     return nouveau;
 }
 
@@ -114,8 +110,7 @@ BSTree * newEBSTree(int (*preceed)(const void*, const void*),
                     void (*viewKey)(const void*), void (*viewData)(const void*),
                     void (*freeKey)(void*), void (*freeData)(void*)) {
   BSTree* nouveau = (BSTree*)calloc(1,sizeof(BSTree));
-  nouveau->root = NULL;
-  nouveau->numelm = 0;
+  assert(nouveau!=NULL);
   nouveau->preceed = preceed;
   nouveau->viewKey = viewKey;
   nouveau->viewData = viewData;
@@ -125,65 +120,55 @@ BSTree * newEBSTree(int (*preceed)(const void*, const void*),
   return nouveau;
 }
 
-/**
+/** FAIT
  * @brief
  * Effectuer une rotation gauche autour du nœud y.
  * N'oubliez pas à mettre à jour les facteurs d'équilibre (bfactor) des nœuds modifiés.
- * Il y a 4 cas à considérer :
+ * Il y a 5 cas à considérer :
  * (+) bfactor(y)=-2 et bfactor(y->right)=-1
  * (+) bfactor(y)=-1 et bfactor(y->right)=1
  * (+) bfactor(y)=-1 et bfactor(y->right)=-1
  * (+) bfactor(y)=-1 et bfactor(y->right)=0
+ * (+) bfactor=-2 et bfactor(y->right)=-2
  * Assurez vous que le nœud y ainsi que son fils droit existent.
  */
-static BSTNode* rotateLeft(BSTNode* y) {
-    assert(y);
-    assert(y->right);
-
+static BSTNode* rotateLeft(BSTNode* A) {
+    assert(A);
+    assert(A->right);
+    BSTNode *B=A->right;
+    BSTNode *T2=B->left;
+    B->left=A;
+    A->right=T2;
+    A->bfactor=A->bfactor-1-(B->bfactor>0?B->bfactor:0);
+    B->bfactor=B->bfactor-1+(A->bfactor<0?A->bfactor:0);
+    return B;
 }
 
-/**
+/** FAIT
  * @brief
  * Effectuer une rotation droite autour du nœud x.
  * N'oubliez pas à mettre à jour les facteurs d'équilibre (bfactor) des nœuds modifiés.
- * Il y a 4 cas à considérer :
+ * Il y a 5 cas à considérer :
  * (+) bfactor(x)=2 et bfactor(x->left)=1
  * (+) bfactor(x)=1 et bfactor(x->left)=1
  * (+) bfactor(x)=1 et bfactor(x->left)=-1
  * (+) bfactor(x)=1 et bfactor(x->left)=0
+ * (+) bfactor(x)=2 et bfactor(x->left)=2
  * Assurez vous que le nœud x ainsi que son fils gauche existent.
  */
-static BSTNode * rotateRight(BSTNode* x) {
-    assert(x);
-    assert(x->left);
-
-	BSTNode * result = x->left;
-
-    if (x->bfactor == 2 && x->left->bfactor == 1) {
-
-		x->left = result->right;
-		result->right = x;
-		result->bfactor = 0;
-		x->bfactor=0;
-
-	} else if (x->bfactor == 1 && x->left->bfactor == 1) {
-
-
-
-	} else if (x->bfactor == 1 && x->left->bfactor == -1) {
-
-
-
-	} else if (x->bfactor == 1 && x->left->bfactor == 0) {
-
-
-
-	}
-
-	return result;
+static BSTNode* rotateRight(BSTNode* A) {
+    assert(A);
+    assert(A->left);
+    BSTNode *B=A->left;
+    BSTNode *T2=B->right;
+    B->right=A;
+    A->left=T2;
+    A->bfactor=A->bfactor+1-(B->bfactor<0?B->bfactor:0);
+    B->bfactor=B->bfactor+1+(A->bfactor>0?A->bfactor:0);
+    return B;
 }
 
-/**
+/** FAIT
  * @brief
  * Insérer un nouveau nœud de clé key et donnée data
  * au sous-arbre binaire de recherche équilibré raciné au nœud curr.
@@ -193,14 +178,39 @@ static BSTNode * rotateRight(BSTNode* x) {
  * NB : fonction récursive.
  */
 static BSTNode* insertEBSTNode(BSTNode* curr, void* key, void* data, int (*preceed)(const void*, const void*)) {
-    
+    if(curr==NULL)
+        return newEBSTNode(key,data);
+    if((preceed)(key,curr->key)==1) {
+        curr->left = insertEBSTNode(curr->left, key, data, preceed);
+        curr->bfactor+=1;
+    }
+    else if((preceed)(curr->key,key)) {
+        curr->right = insertBSTNode(curr->right, key, data, preceed);
+        curr->bfactor-=1;
+    }
+    else
+        error("Dans insertEBSTNode () : tentative d'insétion d'un noeud avec une \"key\" déjà présente");
+    if(curr->bfactor>1 && (preceed)(key,curr->left->key))
+        return rotateRight(curr);
+    if(curr->bfactor<-1 && (preceed)(key,curr->left->key))
+        return rotateLeft(curr);
+    if(curr->bfactor>1 && (preceed)(curr->left->key,key)){
+        curr->left= rotateLeft(curr->left);
+        return rotateRight(curr);
+    }
+    if(curr->bfactor<-1 && (preceed)(key,curr->right->key)){
+        curr->right= rotateRight(curr->right);
+        return rotateLeft(curr);
+    }
+    return curr;
 }
 
-/**
+/** FAIT
  * NB : Utiliser la fonction récursive insertEBSTNode.
  */
 void EBSTreeInsert(BSTree* T, void* key, void* data) {
-    /* A FAIRE */
+    T->root=insertBSTNode(T->root,key,data,T->preceed);
+    T->numelm++;
 }
 
 /*********************************************************************
@@ -209,7 +219,7 @@ void EBSTreeInsert(BSTree* T, void* key, void* data) {
  * Arbre Binaire de Recherche Équilibré.
  *********************************************************************/
 
-/**
+/** FAIT
  * @brief
  * Libérer récursivement le sous-arbre raciné au nœud curr.
  * Dans le cas où le pointeur de fonction freeKey (resp. freeData) n'est pas NULL,
@@ -217,12 +227,18 @@ void EBSTreeInsert(BSTree* T, void* key, void* data) {
  * NB : procédure récursive.
  */
 static void freeBSTNode(BSTNode* curr, void (*freeKey)(void*), void (*freeData)(void*)) {
-    /* A FAIRE */
-    //BSTNode* actuel;
-    //if()
+    if(curr!=NULL){
+        freeBSTNode(curr->left,freeKey,freeData);
+        freeBSTNode(curr->right,freeKey,freeData);
+        if(freeKey!=NULL)
+            (freeKey)(curr->key);
+        if(freeData!=NULL)
+            (freeData)(curr->data);
+        free(curr);
+    }
 }
 
-/**
+/** FAIT
  * NB : Utiliser la procédure récursive freeBSTNode.
  * Vous devez utiliser les bons paramètres freeKey et freeData
  * par rapport aux valeurs deleteKey et deleteData.
@@ -230,28 +246,48 @@ static void freeBSTNode(BSTNode* curr, void (*freeKey)(void*), void (*freeData)(
 void freeBSTree(BSTree* T, int deleteKey, int deleteData) {
     assert(deleteKey == 0 || deleteKey == 1);
     assert(deleteData == 0 || deleteData == 1);
-    /* A FAIRE */
+    freeBSTNode(T->root,deleteKey==1?T->freeKey:NULL,deleteData==1?T->freeData:NULL);
+    free(T);
 }
 
-/**
+/** FAIT
  * @brief
  * Afficher récursivement le sous-arbre raciné au nœud curr
  * en utilisant un ordre infixe.
  * NB : procédure récursive.
  */
 static void inorderView(BSTNode *curr, void (*viewKey)(const void*), void (*viewData)(const void*)) {
-    /* A FAIRE */
-    //if(c)
+    LNode *topOfStack=NULL;
+    if(curr == NULL)
+        printf("Arbre VIDE\n");
+    List* stack = newList(viewKey,NULL);
+    while(1){
+        if(curr != NULL){
+            listInsertFirst(stack,(void*)curr);
+            curr = curr->left;
+        } else{
+            if(stack->numelm == 0)
+                break;
+            else{
+                topOfStack = listRemoveFirst(stack);
+                curr = (BSTNode*)topOfStack->data;
+                free(topOfStack);//Attention! listRemoveFirst() laisse des fuites de mémoire
+                (viewData)(curr->data);//quand le maillon qu'on a "pop" n'est pas utilisé par une autre liste
+                curr = curr->right;
+            }
+        }
+    }
+    freeList(stack,0);
 }
 
-/**
+/** FAIT
  * NB : Utiliser la procédure récursive inorderView.
  */
 void viewBSTree(const BSTree* T) {
-    /* A FAIRE */
+    inorderView(T->root,T->viewKey,T->viewData);
 }
 
-/**
+/** FAIT
  * @brief
  * Transformer récursivement le sous-arbre raciné au nœud curr
  * à une liste doublement chaînée.
@@ -260,27 +296,39 @@ void viewBSTree(const BSTree* T) {
  * NB : procédure récursive.
  */
 static void treetolist(BSTNode* curr, List* list) {
-    /* A FAIRE */
+    if(curr!=NULL){
+        treetolist(curr->left,list);
+        listInsertFirst(list,curr->data);
+        treetolist(curr->right,list);
+    }
 }
 
-/**
+/** FAIT
  * NB : Utiliser la procédure récursive treetolist.
  */
 List* BSTreeToList(const BSTree* T) {
-    /* A FAIRE */
+    List *l1= newList(T->viewData,T->freeData);
+    treetolist(T->root,l1);
+    return l1;
 }
 
 BSTNode* BSTMin(BSTNode* node) {
     assert(node != NULL);
-    /* A FAIRE */
+    BSTNode *min=node;
+    while(min->left!=NULL)
+        min=min->left;
+    return min;
 }
 
 BSTNode* BSTMax(BSTNode* node) {
     assert(node != NULL);
-    /* A FAIRE */
+    BSTNode *max=node;
+    while(max->right!=NULL)
+        max=max->right;
+    return max;
 }
 
-/**
+/** FAIT
  * @brief
  * Chercher récursivement dans le sous-arbre raciné au nœud curr
  * et renvoyer le noeud qui contient la clé qui précède la clé key (prédécesseur).
@@ -289,19 +337,24 @@ BSTNode* BSTMax(BSTNode* node) {
  */
 static BSTNode* predecessor(BSTNode* curr, void* key, int (*preceed)(const void*, const void*)) {
     assert(curr != NULL);
-    /* A FAIRE */
+    if((preceed)(curr->right->key,key))
+        curr= predecessor(curr->right,key,preceed);
+    else if ((preceed)(key,curr->left->key))
+        curr= predecessor(curr->left,key,preceed);
+    else
+        return curr;
 }
 
-/**
+/** FAIT
  * NB : Utiliser la fonction récursive predecessor.
  */
 BSTNode * findPredecessor(const BSTree * T, const BSTNode* node) {
     assert(T->root != NULL);
     assert(node != NULL);
-    /* A FAIRE */
+    return predecessor(T->root,node->key,T->preceed);
 }
 
-/**
+/** FAIT
  * @brief
  * Chercher récursivement dans le sous-arbre raciné au nœud curr
  * et renvoyer le noeud qui contient la clé qui succède la clé key (successeur).
@@ -310,15 +363,20 @@ BSTNode * findPredecessor(const BSTree * T, const BSTNode* node) {
  */
 static BSTNode* successor(BSTNode* curr, void* key, int (*preceed)(const void*, const void*)) {
     assert(curr != NULL);
-    /* A FAIRE */
+    if((preceed)(curr->key,key))
+        curr= successor(curr->right,key,preceed);
+    else if ((preceed)(key,curr->key))
+        curr= successor(curr->left,key,preceed);
+    else
+        return curr;
 }
 
-/**
+/** FAIT
  * NB : Utiliser la fonction récursive successor.
  */
 BSTNode * findSuccessor(const BSTree * T, const BSTNode* node) {
     assert(T->root != NULL);
     assert(node != NULL);
-    /* A FAIRE */
+    return successor(T->root,node->key,T->preceed);
 }
 

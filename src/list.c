@@ -7,13 +7,20 @@
  * Renvoie le nouveau nœud créé.
  */
 static LNode * newLNode(void * data) {
-    LNode* nouveau = (LNode*) calloc(1,sizeof(LNode));
+    LNode* nouveau = (LNode*) calloc (1,sizeof(LNode));
+    assert(nouveau!=NULL);
+    nouveau->succ = NULL;
+    nouveau->pred = NULL;
     nouveau ->data = data;
     return nouveau;
 }
 
 List * newList(void (*viewData)(const void*), void (*freeData)(void*)) {
-    List* L = (List *) calloc(1, sizeof(List));
+    List* L = (List*)calloc(1, sizeof(List));
+    assert(L!=NULL);
+    L->head = NULL;
+    L->tail = NULL;
+    L->numelm = 0;
     L->viewData = viewData;
     L->freeData = freeData;
     return L;
@@ -21,12 +28,11 @@ List * newList(void (*viewData)(const void*), void (*freeData)(void*)) {
 
 void freeList(List * L, int deleteData) {
     LNode* aSauver;
-    while (L->head != NULL) {
+    while(L->head != NULL){
         aSauver = L->head->succ;
-
-        if (deleteData == 1)
+        if(deleteData == 1) {
             (L->freeData)(L->head->data);
-
+        }
         free(L->head);
         L->head = aSauver;
     }
@@ -68,7 +74,6 @@ void listInsertLast(List * L, void * data) {
 }
 
 void listInsertAfter(List * L, void * data, LNode * ptrelm) {
-    //Au cas où ptrelm == NULL et la liste L est vide
    if(L->numelm == 0)
        listInsertFirst(L,data);
    else{
@@ -80,8 +85,6 @@ void listInsertAfter(List * L, void * data, LNode * ptrelm) {
        if(L->tail == ptrelm)
            L->tail = nouveau;
    }
-
-
 }
 
 LNode* listRemoveFirst(List * L) {

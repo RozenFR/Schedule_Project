@@ -1,7 +1,7 @@
-#ifndef _OLIST_
-#define _OLIST_
 #include "list.h"
 #include <stdlib.h>
+#include <assert.h>
+#include <stdio.h>
 
 /**
  * @brief
@@ -47,9 +47,12 @@ typedef struct OrderedList {
  * Construire et initialiser un nouveau nœud d’une liste ordonnée.
  */
 static OLNode * newOLNode (void* key , void* data ){
-    OLNode* nouveau = calloc(1,sizeof(OLNode));
+    OLNode* nouveau = (OLNode*) calloc(1,sizeof(OLNode));
+    assert(nouveau!=NULL);
     nouveau->key = key;
     nouveau->data = data;
+    nouveau->pred = NULL;
+    nouveau->succ = NULL;
     return nouveau;
 }
 
@@ -60,7 +63,8 @@ static OLNode * newOLNode (void* key , void* data ){
 OList * newOList(int (*preceed)(const void*, const void*),
                  void (*viewKey)(const void*), void (*viewData)(const void*),
                  void (*freeKey)(void*), void (*freeData)(void*)){
-    OList* nouveau = calloc(1,sizeof(OList));
+    OList* nouveau = (OList*) calloc(1,sizeof(OList));
+    assert(nouveau!=NULL);
     nouveau->preceed = preceed;
     nouveau->viewKey = viewKey;
     nouveau->viewData = viewData;
@@ -87,15 +91,13 @@ OList * newOList(int (*preceed)(const void*, const void*),
  *     les éléments de la liste L.
  */
 void freeOList(OList * L, int deleteKey, int deleteData){
-    OLNode * aSauver = NULL;
-    while(L->head != NULL) {
+    OLNode* aSauver = NULL;
+    while(L->head != NULL){
         aSauver = L->head->succ;
-        if(deleteData == 1)
-            (L->freeData)(L->head->data);
-
         if(deleteKey == 1)
             (L->freeKey)(L->head->key);
-
+        if(deleteData == 1)
+            (L->freeData)(L->head->data);
         free(L->head);
         L->head = aSauver;
     }
@@ -132,30 +134,46 @@ void viewOList(const OList * L){
         printf("--------------------------------");
         printf("\n");
     }
-} 
+}
 
 /**
  * @brief
  * Ajouter dans la liste ordonnée L un élément de clé key et de donnée data.
  */
 void OListInsert(OList * L, void * key, void * data){
-    OLNode * nouveau = calloc(1,sizeof(OLNode));
-    nouveau->key = key;
-    nouveau->data = data;
-    L->numelm++;
+    OLNode* nouveau = newOLNode(key,data);
+    assert(nouveau != NULL);
+    //Le cas où la LISTE est VIDE
     if(L->numelm == 0){
         L->head = nouveau;
         L->tail = nouveau;
+        L->numelm++;
     }
-    else
-    {
+    //Le cas où l'élèment est à mettre AVANT L->HEAD
+    else if((L->preceed)(nouveau->key,L->head->key) == 1){
+        nouveau->succ = L->head;
+        L->head->pred = nouveau;
+        L->head = nouveau;
+        L->numelm++;
+       }
+    //Recherche de la position pour ranger NOUVEAU
+    else{
         OLNode* actuel = L->head;
-        while(actuel->succ != NULL || (L->preceed)(actuel->succ->key, nouveau->key) == 1){
+        while( actuel->succ != NULL && (L->preceed)(nouveau->key,actuel->succ->key) == 0){
             actuel = actuel->succ;
         }
         nouveau->succ = actuel->succ;
+        //Cas général
+        if(actuel->succ != NULL){
+            nouveau->succ->pred = nouveau;
+        }
+        //Gestion du cas où l'élèment à insérer après TAIL
+        else{
+            L->tail = nouveau;
+        }
+        actuel->succ = nouveau;
         nouveau->pred = actuel;
-        actuel->succ;
+        L->numelm++;
     }
 }
 
@@ -164,17 +182,19 @@ void OListInsert(OList * L, void * key, void * data){
  * Transformer la liste doublement chaînée ordonnée L
  * à une liste doublement chaînée classique (non-ordonnée).
  */
-List * OListToList(const OList* L) {
-    List * nL = newList(L->viewData, L->freeData);
+List* OListToList(const OList* L){
+        List * nL = newList(L->viewData, L->freeData);
 
-    nL -> freeData = L -> freeData;
-    nL -> viewData = L -> viewData;
-    nL -> numelm = L -> numelm;
+        nL -> freeData = L -> freeData;
+        nL -> viewData = L -> viewData;
+        nL -> numelm = L -> numelm;
 
-    for (LNode * iterator = L -> head; iterator != NULL; iterator = iterator -> succ)
-        listInsertFirst(nL, iterator -> data);
+        for (OLNode * iterator = L -> head; iterator != NULL; iterator = iterator -> succ)
+        {
+            listInsertFirst(nL, iterator -> data);
+        }
 
-    return nL;
+
+        return nL;
+
 }
-
-#endif // _OLIST_
