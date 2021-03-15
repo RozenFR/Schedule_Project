@@ -120,6 +120,10 @@ BSTree * newEBSTree(int (*preceed)(const void *, const void *),
   return nouveau;
 }
 
+/**************************
+ * Ajouter au rapport
+**************************/
+
 /** FAIT
  * @brief
  * Effectuer une rotation gauche autour du nœud y.
@@ -180,7 +184,7 @@ static BSTNode * rotateRight(BSTNode * A) {
 static BSTNode * insertEBSTNode(BSTNode * curr, void * key, void * data, int (*preceed)(const void *, const void *)) {
     if(curr == NULL)
         return newEBSTNode(key,data);
-    if((preceed)(key, curr->key) == 1) {
+    else if((preceed)(key, curr->key) == 1) {
         curr->left = insertEBSTNode(curr->left, key, data, preceed);
         curr->bfactor+=1;
     }
