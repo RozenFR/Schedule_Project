@@ -39,6 +39,7 @@ void freeList(List * L, int deleteData) {
     free(L);
 }
 
+
 void viewList(const List * L) {
     if(L->numelm == 0)
         printf("[ ]\n");

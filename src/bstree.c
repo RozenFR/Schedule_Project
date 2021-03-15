@@ -275,8 +275,8 @@ static void inorderView(BSTNode * curr, void (*viewKey)(const void *), void (*vi
             else{
                 topOfStack = listRemoveFirst(stack);
                 curr = (BSTNode *) topOfStack->data;
-                free(topOfStack);//Attention! listRemoveFirst() laisse des fuites de mémoire
-                (viewData)(curr->data);//quand le maillon qu'on a "pop" n'est pas utilisé par une autre liste
+                free(topOfStack); //Attention! listRemoveFirst() laisse des fuites de mémoire
+                (viewData)(curr->data); //quand le maillon qu'on a "pop" n'est pas utilisé par une autre liste
                 curr = curr->right;
             }
         }
