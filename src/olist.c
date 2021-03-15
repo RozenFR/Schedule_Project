@@ -182,7 +182,7 @@ void OListInsert(OList * L, void * key, void * data){
  * Transformer la liste doublement chaînée ordonnée L
  * à une liste doublement chaînée classique (non-ordonnée).
  */
-List* OListToList(const OList* L){
+List* OListToList(const OList * L){
         List * nL = newList(L->viewData, L->freeData);
 
         nL -> freeData = L -> freeData;
@@ -191,7 +191,7 @@ List* OListToList(const OList* L){
 
         for (OLNode * iterator = L -> head; iterator != NULL; iterator = iterator -> succ)
         {
-            listInsertFirst(nL, iterator -> data);
+            listInsertLast(nL, iterator -> data);
         }
 
 

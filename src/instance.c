@@ -12,7 +12,7 @@
  * TASK
  ***********************************************/
 
-Task * newTask(char* id, int proctime, int reltime, int deadline, int weight) {
+Task * newTask(char * id, int proctime, int reltime, int deadline, int weight) {
     assert(proctime > 0);
     assert(reltime >= 0);
     assert((deadline >= reltime + proctime));
@@ -25,16 +25,16 @@ Task * newTask(char* id, int proctime, int reltime, int deadline, int weight) {
     return nouvelle;
 }
 
-void freeTask(void* task) {
+void freeTask(void * task) {
     free(task);
 }
 
-void viewTask(const void *task) {
-    printf("ID : %s\n",((Task*)task)->id);
-    printf("PROCESSING TIME : %d\n",((Task*)task)->processingTime);
-    printf("RELEASE TIME : %d\n",((Task*)task)->releaseTime);
-    printf("DEADLINE : %d\n",((Task*)task)->deadline);
-    printf("WEIGHT : %d\n",((Task*)task)->weight);
+void viewTask(const void * task) {
+    printf("ID : %s\n", ((Task*)task)->id);
+    printf("PROCESSING TIME : %d\n", ((Task*)task)->processingTime);
+    printf("RELEASE TIME : %d\n", ((Task*)task)->releaseTime);
+    printf("DEADLINE : %d\n", ((Task*)task)->deadline);
+    printf("WEIGHT : %d\n", ((Task*)task)->weight);
 }
 
 /************************************************
@@ -42,15 +42,15 @@ void viewTask(const void *task) {
  ************************************************/
 
 Instance readInstance(char * filename) {
-    FILE* ptrFichier;
-    if((ptrFichier=fopen(filename,"r"))==NULL);
+    FILE * ptrFichier;
+    if((ptrFichier = fopen(filename, "r")) == NULL);
         error("readInstance() : echec d'ouverture du fichier");
-    Instance I= newList(&viewTask,&freeTask);
+    Instance I = newList(&viewTask, &freeTask);
     char buffId[255];
-    int buffProcTime=0,buffReleaseTime=0,buffDeadlineTime=0,buffWeight=0;
-    while(fscanf(ptrFichier,"%s\t%d\t%d\t%d\t%d\n",buffId,&buffProcTime,&buffReleaseTime,&buffDeadlineTime,&buffWeight)!=EOF){
-        Task *task= newTask(buffId,buffProcTime,buffReleaseTime,buffDeadlineTime,buffWeight);
-        listInsertFirst(I,(void*)task);
+    int buffProcTime = 0, buffReleaseTime = 0, buffDeadlineTime = 0, buffWeight = 0;
+    while(fscanf(ptrFichier, "%s\t%d\t%d\t%d\t%d\n", buffId, &buffProcTime, &buffReleaseTime, &buffDeadlineTime, &buffWeight) != EOF){
+        Task * task = newTask(buffId, buffProcTime, buffReleaseTime, buffDeadlineTime, buffWeight);
+        listInsertFirst(I, (void *) task);
     }
     return I;
 }
@@ -60,7 +60,7 @@ void viewInstance(Instance I) {
 }
 
 void freeInstance(Instance I, int deleteData) {
-    freeList(I,deleteData);
+    freeList(I, deleteData);
 }
 
 /*****************************************************************************
@@ -76,7 +76,7 @@ void freeInstance(Instance I, int deleteData) {
  * (+) durée de a < durée de b
  * (+) durée de a = durée de b ET date de libération de a < date de libération de b
  */
-static int spt(const void* a, const void* b) {
+static int spt(const void * a, const void * b) {
     if (a->processingTime < b->processingTime)
         return 1;
     else if (a->processingTime == b->processingTime && a->releaseTime < b->releaseTime)
@@ -146,6 +146,124 @@ static int fcfs(const void* a, const void* b) {
         return 0;
 }
 
-void reorderInstance(Instance I,  DataStructure structtype, Order order) {
-    /* A FAIRE */
+/**
+ * @brief
+ * Trier l’instance I par  rapport à l’ordre order
+ * en  utilisant  une  structure  de données  ordonnée de type  structtype.
+ * N’oubliez  pas à libérer la mémoire  de l’instance  de l’entrée.
+ * NB : l’argument I est en entrée/sortie. 
+ */
+void reorderInstance(Instance I, DataStructure structtype, Order order) {
+
+    const void (*ptrViewI)(const void * i);
+    void (*ptrFreeI)(void * i);
+    const int (*ptrCmp)(const void * a, const void * b);
+
+    ptrFreeI = freeTask;
+    ptrViewI = viewTask;
+
+    if (order == SPT) {
+        ptrCmp = &spt;
+
+        if (structtype == OL) {
+            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                OListInsert(L, toInsert, toInsert);
+            }
+            I = OListToList(L);
+        }
+        else if (structtype == BST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                BSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+        else if (structtype == EBST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                EBSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+    }
+    else if (order == LPT)
+    {
+        ptrCmp = &lpt;
+
+        if (structtype == OL) {
+            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                OListInsert(L, toInsert, toInsert);
+            }
+            I = OListToList(L);
+        }
+        else if (structtype == BST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                BSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+        else if (structtype == EBST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                EBSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+    }
+    else if (order == WSPT)
+    {
+        ptrCmp = &wspt;
+
+        if (structtype == OL) {
+            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                OListInsert(L, toInsert, toInsert);
+            }
+            I = OListToList(L);
+        }
+        else if (structtype == BST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                BSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+        else if (structtype == EBST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                EBSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+    }
+    else if (order == FCFS)
+    {
+        ptrCmp = &fcfs;
+
+        if (structtype == OL) {
+            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                OListInsert(L, toInsert, toInsert);
+            }
+            I = OListToList(L);
+        }
+        else if (structtype == BST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                BSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+        else if (structtype == EBST) {
+            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
+            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
+                EBSTreeInsert(T, toInsert, toInsert);
+            }
+            I = BSTreeToList(T);
+        }
+    }
+
 }
