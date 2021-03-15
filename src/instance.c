@@ -77,7 +77,12 @@ void freeInstance(Instance I, int deleteData) {
  * (+) durée de a = durée de b ET date de libération de a < date de libération de b
  */
 static int spt(const void* a, const void* b) {
-    /* A FAIRE */
+    if (a->processingTime < b->processingTime)
+        return 1;
+    else if (a->processingTime == b->processingTime && a->releaseTime < b->releaseTime)
+        return 1;
+    else
+        return 0;
 }
 
 /**
@@ -90,7 +95,12 @@ static int spt(const void* a, const void* b) {
  * (+) durée de a = durée de b ET date de libération de a < date de libération de b
  */
 static int lpt(const void* a, const void* b) {
-    /* A FAIRE */
+    if (a->processingTime > b->processingTime)
+        return 1;
+    else if (a->processingTime == b->processingTime && a->releaseTime < b->releaseTime)
+        return 1;
+    else
+        return 0;
 }
 
 /**
@@ -107,7 +117,14 @@ static int lpt(const void* a, const void* b) {
  *     ET date de libération de a < date de libération de b
  */
 static int wspt(const void* a, const void* b) {
-    /* A FAIRE */
+    if (a->weight/a->processingTime < b->weight/b->processingTime)
+        return 1;
+    else if (a->weight/a->processingTime == b->weight/b->processingTime && a->processingTime < b->processingTime)
+        return 1;
+    else if (a->weight/a->processingTime == b->weight/b->processingTime && a->processingTime == b->processingTime && a->deadline < b->deadline)
+        return 1;
+    else
+        return 0;
 }
 
 /**
@@ -121,7 +138,12 @@ static int wspt(const void* a, const void* b) {
  *     ET durée de a > durée de b
  */
 static int fcfs(const void* a, const void* b) {
-    /* A FAIRE */
+    if (a->deadline < b->deadline)
+        return 1;
+    else if (a->deadline == b->deadline && a->processingTime > b->processingTime)
+        return 1;
+    else
+        return 0;
 }
 
 void reorderInstance(Instance I,  DataStructure structtype, Order order) {
