@@ -4,7 +4,7 @@
 
 void error(char * msg) {
     fprintf(stderr, "%s\n", msg);
-    exit(1);
+    exit(EXIT_FAILURE);
 }
 
 int max(int a, int b) {
