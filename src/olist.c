@@ -160,6 +160,8 @@ void OListInsert(OList * L, void * key, void * data){
     else{
         OLNode* actuel = L->head;
         while( actuel->succ != NULL && (L->preceed)(nouveau->key,actuel->succ->key) == 0){
+            if (actuel->key == nouveau->key)
+                error("Le nouveau noeud ne doit pas être un doublon.");
             actuel = actuel->succ;
         }
         nouveau->succ = actuel->succ;
