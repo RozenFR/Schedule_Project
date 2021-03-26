@@ -44,7 +44,8 @@ BSTree * newBSTree(int (*preceed)(const void*, const void*),
  * Les clés sont comparées en utilisant la fonction preceed.
  * NB : fonction récursive.
  */
-static BSTNode * insertBSTNodeIterative(BSTNode * curr, void * key, void * data, int (*preceed)(const void*, const void*)){
+static BSTNode * insertBSTNodeIterative(BSTNode * curr, void * key, void * data, int (*preceed)(const void*, const void*))
+{
     BSTNode * nouveau = newBSTNode(key,data);
     BSTNode * root = curr;
     if(curr==NULL)
@@ -341,12 +342,27 @@ BSTNode * BSTMax(BSTNode * node) {
  */
 static BSTNode * predecessor(BSTNode * curr, void * key, int (*preceed)(const void *, const void *)) {
     assert(curr != NULL);
-    if((preceed)(curr->right->key, key))
-        curr = predecessor(curr->right, key, preceed);
-    else if ((preceed)(key, curr->left->key))
-        curr = predecessor(curr->left, key, preceed);
-    else
-        return curr;
+    BSTNode * S;
+    if (preceed(key, curr->key)) {
+        S = successor(curr->right, key, preceed);
+        if (S)
+            return curr;
+        else
+            return S;
+    }
+    else if (preceed(curr->key, key)) {
+        S = successor(curr->left, key, preceed);
+        if (S)
+            return S;
+        else
+            return curr;
+    }
+    else {
+        if (curr->left)
+            return NULL;
+        else
+            return BSTMax(curr->right);
+    }
 }
 
 /** FAIT
@@ -367,12 +383,28 @@ BSTNode * findPredecessor(const BSTree * T, const BSTNode * node) {
  */
 static BSTNode * successor(BSTNode * curr, void * key, int (*preceed)(const void *, const void *)) {
     assert(curr != NULL);
-    if((preceed)(curr->key, key))
-        curr = successor(curr->right, key, preceed);
-    else if ((preceed)(key, curr->key))
-        curr = successor(curr->left, key, preceed);
-    else
-        return curr;
+    BSTNode * S;
+    if (preceed(key, curr->key)) {
+        S = successor(curr->left, key, preceed);
+        if (S)
+            return curr;
+        else
+            return S;
+    }
+    else if (preceed(curr->key, key)) {
+        S = successor(curr->right, key, preceed);
+        if (S)
+            return S;
+        else
+            return curr;
+    }
+    else {
+        if (curr->right)
+            return NULL;
+        else
+            return BSTMin(curr->right);
+    }
+
 }
 
 /** FAIT
