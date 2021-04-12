@@ -325,7 +325,7 @@ void viewBSTree( const BSTree * T ) {
 static void treetolist( BSTNode * curr, List * list ) {
     if ( curr != NULL ) {
         treetolist( curr->left, list );
-        listInsertFirst( list, curr->data );
+        listInsertLast( list, curr->data );
         treetolist( curr->right, list );
     }
 }

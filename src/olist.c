@@ -199,7 +199,7 @@ List * OListToList( const OList * L ) {
 
     for ( OLNode * iterator = L -> head; iterator != NULL; iterator = iterator -> succ )
     {
-        listInsertFirst( nL, iterator -> data );
+        listInsertLast( nL, iterator -> data );
     }
 
 
