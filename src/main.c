@@ -13,13 +13,13 @@
 void testListes(void);
 void testArbres(void);
 
-int main(void){
+int main(void) {
     //testListes();
     testArbres();
     return 0;
 }
 
-void testListes(void){
+void testListes(void) {
     const void (*ptrViewInt)(const void* i);
     const int (*ptrCmp)(const void* a, const void* b);
     void (*ptrFreeInt)(void* i);

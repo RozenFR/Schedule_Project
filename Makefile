@@ -1,19 +1,34 @@
-CC=gcc
-EXEC=prog
-SRC=$(wildcard *.c)
-OBJ=$(SRC:.c=.o)
+IDIR = include
+ODIR = obj
+SDIR = src
 
+CC = gcc
+CFLAGS = -g -std=c11 -I$(IDIR)
+#CFLAGS = -g -Wall -Wextra -std=c11 -I$(IDIR)
 
-all : $(EXEC)
+PROG = scheduling
 
-$(EXEC) : $(OBJ)
-	$(CC) -o $@ $^
+_DEPS = utilities.h list.h olist.h bstree.h instance.h
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-%.o : %.c
-	$(CC) -o $@ -c $<
+_OBJ= utilities.o list.o olist.o bstree.o instance.o main.o
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
-clear : 
-	rm -rf *.o
+.PHONY: run all remake clean delete
 
-mrproper : clear
-	rm -rf $(EXEC)
+all : $(PROG)
+
+$(PROG) : $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(ODIR)/%.o : $(SDIR)/%.c $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+run : all
+	./$(PROG)
+
+clean :
+	rm -f $(ODIR)/*.o
+
+delete : clean
+	rm $(PROG)
