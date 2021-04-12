@@ -1,6 +1,7 @@
 #ifndef _BSTREE_
 #define _BSTREE_
 #include "list.h"
+#include <stdbool.h>
 /**
  * @brief
  * Arbre binaire de recherche générique
@@ -145,5 +146,9 @@ BSTNode * findPredecessor(const BSTree * T, const BSTNode* node);
  * Assurez vous que T n'est pas vide et que node existe.
  */
 BSTNode * findSuccessor(const BSTree * T, const BSTNode* node);
+
+bool isBSTree(const BSTNode* curr,int (*preceed)(const void*, const void*));
+
+bool isBalanced(const BSTNode* curr, int (*preceed)(const void*, const void*));
 
 #endif // _BSTREE_

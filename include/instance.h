@@ -42,7 +42,7 @@ void viewTask(const void *task);
  * @brief
  * Supprimer et libérer la mémoire de la tâche task.
  */
-void freeTask(void * task);
+void freeTask(void *task);
 
 /**
  * @brief

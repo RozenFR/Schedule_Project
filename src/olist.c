@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
+#include "utilities.h"
 
 /**
  * @brief
@@ -46,9 +47,9 @@ typedef struct OrderedList {
 /**
  * Construire et initialiser un nouveau nœud d’une liste ordonnée.
  */
-static OLNode * newOLNode (void* key , void* data ){
-    OLNode* nouveau = (OLNode*) calloc(1,sizeof(OLNode));
-    assert(nouveau!=NULL);
+static OLNode * newOLNode ( void * key , void * data ) {
+    OLNode * nouveau = ( OLNode * ) calloc (1,sizeof( OLNode ) );
+    assert( nouveau != NULL );
     nouveau->key = key;
     nouveau->data = data;
     nouveau->pred = NULL;
@@ -60,11 +61,12 @@ static OLNode * newOLNode (void* key , void* data ){
  * @brief
  * Construire une liste doublement chaînée ordonnée vide
  */
-OList * newOList(int (*preceed)(const void*, const void*),
-                 void (*viewKey)(const void*), void (*viewData)(const void*),
-                 void (*freeKey)(void*), void (*freeData)(void*)){
-    OList* nouveau = (OList*) calloc(1,sizeof(OList));
-    assert(nouveau!=NULL);
+OList * newOList( int ( * preceed )( const void *, const void * ),
+                  void ( * viewKey )( const void * ), void ( * viewData )( const void * ),
+                  void ( * freeKey )( void * ), void ( * freeData )( void * ) ) {
+
+    OList * nouveau = ( OList * ) calloc (1,sizeof( OList ) );
+    assert( nouveau != NULL );
     nouveau->preceed = preceed;
     nouveau->viewKey = viewKey;
     nouveau->viewData = viewData;
@@ -81,7 +83,7 @@ OList * newOList(int (*preceed)(const void*, const void*),
  * (+) Si le paramètre deleteData vaut 1
  *     Alors le pointeur de fonction freeKey de la structure OrderedList
  *     va servir à supprimer les clés (key) des éléments de la liste L.
- * 
+ *
  * (+) Si le paramètre deleteData vaut 0
  *     Alors les données (data) référencées par les éléments
  *     de la liste L ne sont pas supprimées ;
@@ -90,18 +92,18 @@ OList * newOList(int (*preceed)(const void*, const void*),
  *     va servir à supprimer les données (data) référencées par
  *     les éléments de la liste L.
  */
-void freeOList(OList * L, int deleteKey, int deleteData){
-    OLNode* aSauver = NULL;
-    while(L->head != NULL){
+void freeOList( OList * L, int deleteKey, int deleteData ) {
+    OLNode * aSauver = NULL;
+    while ( L->head != NULL ) {
         aSauver = L->head->succ;
-        if(deleteKey == 1)
-            (L->freeKey)(L->head->key);
-        if(deleteData == 1)
-            (L->freeData)(L->head->data);
-        free(L->head);
+        if ( deleteKey == 1 )
+            L->freeKey( L->head->key );
+        if ( deleteData == 1 )
+            L->freeData( L->head->data );
+        free( L->head );
         L->head = aSauver;
     }
-    free(L);
+    free( L );
 }
 
 /**
@@ -112,27 +114,23 @@ void freeOList(OList * L, int deleteKey, int deleteData){
  * (+) viewKey pour la clé
  * (+) viewData pour les données
  */
-void viewOList(const OList * L){
-    printf("        VIEW ORDERED LIST\n");
-    printf("--------------------------------");
-    if(L->numelm == 0){
+void viewOList( const OList * L ) {
+    if ( L->numelm == 0 ) {
         printf("[ ]\n");
     }
-    else{
+    else {
         printf("\n");
-        printf("                KEYS\n[ ");
-        for(OLNode* aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ){
-            (L->viewKey)(aAfficher->key);
+        printf("KEYS : [ ");
+        for ( OLNode* aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ ) {
+            L->viewKey( aAfficher->key );
         }
         printf("]");
         printf("\n");
-        printf("                DATA\n[ ");
-        for(OLNode* aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ){
-            (L->viewData)(aAfficher->data);
+        printf("DATA : [ ");
+        for ( OLNode * aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ ) {
+            L->viewData( aAfficher->data );
         }
         printf("]\n");
-        printf("--------------------------------");
-        printf("\n");
     }
 }
 
@@ -140,37 +138,45 @@ void viewOList(const OList * L){
  * @brief
  * Ajouter dans la liste ordonnée L un élément de clé key et de donnée data.
  */
-void OListInsert(OList * L, void * key, void * data){
-    OLNode* nouveau = newOLNode(key,data);
-    assert(nouveau != NULL);
+void OListInsert( OList * L, void * key, void * data ) {
+    OLNode * nouveau = newOLNode( key, data );
+    assert( nouveau != NULL );
     //Le cas où la LISTE est VIDE
-    if(L->numelm == 0){
+    if ( L->numelm == 0 ) {
         L->head = nouveau;
         L->tail = nouveau;
         L->numelm++;
     }
-    //Le cas où l'élèment est à mettre AVANT L->HEAD
-    else if((L->preceed)(nouveau->key,L->head->key) == 1){
+        //Le cas où l'élèment est à mettre AVANT L->HEAD
+    else if ( L->preceed( nouveau->key, L->head->key ) == 1 ) {
+        if ( ! L->preceed( nouveau->key, L->head->key ) && ! L->preceed( L->head->key, nouveau->key ) ) {
+            error("OListInsert() : tentative d'insértion d'une \"key\" déjà présente");
+        }
         nouveau->succ = L->head;
         L->head->pred = nouveau;
         L->head = nouveau;
         L->numelm++;
-       }
-    //Recherche de la position pour ranger NOUVEAU
-    else{
-        OLNode* actuel = L->head;
-        while( actuel->succ != NULL && (L->preceed)(nouveau->key,actuel->succ->key) == 0){
-            if (actuel->key == nouveau->key)
-                error("Le nouveau noeud ne doit pas être un doublon.");
+    }
+        //Recherche de la position pour ranger NOUVEAU
+    else {
+        OLNode * actuel = L->head;
+        while ( actuel->succ != NULL && L->preceed( nouveau->key, actuel->succ->key ) == 0 ) {
             actuel = actuel->succ;
+        }
+        if ( ! L->preceed( nouveau->key, actuel->key ) && ! L->preceed( actuel->key, nouveau->key ) ) {
+            printf("Les éléments sont égaux d'après la politique d'ordonnancement choisie\n");
+            L->viewKey(actuel->key);
+            printf("\n est égal à\n");
+            L->viewKey(nouveau->key);
+            error("\nOListInsert() : tentative d'insértion d'une \"key\" déjà présente");
         }
         nouveau->succ = actuel->succ;
         //Cas général
-        if(actuel->succ != NULL){
+        if ( actuel->succ != NULL ) {
             nouveau->succ->pred = nouveau;
         }
-        //Gestion du cas où l'élèment à insérer après TAIL
-        else{
+            //Gestion du cas où l'élèment à insérer après TAIL
+        else {
             L->tail = nouveau;
         }
         actuel->succ = nouveau;
@@ -184,19 +190,19 @@ void OListInsert(OList * L, void * key, void * data){
  * Transformer la liste doublement chaînée ordonnée L
  * à une liste doublement chaînée classique (non-ordonnée).
  */
-List* OListToList(const OList * L){
-        List * nL = newList(L->viewData, L->freeData);
+List * OListToList( const OList * L ) {
+    List * nL = newList( L->viewData, L->freeData );
 
-        nL -> freeData = L -> freeData;
-        nL -> viewData = L -> viewData;
-        nL -> numelm = L -> numelm;
+    nL -> freeData = L -> freeData;
+    nL -> viewData = L -> viewData;
+    nL -> numelm = L -> numelm;
 
-        for (OLNode * iterator = L -> head; iterator != NULL; iterator = iterator -> succ)
-        {
-            listInsertLast(nL, iterator -> data);
-        }
+    for ( OLNode * iterator = L -> head; iterator != NULL; iterator = iterator -> succ )
+    {
+        listInsertFirst( nL, iterator -> data );
+    }
 
 
-        return nL;
+    return nL;
 
 }

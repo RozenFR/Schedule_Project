@@ -12,12 +12,13 @@
  * TASK
  ***********************************************/
 
-Task * newTask(char * id, int proctime, int reltime, int deadline, int weight) {
-    assert(proctime > 0);
-    assert(reltime >= 0);
-    assert((deadline >= reltime + proctime));
-    Task *nouvelle= (Task*)calloc(1, sizeof(Task));
-    nouvelle->id=id;
+Task * newTask(char* id, int proctime, int reltime, int deadline, int weight) {
+    assert( proctime > 0 );
+    assert( reltime >= 0 );
+    assert( ( deadline >= reltime + proctime ) );
+    Task * nouvelle = ( Task * ) calloc ( 1, sizeof( Task ) );
+    nouvelle->id = ( char * ) calloc ( strlen( id ) + 1, sizeof ( char ) );
+    strcpy( nouvelle->id, id );
     nouvelle->processingTime=proctime;
     nouvelle->releaseTime=reltime;
     nouvelle->deadline=deadline;
@@ -25,16 +26,18 @@ Task * newTask(char * id, int proctime, int reltime, int deadline, int weight) {
     return nouvelle;
 }
 
-void freeTask(void * task) {
+void freeTask(void* task) {
+    Task * aSupprimer = ( Task * ) task;
+    free( aSupprimer->id );
     free(task);
 }
 
-void viewTask(const void * task) {
-    printf("ID : %s\n", ((Task*)task)->id);
-    printf("PROCESSING TIME : %d\n", ((Task*)task)->processingTime);
-    printf("RELEASE TIME : %d\n", ((Task*)task)->releaseTime);
-    printf("DEADLINE : %d\n", ((Task*)task)->deadline);
-    printf("WEIGHT : %d\n", ((Task*)task)->weight);
+void viewTask(const void *task) {
+    printf("{ ID : %s\t",((Task*)task)->id);
+    printf("PROC TIME : %d\t",((Task*)task)->processingTime);
+    printf("REL TIME : %d\t",((Task*)task)->releaseTime);
+    printf("DEADLINE : %d\t",((Task*)task)->deadline);
+    printf("WEIGHT : %d \n}",((Task*)task)->weight);
 }
 
 /************************************************
@@ -42,25 +45,29 @@ void viewTask(const void * task) {
  ************************************************/
 
 Instance readInstance(char * filename) {
-    FILE * ptrFichier;
-    if((ptrFichier = fopen(filename, "r")) == NULL);
+    FILE* ptrFichier = fopen( filename,"r" ) ;
+    if( !ptrFichier )
         error("readInstance() : echec d'ouverture du fichier");
-    Instance I = newList(&viewTask, &freeTask);
-    char buffId[255];
-    int buffProcTime = 0, buffReleaseTime = 0, buffDeadlineTime = 0, buffWeight = 0;
-    while(fscanf(ptrFichier, "%s\t%d\t%d\t%d\t%d\n", buffId, &buffProcTime, &buffReleaseTime, &buffDeadlineTime, &buffWeight) != EOF){
+    Instance I = newList( &viewTask, &freeTask );
+    char buffId[10];
+    int buffProcTime = 0;
+    int buffReleaseTime = 0;
+    int buffDeadlineTime = 0;
+    int buffWeight = 0;
+    while( fscanf ( ptrFichier,"%s %d %d %d %d", buffId, &buffProcTime, &buffReleaseTime, &buffDeadlineTime, &buffWeight ) != EOF ) {
         Task * task = newTask(buffId, buffProcTime, buffReleaseTime, buffDeadlineTime, buffWeight);
-        listInsertFirst(I, (void *) task);
+        listInsertFirst( I, ( void * ) task );
     }
+    fclose(ptrFichier);
     return I;
 }
 
-void viewInstance(Instance I) {
-    viewList(I);
+void viewInstance( Instance I ) {
+    viewList( I );
 }
 
-void freeInstance(Instance I, int deleteData) {
-    freeList(I, deleteData);
+void freeInstance( Instance I, int deleteData ) {
+    freeList( I, deleteData );
 }
 
 /*****************************************************************************
@@ -76,13 +83,14 @@ void freeInstance(Instance I, int deleteData) {
  * (+) durée de a < durée de b
  * (+) durée de a = durée de b ET date de libération de a < date de libération de b
  */
-static int spt(const void * a, const void * b) {
-    if (a->processingTime < b->processingTime)
+static int spt( const void * a, const void * b ) {
+    Task * A = ( Task * )a;
+    Task * B = ( Task * )b;
+    if ( A->processingTime < B->processingTime || ( A->processingTime == B->processingTime && A->releaseTime < B->releaseTime ) ) {
         return 1;
-    else if (a->processingTime == b->processingTime && a->releaseTime < b->releaseTime)
-        return 1;
-    else
+    } else {
         return 0;
+    }
 }
 
 /**
@@ -94,13 +102,14 @@ static int spt(const void * a, const void * b) {
  * (+) durée de a > durée de b
  * (+) durée de a = durée de b ET date de libération de a < date de libération de b
  */
-static int lpt(const void* a, const void* b) {
-    if (a->processingTime > b->processingTime)
+static int lpt(const void * a, const void * b) {
+    Task * A = ( Task * )a;
+    Task * B = ( Task * )b;
+    if ( ( A->processingTime > B->processingTime ) || ( A->processingTime == B->processingTime && A->releaseTime < B->releaseTime ) ) {
         return 1;
-    else if (a->processingTime == b->processingTime && a->releaseTime < b->releaseTime)
-        return 1;
-    else
+    } else {
         return 0;
+    }
 }
 
 /**
@@ -117,14 +126,13 @@ static int lpt(const void* a, const void* b) {
  *     ET date de libération de a < date de libération de b
  */
 static int wspt(const void* a, const void* b) {
-    if (a->weight/a->processingTime < b->weight/b->processingTime)
+    Task * A = ( Task * )a;
+    Task * B = ( Task * )b;
+    if ( ( ( A->weight / A->processingTime ) > ( B->weight / B->processingTime ) ) || ( ( A->weight / A->processingTime ) == ( B->weight / B->processingTime ) ) && A->processingTime < B->processingTime || ( A->weight / A->processingTime == B->weight / B->processingTime ) && A->processingTime == B->processingTime && A->releaseTime < B->releaseTime ) {
         return 1;
-    else if (a->weight/a->processingTime == b->weight/b->processingTime && a->processingTime < b->processingTime)
-        return 1;
-    else if (a->weight/a->processingTime == b->weight/b->processingTime && a->processingTime == b->processingTime && a->deadline < b->deadline)
-        return 1;
-    else
+    } else {
         return 0;
+    }
 }
 
 /**
@@ -138,132 +146,169 @@ static int wspt(const void* a, const void* b) {
  *     ET durée de a > durée de b
  */
 static int fcfs(const void* a, const void* b) {
-    if (a->deadline < b->deadline)
+    Task * A = ( Task * )a;
+    Task * B = ( Task * )b;
+    if ( A->releaseTime < B->releaseTime || ( ( A->releaseTime == B->releaseTime ) && ( A->processingTime > B->processingTime ) ) ) {
         return 1;
-    else if (a->deadline == b->deadline && a->processingTime > b->processingTime)
-        return 1;
-    else
+    } else {
         return 0;
+    }
 }
 
-/**
- * @brief
- * Trier l’instance I par  rapport à l’ordre order
- * en  utilisant  une  structure  de données  ordonnée de type  structtype.
- * N’oubliez  pas à libérer la mémoire  de l’instance  de l’entrée.
- * NB : l’argument I est en entrée/sortie. 
- */
-void reorderInstance(Instance I, DataStructure structtype, Order order) {
 
-    const void (*ptrViewI)(const void * i);
-    void (*ptrFreeI)(void * i);
-    const int (*ptrCmp)(const void * a, const void * b);
-
-    ptrFreeI = freeTask;
-    ptrViewI = viewTask;
-
-    if (order == SPT) {
-        ptrCmp = &spt;
-
-        if (structtype == OL) {
-            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                OListInsert(L, toInsert, toInsert);
+void reorderInstance(Instance I,  DataStructure structtype, Order order) {
+    switch ( order ) {
+        case SPT : {
+            switch ( structtype ) {
+                case OL : {
+                    OList * oL1 = newOList( &spt, &viewTask, &viewTask, &freeTask, &freeTask );
+                    for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                        OListInsert( oL1, currNode->data, currNode->data );
+                    }
+                    Instance instanceResult = OListToList( oL1 );
+                    freeOList( oL1, 0, 0 );
+                    viewInstance( instanceResult );
+                    freeInstance( instanceResult, 0 );
+                } break;
+                case BST : {
+                    BSTree * T1 = newBSTree( &spt, &viewTask, &viewTask, &freeTask, &freeTask );
+                    for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                        BSTreeInsert( T1, currNode->data, currNode->data);
+                    }
+                    Instance instanceResult = BSTreeToList( T1 );
+                    freeBSTree( T1, 0, 0 );
+                    viewInstance( instanceResult );
+                    freeInstance( instanceResult, 0 );
+                } break;
+                case EBST : {
+                    BSTree  * T2 = newEBSTree( &spt, &viewTask, &viewTask, &freeTask, &freeTask );
+                    for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                        EBSTreeInsert( T2, currNode->data, currNode->data );
+                    }
+                    Instance instanceResult = BSTreeToList( T2 );
+                    freeBSTree( T2, 0, 0 );
+                    viewInstance( instanceResult );
+                    freeInstance( instanceResult, 0 );
+                } break;
+                default:{
+                    error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");
+                }
+            } break;
+            case LPT : {
+                switch ( structtype ) {
+                    case OL : {
+                        OList * oL1 = newOList( &lpt, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            OListInsert( oL1, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = OListToList(oL1);
+                        freeOList( oL1, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    case BST : {
+                        BSTree * T1 = newBSTree( &lpt, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            BSTreeInsert( T1, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = BSTreeToList( T1 );
+                        freeBSTree( T1, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    case EBST : {
+                        BSTree  * T2 = newEBSTree( &lpt, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            EBSTreeInsert( T2, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = BSTreeToList( T2 );
+                        freeBSTree( T2, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    default:{
+                        error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");
+                    }
+                }
+            } break;
+            case WSPT : {
+                switch ( structtype ) {
+                    case OL : {
+                        OList * oL1 = newOList( &wspt, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            OListInsert( oL1, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = OListToList(oL1);
+                        freeOList( oL1, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    case BST : {
+                        BSTree * T1 = newBSTree( &wspt, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            BSTreeInsert( T1 , currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = BSTreeToList( T1 );
+                        freeBSTree( T1, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    case EBST : {
+                        BSTree  * T2 = newEBSTree( &wspt, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            EBSTreeInsert( T2, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = BSTreeToList( T2 );
+                        freeBSTree( T2, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    default:{
+                        error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");
+                    }
+                }
+            } break;
+            case FCFS : {
+                switch ( structtype ) {
+                    case OL : {
+                        OList * oL1 = newOList( &fcfs, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            OListInsert( oL1, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = OListToList(oL1);
+                        freeOList( oL1, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    case BST : {
+                        BSTree * T1 = newBSTree( &fcfs, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            BSTreeInsert( T1, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = BSTreeToList( T1 );
+                        freeBSTree( T1, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    case EBST : {
+                        BSTree  * T2 = newEBSTree( &fcfs, &viewTask, &viewTask, &freeTask, &freeTask );
+                        for ( LNode * currNode = I->head; currNode != NULL; currNode = currNode->succ ) {
+                            EBSTreeInsert( T2, currNode->data, currNode->data );
+                        }
+                        Instance instanceResult = BSTreeToList( T2 );
+                        freeBSTree( T2, 0, 0 );
+                        viewInstance( instanceResult );
+                        freeInstance( instanceResult, 0 );
+                    } break;
+                    default : {
+                        error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");
+                    }
+                }
+            } break;
+            default : {
+                error("reorderInstance() : l'ordre de trie est différent de SPT - LPT - WSPT - FCFS\n");
             }
-            I = OListToList(L);
-        }
-        else if (structtype == BST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                BSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
-        }
-        else if (structtype == EBST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                EBSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
+
         }
     }
-    else if (order == LPT)
-    {
-        ptrCmp = &lpt;
-
-        if (structtype == OL) {
-            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                OListInsert(L, toInsert, toInsert);
-            }
-            I = OListToList(L);
-        }
-        else if (structtype == BST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                BSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
-        }
-        else if (structtype == EBST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                EBSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
-        }
-    }
-    else if (order == WSPT)
-    {
-        ptrCmp = &wspt;
-
-        if (structtype == OL) {
-            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                OListInsert(L, toInsert, toInsert);
-            }
-            I = OListToList(L);
-        }
-        else if (structtype == BST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                BSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
-        }
-        else if (structtype == EBST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                EBSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
-        }
-    }
-    else if (order == FCFS)
-    {
-        ptrCmp = &fcfs;
-
-        if (structtype == OL) {
-            OList * L = newOList(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                OListInsert(L, toInsert, toInsert);
-            }
-            I = OListToList(L);
-        }
-        else if (structtype == BST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                BSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
-        }
-        else if (structtype == EBST) {
-            BSTree * T = newBSTree(ptrCmp, ptrViewI, ptrViewI, ptrFreeI, ptrFreeI);
-            for(LNode * toInsert = I->head; toInsert != NULL; toInsert = toInsert->succ) {
-                EBSTreeInsert(T, toInsert, toInsert);
-            }
-            I = BSTreeToList(T);
-        }
-    }
-
 }

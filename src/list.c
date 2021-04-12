@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <time.h>
+#include "utilities.h"
 #include "list.h"
 /*
  * Construire et initialiser un nouveau nœud d'une liste doublement chaînée.
@@ -39,7 +41,6 @@ void freeList(List * L, int deleteData) {
     free(L);
 }
 
-
 void viewList(const List * L) {
     if(L->numelm == 0)
         printf("[ ]\n");
@@ -64,28 +65,36 @@ void listInsertFirst(List * L, void * data) {
 }
 
 void listInsertLast(List * L, void * data) {
-    LNode* nouveau = newLNode(data);
-    nouveau->pred = L->tail;
-    if(L->tail != NULL)
-        L->tail->succ = nouveau;
-    else
-        L->head = nouveau;
-    L->tail = nouveau;
+    LNode* nouveau;
+    if(L->head==NULL)
+        L->head=L->tail= newLNode(data);
+    else{
+        nouveau= newLNode(data);
+        L->tail->succ=nouveau;
+        nouveau->pred=L->tail;
+        L->tail=nouveau;
+    }
     L->numelm++;
 }
 
 void listInsertAfter(List * L, void * data, LNode * ptrelm) {
-   if(L->numelm == 0)
-       listInsertFirst(L,data);
-   else{
-       LNode* nouveau = newLNode(data);
-       nouveau->succ = ptrelm->succ;
-       nouveau->pred = ptrelm;
-       ptrelm->succ = nouveau;
-       L->numelm++;
-       if(L->tail == ptrelm)
-           L->tail = nouveau;
-   }
+    if(ptrelm==NULL)
+        error("listInsertAfter() : tentative d'insértion après le pointeur \"NULL\"");
+    else if (L->head==NULL){
+        L->head=L->tail= newLNode(data);
+        L->numelm++;
+    }
+    else{
+        LNode *nouveau= newLNode(data);
+        nouveau->pred=ptrelm;
+        nouveau->succ=ptrelm->succ;
+        if(ptrelm->succ!=NULL)
+            ptrelm->succ->pred=nouveau;
+        else
+            L->tail=nouveau;
+        ptrelm->succ=nouveau;
+        L->numelm++;
+    }
 }
 
 LNode* listRemoveFirst(List * L) {
@@ -103,13 +112,17 @@ LNode* listRemoveFirst(List * L) {
 LNode* listRemoveLast(List * L) {
     if(L->numelm == 0)
         exit(EXIT_FAILURE);
-    LNode* queue = L->tail;
-    L->tail = L->tail->pred;
-    L->numelm--;
-    if(L->numelm == 0)
-        L->head = NULL;
-    queue->pred = NULL;
-    return queue;
+    else{
+        LNode * queue = L->tail;
+        L->tail = L->tail->pred;
+        L->numelm--;
+        if(L->numelm == 0)
+            L->head = NULL;
+        else
+            L->tail->succ = NULL;
+        queue->pred = NULL;
+        return queue;
+    }
 }
 
 LNode* listRemoveNode(List * L, LNode * node) {

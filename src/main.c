@@ -1,87 +1,472 @@
-//
-// Created by alex on 01/02/2021.
-//
 #include "olist.h"
 #include "list.h"
 #include "bstree.h"
 #include "utilities.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 #include <time.h>
+//#include <stdbool.h>
+#include "instance.h"
+#include <string.h>
+/**
+⢕⢕⢕⢑⠁⢁⣼⣿⣻⢿⣟⢿⡻⡙⡏⡏⣟⡽⡹⣹⢪⡻⢽⡫⠯⣻⢛⢿⣻⣿⣿⡿⣧⢍⠝⡍⡏⡎⡕⢵
+⢕⢕⠸⡐⣠⣿⣗⢯⡺⡽⡸⡅⠕⢕⢐⠑⢕⠸⢙⢕⢱⢸⠸⢜⠴⡈⡜⡔⢅⢟⢞⣿⣿⣧⠨⡊⣜⢜⢜⡵
+⢕⢌⢂⢀⣿⡷⡧⣯⡣⡹⡎⠪⣈⡂⣦⣁⣱⡱⣱⣡⢑⣘⡨⢮⢝⢞⣎⣖⣵⢳⣸⣯⣿⣿⣇⢣⢪⡪⣣⣻
+⢕⢐⠄⣸⣿⣿⡝⣮⡪⡪⣊⢎⡔⣗⢳⢪⢻⠾⡻⡿⡻⣗⢾⢗⡿⢿⢻⡻⡾⣟⣶⣯⣿⣿⡇⡎⢆⢇⢇⢿
+⢕⠐⠄⣿⣿⣿⡽⢜⡲⣇⣷⡛⢗⢙⠹⠘⠔⠑⠉⠘⠜⠑⠔⠑⢘⠈⠂⠊⠘⠈⠈⠘⠹⢿⡧⡣⡣⡣⡳⡽
+⢅⠅⠄⣿⣿⣿⢝⢷⣻⡻⠁⠄⠄⠄⠄⢀⠄⠄⠄⠄⠂⠬⡀⡄⠄⠄⠄⡀⠄⠄⠄⠄⠁⠂⢻⣕⢧⢳⢕⣿
+⠅⠂⠄⢻⣿⣯⠧⢟⣿⣔⠄⠁⡀⡀⠄⠄⠄⣀⠄⠄⡀⠩⠳⠵⠁⠄⡀⠄⢰⣁⠄⠠⠄⠄⠈⢿⣪⡺⡜⣾
+⢵⣷⠶⣼⠏⣿⠹⡙⠄⠁⠄⠖⠂⠄⡀⠄⠄⠹⣾⠄⠄⢔⣻⣿⡳⠄⠄⠄⠈⡷⠠⠄⠄⠄⠄⣼⡟⠵⡭⣻
+⡪⡂⡕⡄⢠⣿⣏⢌⢠⠰⡌⡢⠄⠄⠅⠠⠄⠐⠄⠄⡔⣵⢾⣟⣯⢧⢂⢠⢀⠄⠄⠄⣀⢤⢾⢦⣿⣇⢗⣿
+⠜⣔⠄⠈⢘⣿⣯⡖⠔⠑⢜⢐⠁⢂⠄⠢⢐⠐⢀⢕⢝⡚⡟⠿⡿⣿⣪⡢⠳⣭⣊⢆⠣⠣⠣⠓⡯⢷⡣⣿
+⠝⣾⠄⠄⢸⣹⣷⣆⢀⢑⢐⠰⢈⢐⠨⠨⠠⠐⡎⠫⠑⢌⠌⡈⡈⠪⠚⠷⠈⠰⢕⢟⢎⢎⠂⠌⣾⣿⢸⣺
+⢅⠱⢷⢄⡀⢽⣿⣟⡀⠑⡐⢅⢃⠢⠑⠅⢅⢢⠈⠄⠄⠄⠁⠐⠈⢀⢀⢬⢤⢠⢌⠪⠲⢈⠸⡠⣿⢾⠱⣽
+⡅⠄⠳⣝⠄⢸⣿⣻⡜⠆⠌⣐⡂⢅⠅⡍⡆⢧⢑⢦⠕⠔⠤⠤⠤⠳⢯⣯⢿⢵⠥⡧⣑⢄⠃⣆⣿⠃⢑⢵
+⢆⠕⡠⡉⠃⠸⣿⣿⡸⠰⢁⢐⠄⡥⡪⠢⡸⡸⢊⠁⠄⠡⠡⠨⠐⠄⠈⠈⠫⡇⠟⣜⣖⡔⠥⣢⣻⠄⠄⡸
+⡣⡣⡱⡨⠢⡀⢹⡗⡳⡉⢐⠄⠕⡽⢐⠁⠄⠅⠐⠈⠄⠄⠄⢀⢀⣀⣀⣀⠄⠁⠄⠨⣾⣗⡘⣆⣿⠄⠐⡌
+⡪⡪⡢⡣⡃⢆⠸⣿⡢⡸⠂⡘⡩⠼⡄⢄⠰⡐⢔⠑⢍⢚⢙⢊⠣⠓⠝⢚⢹⢕⢕⢡⠺⡒⠕⠅⡾⣤⣐⢜
+⡕⢕⢸⢨⢊⠆⡂⡹⣯⣪⡀⡄⢜⡽⡀⢢⠊⡊⡢⢑⢀⠄⡀⠄⠄⡀⠄⡊⠮⡪⡊⢆⢆⠯⢨⢢⠁⠄⣿⣽
+⢎⢕⢕⢅⢇⣣⡱⠒⢿⡜⣖⡂⢚⡺⣎⢐⠄⡊⡐⠰⡀⡅⣀⡢⣐⢔⡰⡨⡘⡄⡣⡡⣏⡓⠇⠁⠄⠄⣍⣿
+⡣⡱⡡⡣⣳⠞⠄⠄⠸⣿⣝⢮⣶⢪⡗⡄⠠⢂⠌⠆⡅⠇⠇⡓⡘⡘⡪⣚⠪⡪⡘⡜⡂⢪⡃⠄⠄⢀⣽⢿
+⡕⢕⢕⢽⠁⠄⠄⠄⠄⡑⠌⠹⢹⢹⢭⢻⡅⡆⡈⡠⠠⠁⡂⠄⠄⠠⢀⠂⠅⡃⠅⠁⡄⡣⡂⠄⢠⢙⢄⢾
+⡕⡕⢵⠃⠄⢀⠄⠡⠄⢈⢂⢀⠄⠁⠌⠈⠪⠒⠢⠐⡐⠡⠐⠠⠡⠈⠄⠌⠄⠄⢀⠌⡀⠊⢐⡴⠩⡓⠔⢝
+⢎⢪⢸⠄⠄⠘⠐⠄⠄⠄⠐⡀⠌⡀⠄⢂⠠⠄⠄⠁⠄⠁⠄⠄⠄⠄⠄⠄⠄⠄⡀⠄⡠⠔⠁⠐⠐⡭⡨⡘
+⢕⠅⢝⣕⠄⠄⠄⠄⠄⠄⠄⠐⠄⠄⠄⠠⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡀⠅⠐⠁⠄⠄⠈⢀⠁⡒⡊⠌
+⡕⣌⣄⣿⣾⣄⠄⠄⠄⠄⠄⠄⠂⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⠄⠄⠈⠄⠄⠄⠄⠄⠄⠈⠄⠄⠄⢂⠠⠠
+ */
 
-void testListes(void);
-void testArbres(void);
 
-int main(void) {
-    //testListes();
-    testArbres();
-    return 0;
-}
+void testListesDoublementChaineesNonOrdonnees();
+void testListesDoublementChaineesOrdonnees();
+void testArbres( void );
+void testInstances( void );
 
-void testListes(void) {
-    const void (*ptrViewInt)(const void* i);
-    const int (*ptrCmp)(const void* a, const void* b);
-    void (*ptrFreeInt)(void* i);
-    ptrViewInt = &viewInt;
-    ptrFreeInt = &freeInt;
-    ptrCmp = &compareInt;
-    OList* l1 = newOList(ptrCmp,viewInt,viewInt,ptrFreeInt,ptrFreeInt);
-    int* x1;
-    int* y1;
-    srand(time(NULL));
-    for(int i = 0; i<10; i++){
-        x1 = (int*)calloc(1,sizeof(int));
-        y1 = (int*)calloc(1, sizeof(int));
-        assert(x1 != NULL && y1 != NULL);
-        *x1 = rand()%51;
-        *y1 = rand()%51;
-        OListInsert(l1,x1,y1);
+int main( void ) {
+
+    int choix = 1;
+
+    printf("-Choix 1 : Listes Non Ordonnées\n-Choix 2 : Listes Ordonnées\n-Choix 3 : Arbres Binaires de Recherche\n-Choix 4 : Instances\n");
+    scanf("%d", &choix );
+
+    switch ( choix ) {
+        case 1 : {
+            testListesDoublementChaineesNonOrdonnees();
+        } break;
+        case 2 : {
+            testListesDoublementChaineesOrdonnees();
+        } break;
+        case 3 : {
+            testArbres();
+        } break;
+        case 4 : {
+            testInstances();
+        } break;
+        default : {
+            printf("Choix invalide...\n" );
+            exit( EXIT_FAILURE );
+        }
     }
-    //viewOList(l1);
-    List* l2 = OListToList(l1);
-    /**for(int i = 0; i<10; i++){
-        x1 = (int*)calloc(1,sizeof(int));
-        assert(x1 != NULL);
-        *x1 = rand()%51;
-        listInsertFirst(l2,x1);
-    }*/
-
-    viewOList(l1);
-    freeList(l2,1);//21 free
-    freeOList(l1,1,0);
-
+    return EXIT_SUCCESS;
 }
 
-void testArbres(void){
-    const void (*ptrViewInt)(const void* i);
-    const int (*ptrCmp)(const void* a, const void* b);
+void testInstances( void ) {
+    void ( * ptrViewTask )( const void * i );
+    void ( *ptrFreeTask )( void * );
+
+    ptrViewTask = &viewTask;
+    ptrFreeTask = &freeTask;
+
+    Instance I1;
+    int choix = 0;
+
+    printf("-Choix 1 : test readInstace()\n-Choix 2 : test reorderInstance()\n" );
+    scanf("%d",&choix );
+
+    switch ( choix ) {
+        case 1 : {
+
+            I1 = readInstance( "/exemple" );
+            viewInstance( I1 );
+            freeInstance( I1, 1 );
+
+        } break;
+        case 2 : {
+
+            I1 = readInstance("/exemple" );
+            char readBuffer[6];
+
+            do {
+
+                printf("Saisissez l'ordre suivant lequel trier les tâches parmi : SPT, LPT, WSPT, FCFS\n");
+                scanf("%s", readBuffer );
+
+            } while ( strcmp( readBuffer, "SPT" ) != 0 && strcmp( readBuffer, "LPT" ) != 0 && strcmp( readBuffer, "WSPT" ) != 0 &&
+                      strcmp( readBuffer, "FCFS" ) != 0 );
+
+            if ( strcmp( readBuffer, "SPT" ) == 0 ) {
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
+                reorderInstance( I1, OL, SPT);
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
+                reorderInstance( I1, BST, SPT);
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
+                reorderInstance( I1, EBST, SPT);
+
+            } else if ( strcmp( readBuffer, "LPT") == 0 ) {
+
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
+                reorderInstance( I1, OL, LPT);
+
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
+                reorderInstance( I1, BST, LPT);
+
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
+                reorderInstance( I1, EBST, LPT);
+
+            } else if ( strcmp( readBuffer, "WSPT") == 0 ) {
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
+                reorderInstance( I1, OL, WSPT);
+
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
+                reorderInstance( I1, BST, WSPT);
+
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
+                reorderInstance( I1, EBST, WSPT);
+
+            } else if ( strcmp( readBuffer, "FCFS") == 0 ) {
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
+                reorderInstance( I1, OL, FCFS);
+
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
+                reorderInstance( I1, BST, FCFS);
+
+
+                printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
+                reorderInstance( I1, EBST, FCFS);
+
+            } else {
+
+                freeInstance( I1, 1 );
+                error("testInstance() : un problème inattendu est apparu, l'utilisateur a réussi à contourner la saisie contrôlée et une chaîne de caractère autre que \"SPT\" \"LPT\" \"WSPT\" \"FCFS\" à été introduite");
+
+            }
+
+            freeInstance( I1, 1 );
+        } break;
+        default : {
+            printf( "Choix invalide...\n" );
+        }
+    }
+}
+
+void testArbres( void )
+{
+    void ( * ptrViewInt )( const void * i );
+    int ( * ptrCmp )( const void * a, const void * b );
+    void ( * ptrFreeInt )( void * i );
+    ptrViewInt = &viewInt;
+    ptrFreeInt = &freeInt;
+    ptrCmp = &compareInt;
+    BSTree * T = newEBSTree( compareInt, ptrViewInt, ptrViewInt, ptrFreeInt, ptrFreeInt );
+    int choix = 0;
+    printf("-Choix 1 : test BSTreeInsert()\n-Choix 2 : test EBSTreeInsert()\n-Choix 3 : test findPredecessor() & findSuccessor()\n" );
+    scanf("%d", &choix );
+    int * x;
+    switch ( choix ) {
+        case 1 : {
+            printf("Test de la fonction : BSTreeInsert()\n\n" );
+            for( int i = 0; i < 10; i++ ) {
+                x = ( int * ) calloc(1, sizeof( int ) );
+                printf("Saisissez le noeud N°%d à insérer : ", i+1 );
+                scanf("%d", x );
+                BSTreeInsert( T, x, x );
+            }
+            printf("Voici l'affichage infixé de l'arbre :\n");
+            viewBSTree( T );
+            if( isBSTree( T->root, ptrCmp ) ) {
+                printf("\nL'arbre crée est un arbre binaire de recherche\n" );
+            } else {
+                printf("\nL'arbre généré n'est pas un arbre binaire de recherche\n" );
+
+            }
+            freeBSTree( T,1,0 );
+        } break;
+        case 2 : {
+            printf("Test de la fonction : EBSTreeInsert()\n\n" );
+            for ( int i = 0; i < 10; i++ ) {
+                x = ( int * ) calloc (1, sizeof( int ) );
+                printf("Saisissez le noeud N°%d à insérer : ", i + 1 );
+                scanf("%d", x );
+                EBSTreeInsert( T, x, x );
+            }
+            printf("Voici l'affichage infixé de l'arbre :\n");
+            viewBSTree( T );
+            printf("\n");
+            printf("\n");
+            printf("Root : %d\n",* ( ( int * ) T->root->key ) );
+            printf("Bfactor du Root : %d\n", T->root->bfactor );
+            printf("\n");
+            printf("Fils Gauche : %d\n", * ( ( int * ) T->root->left->key ) );
+            printf("Bfactor du Fils Gauche : %d\n", T->root->left->bfactor );
+            printf("\n");
+            printf("Fils Droit : %d\n", * ( ( int * ) T->root->right->key ) );
+            printf("Bfactor du Fils Droit : %d\n", T->root->right->bfactor );
+            if( isBalanced( T->root, ptrCmp ) ) {
+                printf("\nL'arbre est équilibré\n");
+            } else {
+                printf("\nL'arbre généré n'est pas un arbre équilibré");
+            }
+            freeBSTree( T,1,0 );
+        } break;
+        case 3 : {
+            printf("Test de la fonction : findPredecessor()\n\n");
+            for ( int i = 0; i < 10; i++ ) {
+                x = ( int * ) calloc (1, sizeof( int ) );
+                printf("Saisissez le noeud N°%d à insérer : ", i+1 );
+                scanf("%d", x );
+                EBSTreeInsert( T, x, x );
+            }
+            printf("Voici l'affichage infixé de l'arbre :\n");
+            viewBSTree( T );
+            printf("\n");
+            printf("\n");
+            printf("Root : %d\n",* ( ( int * ) T->root->key ) );
+            printf("Bfactor du Root : %d\n", T->root->bfactor );
+            printf("\n");
+            printf("Fils Gauche : %d\n", * ( ( int * ) T->root->left->key ) );
+            printf("Bfactor du Fils Gauche : %d\n", T->root->left->bfactor );
+            printf("\n");
+            printf("Fils Droit : %d\n", * ( ( int * ) T->root->right->key ) );
+            printf("Bfactor du Fils Droit : %d\n", T->root->right->bfactor );
+            BSTNode * node1 = findPredecessor( T, T->root );
+            BSTNode * node2 = findSuccessor( T, T->root );
+            printf("Le prédecesseur de %d est %d\n", * ( ( int * ) T->root->right->key ), * ( ( int * ) node1->key ) );
+            printf("Le successeur de %d est %d\n", * ( ( int * ) T->root->right->key ), * ( ( int * ) node2->key ) );
+            freeBSTree( T,1,0 );
+        } break;
+        default : {
+            freeBSTree( T,0,0 );
+        } break;
+    }
+}
+
+void testListesDoublementChaineesNonOrdonnees(){
+    void ( * ptrViewInt )( const void * i );
+    int ( * ptrCmp )( const void * a, const void * b );
+    void ( * ptrFreeInt )( void * i );
+    ptrViewInt = &viewInt;
+    ptrFreeInt = &freeInt;
+    ptrCmp = &compareInt;
+    List * L= newList( ptrViewInt, ptrFreeInt );
+    int choix = 0;
+    printf("-Choix 1 : test listInsertFirst()\n-Choix 2 : test listInsertLast()\n-Choix 3 : test listRemoveFirst()\n-Choix 4 : test listRemoveLast()\n-Choix 5 : test listInsertAfter()\n-Choix 6 : test listRemoveNode()\n");
+    scanf("%d", &choix );
+    int * x;
+    switch ( choix ) {
+        case 1 : {
+            printf("Test de la fonction : listInsertFirst()\n\n");
+            srand(time(NULL));
+            for( int i = 0; i<10; i++ ) {
+                x = ( int * ) calloc (1, sizeof( int ) );
+                * x = rand() % 51;
+                listInsertFirst( L, x );
+            }
+            viewList( L );
+            freeList( L,1 );
+        } break;
+        case 2 : {
+            printf("Test de la fonction : listInsertLast()\n\n");
+            srand(time(NULL));
+            for( int i = 0; i<10; i++ ) {
+                x = ( int * ) calloc (1, sizeof( int ) );
+                * x = rand() % 51;
+                listInsertLast( L, x );
+            }
+            viewList( L );
+            freeList( L,1 );
+        } break;
+        case 3 : {
+            printf("Test de la fonction : listRemoveFirst()\n\n");
+            srand(time(NULL));
+            for( int i = 0; i<10; i++ ) {
+                x = ( int * ) calloc (1, sizeof( int ) );
+                * x = rand() % 51;
+                listInsertFirst( L, x );
+            }
+            viewList( L );
+            printf("Génération d'une liste de 10 éléments\nOn va maintenant pop les \"Node\" une par une et les libérer à la main par la gauche\n");
+            LNode * aEffacer;
+            for( int i = 0; i<10; i++ ) {
+                aEffacer = listRemoveFirst( L );
+                printf("Le \"Node\" qui sera pop : ");
+                L->viewData( aEffacer->data );
+                printf("\n");
+                L->freeData( aEffacer->data );
+                free( aEffacer );
+                viewList( L );
+            }
+            free( L );
+        } break;
+        case 4 : {
+            printf("Test de la fonction : listRemoveLast()\n\n");
+            srand(time(NULL));
+            for( int i = 0; i<10; i++ ) {
+                x = ( int * ) calloc (1, sizeof( int ) );
+                * x = rand() % 51;
+                listInsertLast( L, x );
+            }
+            viewList( L );
+            printf("Génération d'une liste de 10 éléments\nOn va maintenant pop les \"Node\" une par une et les libérer à la main par la droite\n");
+            LNode * aEffacer;
+            for( int i = 0; i<10; i++ ) {
+                aEffacer = listRemoveLast( L );
+                printf("Le \"Node\" qui sera pop : ");
+                L->viewData( aEffacer->data );
+                printf("\n");
+                L->freeData( aEffacer->data );
+                free( aEffacer );
+                viewList( L );
+            }
+            free( L );
+        } break;
+        case 5 : {
+            printf("Test de la fonction : listInsertAfter()\n\n");
+            srand(time(NULL));
+            for(int i = 0; i<10; i++){
+                x = (int*) calloc(1, sizeof(int));
+                *x = rand()%51;
+                listInsertFirst(L,x);
+            }
+            printf("La liste générée :\n");
+            viewList(L);
+            printf("\n\n");
+
+
+            x = (int*) calloc(1, sizeof(int));
+            *x = -10;
+            printf("Le \"Node\" -10 sera rajouté APRES la TETE de la liste :\n");
+            listInsertAfter(L,x,L->head);
+            viewList(L);
+            printf("\n\n");
+
+
+            x = (int*) calloc(1, sizeof(int));
+            *x = -10;
+            printf("Le \"Node\" -10 sera rajouté APRES la QUEUE de la liste :\n");
+            listInsertAfter(L,x,L->tail);
+            viewList(L);
+            printf("\n\n");
+
+
+            x = (int*) calloc(1, sizeof(int));
+            *x = -10;
+            printf("Le \"Node\" -10 sera rajouté APRES le 4e élément de la liste :\n");
+            listInsertAfter(L,x,L->head->succ->succ->succ);
+            viewList(L);
+
+
+            freeList(L,1);
+        }break;
+        case 6 : {
+            printf("Test de la fonction : listRemoveNode()\n\n");
+            srand(time(NULL));
+            int idRemove = rand()%10 + 1;
+            printf("Le %dème \"Node\" sera enlèvé de la liste :\n",idRemove);
+            for(int i = 0; i<10; i++){
+                x = (int*) calloc(1, sizeof(int ));
+                *x = rand()%51;
+                listInsertFirst(L,x);
+            }
+            viewList(L);
+            printf("\n\n");
+            int i = 1;
+            LNode *nodePosition = L->head;
+            while(i < idRemove){
+                nodePosition = nodePosition->succ;
+                i++;
+            }
+            listRemoveNode(L,nodePosition);
+            printf("Le \"Node\" qui sera pop : ");
+            (L->viewData)(nodePosition->data);
+            printf("\n");
+            (L->freeData)(nodePosition->data);
+            free(nodePosition);
+            viewList(L);
+            freeList(L,1);
+        }break;
+        default : {
+            freeList(L,0);
+        }break;
+    }
+}
+
+void testListesDoublementChaineesOrdonnees(){
+    void (*ptrViewInt)(const void* i);
+    int (*ptrCmp)(const void* a, const void* b);
     void (*ptrFreeInt)(void* i);
     ptrViewInt = &viewInt;
     ptrFreeInt = &freeInt;
     ptrCmp = &compareInt;
-    BSTree* T = newEBSTree(compareInt,ptrViewInt,ptrViewInt,ptrFreeInt,ptrFreeInt);
-    int* x1=calloc(1, sizeof(int));
-    int* x2=calloc(1, sizeof(int));
-    int* x3=calloc(1, sizeof(int));
-    int* x4=calloc(1, sizeof(int));
-    int* x5=calloc(1, sizeof(int));
-    int* x6=calloc(1, sizeof(int));
-    //int* x7=calloc(1, sizeof(int));
-    *x1=1;
-    *x2=5;
-    *x3=4;
-    *x4=3;
-    //*x5=1;
-    //*x6=5;
-    //*x7=8;
-    EBSTreeInsert(T,x1,x1);
-    EBSTreeInsert(T,x2,x2);
-    EBSTreeInsert(T,x3,x3);
-    EBSTreeInsert(T,x4,x4);
-    //EBSTreeInsert(T,x5,x5);
-    //EBSTreeInsert(T,x6,x6);
-    //BSTreeInsert(T,x7,x7);
-    viewBSTree(T);
-    freeBSTree(T,1,0);
+    OList * L = newOList(ptrCmp,ptrViewInt,ptrViewInt,ptrFreeInt,ptrFreeInt);
+    List * M = newList(ptrViewInt,ptrFreeInt);
+    int choix=0;
+    printf("Choix 1 : test OListInsert()\nChoix 2 : test OListToList()\n");
+    scanf("%d",&choix);
+    int *key, *data;
+    switch (choix) {
+        case 1 : {
+            printf("Test de la fonction : OListInsert()\n");
+            for(int i = 0; i<10; i++){
+                printf("Saississez un entier pour la key N°%d\n", i + 1 );
+                key = (int*) calloc (1, sizeof(int));
+                scanf("%d",key);
+                printf("Saississez un entier pour la data N°%d\n", i + 1 );
+                data = (int*) calloc (1, sizeof(int));
+                scanf("%d",data);
+                listInsertLast(M,key);
+                OListInsert(L,key,data);
+            }
+            printf("Les 10 \"key\" étaient générées dans cet ordre :\n");
+            viewList(M);
+            printf("Voici une liste triée suivant les 10 \"key\" :\n");
+            viewOList(L);
+            freeOList(L,1,1);
+            freeList(M,0);
+        }break;
+        case 2 : {
+            printf("Test de la fonction : OListToList() : \n");
+            for(int i = 0; i<10; i++){
+                printf("Saississez un entier pour la key N°%d\n", i + 1 );
+                key = (int*) calloc (1, sizeof(int));
+                scanf("%d",key);
+                printf("Saississez un entier pour la data N°%d\n", i + 1 );
+                data = (int*) calloc (1, sizeof(int));
+                scanf("%d",data);
+                listInsertLast(M,key);
+                OListInsert(L,key,data);
+            }
+            printf("On crée une liste ordonnée de 10 \"Node\" et nous allons la transformer en une liste doublement chainnée normale");
+            viewOList(L);
+            List * N = OListToList(L);
+            printf("Voici la liste renvoyée par OListToList() :\n");
+            viewList(N);
+            freeOList(L,1,1);
+            freeList(N,0);
+            freeList(M,0);
+        }break;
+        default : {
+            freeOList(L,0,0);
+            freeList(M,0);
+        }break;
+    }
 }
