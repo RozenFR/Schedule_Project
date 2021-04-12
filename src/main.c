@@ -85,14 +85,14 @@ void testInstances( void ) {
     switch ( choix ) {
         case 1 : {
 
-            I1 = readInstance( "/exemple" );
+            I1 = readInstance( "./data/exemple");
             viewInstance( I1 );
             freeInstance( I1, 1 );
 
         } break;
         case 2 : {
 
-            I1 = readInstance("/exemple" );
+            I1 = readInstance("./data/exemple");
             char readBuffer[6];
 
             do {
