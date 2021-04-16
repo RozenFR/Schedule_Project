@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-//#include <stdbool.h>
 #include "instance.h"
 #include <string.h>
+//#include "schedule.h"
 /**
 ⢕⢕⢕⢑⠁⢁⣼⣿⣻⢿⣟⢿⡻⡙⡏⡏⣟⡽⡹⣹⢪⡻⢽⡫⠯⣻⢛⢿⣻⣿⣿⡿⣧⢍⠝⡍⡏⡎⡕⢵
 ⢕⢕⠸⡐⣠⣿⣗⢯⡺⡽⡸⡅⠕⢕⢐⠑⢕⠸⢙⢕⢱⢸⠸⢜⠴⡈⡜⡔⢅⢟⢞⣿⣿⣧⠨⡊⣜⢜⢜⡵
@@ -71,12 +71,12 @@ int main( void ) {
 
 void testInstances( void ) {
     void ( * ptrViewTask )( const void * i );
-    void ( *ptrFreeTask )( void * );
+    void ( * ptrFreeTask )( void * );
 
     ptrViewTask = &viewTask;
     ptrFreeTask = &freeTask;
 
-    Instance I1;
+    Instance  I1;
     int choix = 0;
 
     printf("-Choix 1 : test readInstace()\n-Choix 2 : test reorderInstance()\n" );
@@ -84,15 +84,13 @@ void testInstances( void ) {
 
     switch ( choix ) {
         case 1 : {
-
-            I1 = readInstance( "./data/exemple");
+            I1 = readInstance( "./data/exemple" );
             viewInstance( I1 );
             freeInstance( I1, 1 );
 
         } break;
         case 2 : {
-
-            I1 = readInstance("./data/exemple");
+            I1 = readInstance( "./data/exemple" );
             char readBuffer[6];
 
             do {
@@ -106,57 +104,70 @@ void testInstances( void ) {
             if ( strcmp( readBuffer, "SPT" ) == 0 ) {
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
-                reorderInstance( I1, OL, SPT);
+                reorderInstance( &I1, OL, SPT);
+                viewInstance( I1 );
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
-                reorderInstance( I1, BST, SPT);
+                reorderInstance( &I1, BST, SPT);
+                viewInstance( I1 );
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
-                reorderInstance( I1, EBST, SPT);
+                reorderInstance( &I1, EBST, SPT);
+                viewInstance( I1 );
 
             } else if ( strcmp( readBuffer, "LPT") == 0 ) {
 
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
-                reorderInstance( I1, OL, LPT);
+                reorderInstance( &I1, OL, LPT);
+                viewInstance( I1);
 
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
-                reorderInstance( I1, BST, LPT);
+                reorderInstance( &I1, BST, LPT);
+                viewInstance( I1 );
 
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
-                reorderInstance( I1, EBST, LPT);
+                reorderInstance( &I1, EBST, LPT);
+                viewInstance( I1 );
 
             } else if ( strcmp( readBuffer, "WSPT") == 0 ) {
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
-                reorderInstance( I1, OL, WSPT);
+                reorderInstance( &I1, OL, WSPT);
+                viewInstance( I1 );
 
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
-                reorderInstance( I1, BST, WSPT);
+                reorderInstance( &I1, BST, WSPT);
+                viewInstance( I1 );
 
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
-                reorderInstance( I1, EBST, WSPT);
+                reorderInstance( &I1, EBST, WSPT);
+                viewInstance( I1 );
 
             } else if ( strcmp( readBuffer, "FCFS") == 0 ) {
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure OL\n", readBuffer);
-                reorderInstance( I1, OL, FCFS);
+                reorderInstance( &I1, OL, FCFS);
+                viewInstance( I1 );
 
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure BST\n", readBuffer);
-                reorderInstance( I1, BST, FCFS);
+                reorderInstance( &I1, BST, FCFS);
+                viewInstance( I1 );
 
 
                 printf("Les tâches ont été ordonnées suivant l'ordre %s en utilisant la structure EBST\n", readBuffer);
-                reorderInstance( I1, EBST, FCFS);
+                reorderInstance( &I1, EBST, FCFS);
+                viewInstance( I1 );
 
             } else {
 
                 freeInstance( I1, 1 );
+                I1 = NULL;
                 error("testInstance() : un problème inattendu est apparu, l'utilisateur a réussi à contourner la saisie contrôlée et une chaîne de caractère autre que \"SPT\" \"LPT\" \"WSPT\" \"FCFS\" à été introduite");
 
             }

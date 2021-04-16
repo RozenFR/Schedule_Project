@@ -8,10 +8,10 @@ CFLAGS = -g -std=c11 -I$(IDIR)
 
 PROG = scheduling
 
-_DEPS = utilities.h list.h olist.h bstree.h instance.h
+_DEPS = utilities.h list.h olist.h bstree.h instance.h schedule.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ= utilities.o list.o olist.o bstree.o instance.o main.o
+_OBJ= utilities.o list.o olist.o bstree.o instance.o main.o schedule.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 .PHONY: run all remake clean delete
