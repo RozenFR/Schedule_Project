@@ -43,11 +43,11 @@ typedef struct BinarySearchTreeNode {
 typedef struct BinarySearchTree {
     BSTNode * root;
     int numelm;
-    int (*preceed)(const void* a, const void* b);
-    void (*viewKey)(const void* key);
-    void (*viewData)(const void* data);
-    void (*freeKey)(void* key);
-    void (*freeData)(void* data);
+    int ( * preceed )( const void * a, const void * b );
+    void ( * viewKey )( const void * key );
+    void ( * viewData )( const void * data );
+    void ( * freeKey )( void * key );
+    void ( * freeData )( void * data );
     int balanced;
 } BSTree;
 
@@ -55,17 +55,17 @@ typedef struct BinarySearchTree {
  * @brief
  * Construire un arbre binaire de recherche (non-équilibré) vide
  */
-BSTree * newBSTree(int (*preceed)(const void*, const void*),
-                   void (*viewKey)(const void*), void (*viewData)(const void*),
-                   void (*freeKey)(void*), void (*freeData)(void*));
+BSTree * newBSTree( int ( * preceed )( const void *, const void * ),
+                   void ( * viewKey )( const void * ), void ( * viewData )( const void * ),
+                   void ( * freeKey )( void * ), void ( * freeData )( void * ) );
 
 /**
  * @brief
  * Construire un arbre binaire de recherche équilibre vide
  */
-BSTree * newEBSTree(int (*preceed)(const void*, const void*),
-                    void (*viewKey)(const void*), void (*viewData)(const void*),
-                    void (*freeKey)(void*), void (*freeData)(void*));
+BSTree * newEBSTree( int ( * preceed )( const void *, const void * ),
+                    void ( * viewKey )( const void * ), void ( * viewData )( const void * ),
+                    void ( * freeKey )( void * ), void ( * freeData )( void * ) );
 
 /**
  * @brief
@@ -84,7 +84,7 @@ BSTree * newEBSTree(int (*preceed)(const void*, const void*),
  *     va servir à supprimer les données (data) référencées par
  *     les éléments de l'arbre T.
  */
-void freeBSTree(BSTree * T, int deleteKey, int deleteData);
+void freeBSTree( BSTree * T, int deleteKey, int deleteData );
 
 /**
  * @brief
@@ -95,25 +95,25 @@ void freeBSTree(BSTree * T, int deleteKey, int deleteData);
  * (+) viewData pour les données
  * L'arbre est affiché dans l'ordre infixe.
  */
-void viewBSTree(const BSTree* T);
+void viewBSTree( const BSTree * T );
 
 /**
  * @brief
  * Ajouter dans l'arbre binaire de recherche (non-équilibré) T un élément de clé key et de donnée data.
  */
-void BSTreeInsert(BSTree* T, void* key, void* data);
+void BSTreeInsert( BSTree * T, void * key, void * data );
 
 /**
  * @brief
  * Ajouter dans l'arbre binaire de recherche équilibré T un élément de clé key et de donnée data.
  */
-void EBSTreeInsert(BSTree* T, void* key, void* data);
+void EBSTreeInsert( BSTree * T, void * key, void * data );
 
 /**
  * @brief
  * Transformer l'arbre binaire de recherche T à une liste doublement chaînée.
  */
-List * BSTreeToList(const BSTree* T);
+List * BSTreeToList( const BSTree * T );
 
 /**
  * @brief
@@ -121,7 +121,7 @@ List * BSTreeToList(const BSTree* T);
  * NB : fonction récursive.
  * Assurez vous que node existe.
  */
-BSTNode* BSTMin(BSTNode* node);
+BSTNode * BSTMin( BSTNode * node );
 
 /**
  * @brief
@@ -129,7 +129,7 @@ BSTNode* BSTMin(BSTNode* node);
  * NB : fonction récursive.
  * Assurez vous que node existe.
  */
-BSTNode* BSTMax(BSTNode* node);
+BSTNode * BSTMax( BSTNode * node );
 
 /**
  * @brief
@@ -137,7 +137,7 @@ BSTNode* BSTMax(BSTNode* node);
  * qui est plus petite que la clé du nœud node (prédécesseur du node) de l'arbre T.
  * Assurez vous que T n'est pas vide et que node existe.
  */
-BSTNode * findPredecessor(const BSTree * T, const BSTNode* node);
+BSTNode * findPredecessor( const BSTree * T, const BSTNode * node );
 
 /**
  * @brief
@@ -145,10 +145,10 @@ BSTNode * findPredecessor(const BSTree * T, const BSTNode* node);
  * qui est plus grande que la clé du nœud node (successeur du node) de l'arbre T.
  * Assurez vous que T n'est pas vide et que node existe.
  */
-BSTNode * findSuccessor(const BSTree * T, const BSTNode* node);
+BSTNode * findSuccessor( const BSTree * T, const BSTNode * node );
 
-bool isBSTree(const BSTNode* curr,int (*preceed)(const void*, const void*));
+bool isBSTree( const BSTNode * curr, int ( * preceed )( const void *, const void * ) );
 
-bool isBalanced(const BSTNode* curr, int (*preceed)(const void*, const void*));
+bool isBalanced( const BSTNode * curr, int ( * preceed )( const void *, const void * ) );
 
 #endif // _BSTREE_

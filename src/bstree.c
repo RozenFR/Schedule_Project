@@ -232,7 +232,7 @@ static BSTNode * insertEBSTNode( BSTNode * curr, void * key, void * data, int ( 
 /** FAIT
  * NB : Utiliser la fonction récursive insertEBSTNode.
  */
-void EBSTreeInsert( BSTree* T, void* key, void* data ) {
+void EBSTreeInsert( BSTree * T, void * key, void * data ) {
     T -> root = insertEBSTNode( T -> root, key, data, T -> preceed );
     T -> numelm++;
 }
@@ -365,22 +365,19 @@ BSTNode * BSTMax( BSTNode * node ) {
  * NB : fonction récursive.
  */
 static BSTNode * predecessor( BSTNode * curr, void * key, int ( * preceed )( const void *, const void * ) ) {
+    //"findSuccessor() : Le noeud de clef \"key\", qui a été donné en paramètre n'est pas présent dans l'arbre\n"
     assert( curr != NULL );
-    if ( ! preceed( key, curr -> key ) && ! preceed( curr -> key, key ) ) {
-        return curr -> left != NULL ? BSTMax( curr -> left ) : curr;
-    } else if ( preceed( key, curr -> key ) ) {
-        if ( curr -> left != NULL ) {
-            return predecessor( curr -> left, key, preceed );
-        } else {
-            error( "findSuccessor() : Le noeud de clef \"key\", qui a été donné en paramètre n'est pas présent dans l'arbre\n" );
-        }
-    } else {
-        if ( curr -> right != NULL ) {
-            return predecessor( curr -> right, key, preceed );
-        } else {
-            error( "findSuccessor() : Le noeud de clef \"key\", qui a été donné en paramètre n'est pas présent dans l'arbre\n" );
-        }
-    }
+    /**
+    BSTNode * max;
+    if ( ! preceed( curr -> key, key ) && ! preceed( key, curr -> key ) )
+        return curr -> left == NULL ? curr : curr -> left;
+    else if ( preceed( curr -> key, key ) )
+        max = predecessor( curr -> right, key, preceed );
+    else
+        max = predecessor( curr -> left, key, preceed );
+    if ( preceed( curr -> key, key ) || preceed( key, curr -> key ) )
+     */
+    return curr;
 }
 
 /** FAIT
@@ -401,20 +398,23 @@ BSTNode * findPredecessor( const BSTree * T, const BSTNode * node ) {
  */
 static BSTNode * successor( BSTNode * curr, void * key, int ( * preceed )( const void *, const void * ) ) {
     assert( curr != NULL );
-    if ( ! preceed( key, curr -> key ) && ! preceed( curr -> key ,key ) ) {
-        return curr -> right != NULL ? BSTMin( curr -> right ) : curr;
-    } else if ( preceed( key, curr -> key ) ) {
-        if ( curr -> left != NULL ) {
-            return successor( curr -> left, key, preceed );
-        } else {
-            error( "findSuccessor() : Le noeud de clef \"key\", qui a été donné en paramètre n'est pas présent dans l'arbre\n" );
-        }
+    if ( preceed( key, curr -> key ) ) {
+        BSTNode * succ = successor( curr -> left, key, preceed );
+        if ( succ == NULL )
+            return curr;
+        else
+            return curr;
+    } else if ( preceed( curr -> key , key ) ) {
+        BSTNode * succ = successor( curr -> right, key, preceed );
+        if ( succ == NULL )
+            return succ;
+        else
+            return succ;
     } else {
-        if ( curr -> right != NULL ) {
-            return successor( curr -> right, key, preceed );
-        } else {
-            error( "findSuccessor() : Le noeud de clef \"key\", qui a été donné en paramètre n'est pas présent l'arbre\n" );
-        }
+        if ( curr -> right == NULL )
+            return NULL;
+        else
+            return BSTMin( curr -> right );
     }
 }
 
