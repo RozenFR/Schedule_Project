@@ -1,11 +1,14 @@
 package application;
 
+import controller.ScheduleController;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import model.ScheduleModel;
+import view.ScheduleView;
 
 public class App extends Application {
     public static void main(String [] args) {
@@ -14,18 +17,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        // Setup
+        ScheduleModel schedModel = new ScheduleModel();
+        ScheduleController schedController = new ScheduleController(schedModel);
+        ScheduleView schedView = new ScheduleView(schedController, schedModel);
 
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        stage.setScene(new Scene(root, 300, 250));
+        stage.setScene(new Scene(schedView.AsParent(), 500, 500));
         stage.show();
     }
 }
