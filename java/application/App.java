@@ -1,14 +1,11 @@
 package application;
 
-import controller.ScheduleController;
 import javafx.application.Application;
-import javafx.event.*;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import model.ScheduleModel;
-import view.ScheduleView;
+
+import java.io.IOException;
 
 public class App extends Application {
     public static void main(String [] args) {
@@ -16,13 +13,11 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
-        // Setup
-        ScheduleModel schedModel = new ScheduleModel();
-        ScheduleController schedController = new ScheduleController(schedModel);
-        ScheduleView schedView = new ScheduleView(schedController, schedModel);
+    public void start(Stage stage) throws IOException {
+        // Setup FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Schedule.fxml"));
 
-        stage.setScene(new Scene(schedView.AsParent(), 500, 500));
+        stage.setScene(new Scene(loader.load(), 500, 500));
         stage.show();
     }
 }

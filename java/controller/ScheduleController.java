@@ -20,7 +20,7 @@ public class ScheduleController {
     }
 
     // Getter
-    public ScheduleModel GetModel() {
+    private ScheduleModel GetModel() {
         return this.schedModel;
     }
 
