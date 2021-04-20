@@ -9,35 +9,11 @@ extern "C" {
 #endif
 /*
  * Class:     model_ScheduleModel
- * Method:    makespan
- * Signature: (Lmodel/Schedule;)J
+ * Method:    getSchedule
+ * Signature: (Ljava/lang/String;Ljava/lang/String;III)V
  */
-JNIEXPORT jlong JNICALL Java_model_ScheduleModel_makespan
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     model_ScheduleModel
- * Method:    SumWjCj
- * Signature: (Lmodel/Schedule;)J
- */
-JNIEXPORT jlong JNICALL Java_model_ScheduleModel_SumWjCj
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     model_ScheduleModel
- * Method:    SumWjFj
- * Signature: (Lmodel/Schedule;)J
- */
-JNIEXPORT jlong JNICALL Java_model_ScheduleModel_SumWjFj
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     model_ScheduleModel
- * Method:    SumWjTj
- * Signature: (Lmodel/Schedule;)J
- */
-JNIEXPORT jlong JNICALL Java_model_ScheduleModel_SumWjTj
-  (JNIEnv *, jobject, jobject);
+JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
+  (JNIEnv *, jobject, jstring, jstring, jint, jint, jint);
 
 #ifdef __cplusplus
 }

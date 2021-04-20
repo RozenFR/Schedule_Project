@@ -2,17 +2,7 @@ package model;
 
 public class ScheduleModel {
 
-    public native long makespan(final Schedule sched);
-
-    public native long SumWjCj(Schedule sched);
-
-    public native long SumWjFj(Schedule sched);
-
-    public native long SumWjTj(Schedule sched);
-
-    public ScheduleModel() {
-
-    }
+    public native void getSchedule(String inFileName, String outFileName, int datastructure, int order, int backfilling);
 
     static {
         System.loadLibrary("ScheduleLibrary");
