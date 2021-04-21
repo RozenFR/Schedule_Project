@@ -43,18 +43,17 @@ public class ScheduleController {
     // Variable
     private ScheduleModel schedModel;
 
-    private int makespan;
-    private int wjcj;
-    private int wjfj;
-    private int wjtj;
-
     public ScheduleController() {
 
     }
 
     @FXML
     public void initialize() {
-
+        try {
+            SetMakeSpan();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Setter
@@ -213,7 +212,7 @@ public class ScheduleController {
     }
 
     // Diagram
-    private void SetDiagram() {
+    private void SetDiagram() throws Exception {
         // Constant
         final int DEFAULT_MARGIN = 25;
 
@@ -253,8 +252,31 @@ public class ScheduleController {
         this._diagram.getChildren().clear();
     }
 
-    private int StrToInt(String str) {
+    private void SetMakeSpan() throws Exception {
+        File file = new File(_output.toString());
+        int makespan = 0;
+        try {
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+                String [] data = reader.nextLine().split(" ");
+                makespan = makespan + StrToInt(data[1]);
+            }
+            this._Makespan.setText(IntToStr(makespan));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int StrToInt(String str) throws Exception {
+        if (str.isEmpty())
+            throw new NullPointerException("StrToInt : str is not nullable.");
+        if (str.contains("-"))
+            throw new Exception("StrToInt : Conversion only available for positive value.");
         return Integer.parseInt(str);
+    }
+
+    private String IntToStr(int i) {
+        return Integer.toString(i);
     }
 
 }
