@@ -2,9 +2,13 @@ package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.JMetroStyleClass;
+import jfxtras.styles.jmetro.Style;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +24,10 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         // Setup FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Schedule.fxml"));
-        HBox view = loader.load();
+        Parent view = loader.load();
+        stage.setTitle("Scheduling");
+
+        JMetro jmetro = new JMetro(view, Style.LIGHT);
 
         stage.setScene(new Scene(view));
         stage.show();
