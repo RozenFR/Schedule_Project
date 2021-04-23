@@ -138,11 +138,11 @@ static int OLFindStartingTime( const OList * scheduledTasks, const Task * task, 
     if ( backfilling == 1 )
         taskDateDebut = OLFindBackfillingPosition( scheduledTasks, task );
     if ( backfilling == 0 || taskDateDebut == -1 ) {
-        taskDateDébut = task ->releaseTime;
+        taskDateDebut = task ->releaseTime;
         for ( OLNode * actuel = scheduledTasks ->head; actuel != NULL; actuel = actuel ->succ ) {
             int actuelTaskDateDebut = * ( int * ) actuel ->key;
             int actuelTaskProcessingTime = ( ( Task * ) actuel ->data ) ->processingTime;
-            taskDateDébut = max( actuelTaskDateDebut + actuelTaskProcessingTime, task ->releaseTime );
+            taskDateDebut = max( actuelTaskDateDebut + actuelTaskProcessingTime, task ->releaseTime );
         }
     }
     return taskDateDebut;
