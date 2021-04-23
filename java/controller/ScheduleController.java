@@ -44,31 +44,23 @@ public class ScheduleController {
     private ScheduleModel schedModel;
 
     public ScheduleController() {
-
     }
 
     @FXML
     public void initialize() {
         try {
-            SetMakeSpan();
+            Exec_Schedule();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Setter
-    private void SetModel(ScheduleModel schedModel) {
-        this.schedModel = schedModel;
-    }
-
     private void SetSchedule(String input, String output, int dt, int ord, int bf) {
-        GetModel().getSchedule(input, output, dt, ord, bf);
+        new ScheduleModel().getSchedule(input, output, dt, ord, bf);
     }
 
     // Getter
-    private ScheduleModel GetModel() {
-        return this.schedModel;
-    }
 
     // SetInput
     @FXML
@@ -88,6 +80,14 @@ public class ScheduleController {
         File selectedFile = file.showOpenDialog(null);
         if (selectedFile != null)
             this._output.setText(selectedFile.toString());
+
+        try {
+            Exec_Schedule();
+            SetMakeSpan();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     // Management of the Schedule data
@@ -209,6 +209,13 @@ public class ScheduleController {
             throw new Exception("Exec_Schedule() ALL : Selection out of range.");
 
         SetDiagram();
+
+        try {
+            SetMakeSpan();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     // Diagram
@@ -253,17 +260,22 @@ public class ScheduleController {
     }
 
     private void SetMakeSpan() throws Exception {
-        File file = new File(_output.toString());
-        int makespan = 0;
-        try {
-            Scanner reader = new Scanner(file);
-            while (reader.hasNextLine()) {
-                String [] data = reader.nextLine().split(" ");
-                makespan = makespan + StrToInt(data[1]);
+        if (this._output.toString().isEmpty()) {
+            File file = new File(_output.toString());
+            int makespan = 0;
+            try {
+                Scanner reader = new Scanner(file);
+                while (reader.hasNextLine()) {
+                    String[] data = reader.nextLine().split(" ");
+                    makespan = makespan + StrToInt(data[1]);
+                }
+                this._Makespan.setText(IntToStr(makespan));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-            this._Makespan.setText(IntToStr(makespan));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        }
+        else {
+            throw new Exception("SetMakeSpan : _output undefined.");
         }
     }
 

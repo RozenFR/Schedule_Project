@@ -27,8 +27,6 @@ public class App extends Application {
         Parent view = loader.load();
         stage.setTitle("Scheduling");
 
-        JMetro jmetro = new JMetro(view, Style.LIGHT);
-
         stage.setScene(new Scene(view));
         stage.show();
     }
