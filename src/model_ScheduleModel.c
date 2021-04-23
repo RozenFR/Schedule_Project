@@ -1,4 +1,11 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
 #include "model_ScheduleModel.h"
+#include "list.h"
+#include "olist.h"
+#include "bstree.h"
+#include "list.h"
 #include "instance.h"
 #include "schedule.h"
 #include "utilities.h"
@@ -8,9 +15,11 @@ JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
     // Transformed String to char *
     const char * cs1 = (*env) -> GetStringUTFChars(env, s1, NULL);
     const char * cs2 = (*env) -> GetStringUTFChars(env, s2, NULL);
+    char * csin = (char *) cs1;
+    char * csout = (char *) cs2;
 
     // Read Input Stream
-    Instance I = readInstance(cs1);
+    Instance I = readInstance(csin);
 
     // Declare Schedule
     Schedule * sched;
@@ -92,6 +101,6 @@ JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
     computeSchedule(sched, I);
 
     // Save Schedule
-    saveSchedule(sched, cs2);
+    saveSchedule(sched, csout);
 
 }

@@ -19,7 +19,7 @@ OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 all: $(OBJ) $(ODIR)/model_ScheduleModel.o
 	$(CC) -shared -o $(LIB) $^
 
-$(ODIR)/application_MyClass.o : $(SDIR)/model_ScheduleModel.c $(DEPS)
+$(ODIR)/model_ScheduleModel.o : $(SDIR)/model_ScheduleModel.c $(DEPS)
 	$(CC) $(CFLAGS) $(JINCLUDES) -c -o $@ $<
 
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)

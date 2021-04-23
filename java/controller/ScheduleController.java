@@ -94,40 +94,40 @@ public class ScheduleController {
     @FXML
     public void Exec_Schedule() throws Exception {
         CleanDiagram();
-        if (_input.toString().isEmpty())
+        if (this._input.toString().isBlank())
             throw new NullPointerException("Exec_Schedule() : Input Path is not nullable");
-        if (_output.toString().isEmpty())
+        if (this._output.toString().isBlank())
             throw new NullPointerException("Exec_Schedule() : Output Path is not nullable");
 
         if (_rOL.isSelected()) {
             if (_rSPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 0, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 0, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 0, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 0, 0);
                 else
                     throw new Exception("Exec_Schedule() OLSPT : Selection out of range.");}
             else if (_rLPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 1, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 1, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 1, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 1, 0);
                 else
                     throw new Exception("Exec_Schedule() OLLPT : Selection out of range.");
             }
             else if (_rWSPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 2, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 2, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 2, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 2, 0);
                 else
                     throw new Exception("Exec_Schedule() OLWSPT : Selection out of range.");
             }
             else if (_rFCFS.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 3, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 3, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 0, 3, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 0, 3, 0);
                 else
                     throw new Exception("Exec_Schedule() OLFCFS : Selection out of range.");
             }
@@ -137,32 +137,32 @@ public class ScheduleController {
         else if (_rBST.isSelected()) {
             if (_rSPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 0, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 0, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 0, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 0, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTSPT : Selection out of range.");}
             else if (_rLPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 1, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 1, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 1, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 1, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTLPT : Selection out of range.");
             }
             else if (_rWSPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 2, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 2, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 2, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 2, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTWSPT : Selection out of range.");
             }
             else if (_rFCFS.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 3, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 3, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 1, 3, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 1, 3, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTFCFS : Selection out of range.");
             }
@@ -172,33 +172,33 @@ public class ScheduleController {
         else if (_rEBST.isSelected()) {
             if (_rSPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 0, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 0, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 0, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 0, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTSPT : Selection out of range.");
             }
             else if (_rLPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 1, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 1, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 1, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 1, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTLPT : Selection out of range.");
             }
             else if (_rWSPT.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 2, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 2, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 2, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 2, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTWSPT : Selection out of range.");
             }
             else if (_rFCFS.isSelected()) {
                 if (_rbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 3, 1);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 3, 1);
                 else if (_rnbf.isSelected())
-                    SetSchedule(_input.toString(), _output.toString(), 2, 3, 0);
+                    SetSchedule(this._input.toString(), this._output.toString(), 2, 3, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTFCFS : Selection out of range.");
             }
@@ -260,23 +260,27 @@ public class ScheduleController {
     }
 
     private void SetMakeSpan() throws Exception {
-        if (this._output.toString().isEmpty()) {
-            File file = new File(_output.toString());
+        if (this._output.toString().isBlank()) {
+
+            File file = new File(this._output.toString());
             int makespan = 0;
+
             try {
+
                 Scanner reader = new Scanner(file);
                 while (reader.hasNextLine()) {
                     String[] data = reader.nextLine().split(" ");
                     makespan = makespan + StrToInt(data[1]);
                 }
                 this._Makespan.setText(IntToStr(makespan));
+
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+
         }
-        else {
-            throw new Exception("SetMakeSpan : _output undefined.");
-        }
+        else
+            throw new Exception("ScheduleController <SetMakeSpan> : _output undefined.");
     }
 
     private int StrToInt(String str) throws Exception {
