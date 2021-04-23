@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include "model_ScheduleModel.h"
+#include "utilities.h"
 #include "list.h"
 #include "olist.h"
 #include "bstree.h"
 #include "list.h"
 #include "instance.h"
 #include "schedule.h"
-#include "utilities.h"
+#include "model_ScheduleModel.h"
 
 JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
 (JNIEnv * env, jobject obj, jstring s1, jstring s2, jint dt, jint ord, jint bf) {

@@ -5,10 +5,10 @@ JDIR = java
 
 CC = gcc
 CFLAGS = -Wall -fPIC -I$(IDIR)
-LIB = $(JDIR)/schedule_library.so
+LIB = $(JDIR)/lib/schedulelibrary.so
 
 #JINCLUDES = -I/usr/lib/jvm/java-8-openjdk-amd64/ -I/usr/lib/jvm/java-8-openjdk-amd64/include/ -I/usr/lib/jvm/java-8-openjdk-amd64/include/linux/
-JINCLUDES = -I/usr/lib/jvm/jdk-11.0.10/ -I/usr/lib/jvm/jdk-11.0.10/include/ -I/usr/lib/jvm/jdk-11.0.10/include/linux/
+JINCLUDES = -I/usr/lib/jvm/java-16-oracle/ -I/usr/lib/jvm/java-16-oracle/include/ -I/usr/lib/jvm/java-16-oracle/include/linux/
 
 _DEPS = utilities.h list.h olist.h bstree.h instance.h schedule.h model_ScheduleModel.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
