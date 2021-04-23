@@ -252,18 +252,22 @@ void saveSchedule( const Schedule * sched, char * filename ) {
 long makespan( const Schedule * sched ) {
     long s = 0;
     switch(sched -> structtype) {
-        case OL :
-            for ( OLNode * element = (sched -> scheduledTasks) -> head; element != NULL; element = element -> succ ) {
-                L -> viewKey( aAfficher -> key );
-                s = s + ((element->data) -> processingTime);
+        case OL : {
+            OList *L = sched->scheduledTasks;
+            for (OLNode *element = L->head; element != NULL; element = element->succ) {
+                Task * task = element -> data;
+                s = s + task -> processingTime;
             }
             return s;
-        case BST :
+        }
+        case BST : {
 
-            break;
-        case EBST :
+            return s;
+        }
+        case EBST : {
 
-            break;
+            return s;
+        }
         default :
             error("Schedule.c <makespan> : invalid data structure type.");
             return -1;
