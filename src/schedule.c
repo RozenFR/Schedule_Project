@@ -105,21 +105,21 @@ static int OLFindBackfillingPosition( const OList * scheduledTasks, const Task *
 
         for ( OLNode * actuel = scheduledTasks ->head; actuel != NULL; actuel = actuel ->succ ) {
 
-            int actuelTaskDateDébut = * ( int * ) actuel ->key;
+            int actuelTaskDateDebut = * ( int * ) actuel ->key;
 
-            int predTaskDateDébut = 0;
+            int predTaskDateDebut = 0;
             int predTaskProcessingTime = 0;
 
             if ( actuel ->pred != NULL ) {
 
-                predTaskDateDébut = * ( int * ) actuel ->pred ->key;
-                predTaskProcessingTime = ( ( Task * ) actuel ->pred ->data ) ->processingTime;
+                predTaskDateDebut = * ( int * ) actuel ->pred ->key;
+                predTaskProcessingTime = ( ( Task * ) actuel ->pred ->data ) -> processingTime;
 
             }
 
-            if ( actuelTaskDateDébut - predTaskDateDébut - predTaskDateDébut >= task ->processingTime )
+            if ( actuelTaskDateDebut - predTaskDateDebut * 2 >= task -> processingTime )
+                return predTaskDateDebut + predTaskProcessingTime;
 
-                return predTaskDateDébut + predTaskProcessingTime;
         }
 
     }
@@ -134,18 +134,18 @@ static int OLFindBackfillingPosition( const OList * scheduledTasks, const Task *
  * NB : La fonction n'ajoute pas la tâche dans l'ordonnancement !
  */
 static int OLFindStartingTime( const OList * scheduledTasks, const Task * task, int backfilling ) {
-    int taskDateDébut;
+    int taskDateDebut;
     if ( backfilling == 1 )
-        taskDateDébut = OLFindBackfillingPosition( scheduledTasks, task );
-    if ( backfilling == 0 || taskDateDébut == -1 ) {
+        taskDateDebut = OLFindBackfillingPosition( scheduledTasks, task );
+    if ( backfilling == 0 || taskDateDebut == -1 ) {
         taskDateDébut = task ->releaseTime;
         for ( OLNode * actuel = scheduledTasks ->head; actuel != NULL; actuel = actuel ->succ ) {
-            int actuelTaskDateDébut = * ( int * ) actuel ->key;
+            int actuelTaskDateDebut = * ( int * ) actuel ->key;
             int actuelTaskProcessingTime = ( ( Task * ) actuel ->data ) ->processingTime;
-            taskDateDébut = max( actuelTaskDateDébut + actuelTaskProcessingTime, task ->releaseTime );
+            taskDateDébut = max( actuelTaskDateDebut + actuelTaskProcessingTime, task ->releaseTime );
         }
     }
-    return taskDateDébut;
+    return taskDateDebut;
 }
 
 /**
@@ -250,7 +250,22 @@ void saveSchedule( const Schedule * sched, char * filename ) {
 /////////////////////// makespan ///////////////////////
 
 long makespan( const Schedule * sched ) {
-    /* A FAIRE */
+    long s = 0;
+    switch(sched -> structtype) {
+        case OL :
+
+            break;
+        case BST :
+
+            break;
+        case EBST :
+
+            break;
+        default :
+            error("Schedule.c <makespan> : invalid data structure type.");
+            return -1;
+    }
+
 }
 
 /////////////////////// SumWjCj ///////////////////////
