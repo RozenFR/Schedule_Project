@@ -253,8 +253,11 @@ long makespan( const Schedule * sched ) {
     long s = 0;
     switch(sched -> structtype) {
         case OL :
-
-            break;
+            for ( OLNode * element = (sched -> scheduledTasks) -> head; element != NULL; element = element -> succ ) {
+                L -> viewKey( aAfficher -> key );
+                s = s + ((element->data) -> processingTime);
+            }
+            return s;
         case BST :
 
             break;
