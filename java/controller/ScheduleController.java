@@ -53,12 +53,21 @@ public class ScheduleController {
 
     // Setter
     private void SetSchedule(String input, String output, int dt, int ord, int bf) {
+        if (input.isBlank())
+            throw new NullPointerException("SetSchedule NullPointerException : input is blank.");
+        if (output.isBlank())
+            throw new NullPointerException("SetSchedule NullPointerException : output is blank.");
+        if (dt < 0 || dt > 2)
+            throw new NullPointerException("SetSchedule NullPointerException : DataStructure need to be between 0 and 2 included.");
+        if (ord < 0 || ord > 3)
+            throw new NullPointerException("SetSchedule NullPointerException : Order need to be between 0 and 3 included.");
+        if (bf != 0 && bf != 1)
+            throw new NullPointerException("SetSchedule NullPointerException : BackFilling need to be 0 or 1.");
+
         new ScheduleModel().getSchedule(input, output, dt, ord, bf);
     }
 
     // Getter
-
-    // SetInput
     @FXML
     public void SetInput() {
         FileChooser file = new FileChooser();
@@ -68,7 +77,6 @@ public class ScheduleController {
             this._input.setText(selectedFile.toString());
     }
 
-    // Set Output
     @FXML
     public void SetOutput() {
         FileChooser file = new FileChooser();
@@ -79,11 +87,34 @@ public class ScheduleController {
 
         try {
             Exec_Schedule();
-            SetMakeSpan();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void SetMakespan(int makespan) throws Exception {
+        if (makespan < 0)
+            throw new Exception("SetMakespan <variable> : makespan can't be negative.");
+        this._Makespan.setText(IntToStr(makespan));
+    }
+
+    private void SetWjCj(int wjcj) throws Exception {
+        if (wjcj < 0)
+            throw new Exception("SetWjCj <variable> : wjcj can't be negative.");
+        this._Makespan.setText(IntToStr(wjcj));
+    }
+
+    private void SetWjTj(int wjtj) throws Exception {
+        if (wjtj < 0)
+            throw new Exception("SetWjTj <variable> : wjtj can't be negative.");
+        this._Makespan.setText(IntToStr(wjtj));
+    }
+
+    private void SetWjFj(int wjfj) throws Exception {
+        if (wjfj < 0)
+            throw new Exception("SetWjFj <variable> : wjfj can't be negative.");
+        this._Makespan.setText(IntToStr(wjfj));
     }
 
     // Management of the Schedule data
@@ -204,79 +235,74 @@ public class ScheduleController {
         else
             throw new Exception("Exec_Schedule() ALL : Selection out of range.");
 
-        SetDiagram();
-
-        try {
-            SetMakeSpan();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SetDiagramAndSum();
 
     }
 
     // Diagram
-    private void SetDiagram() throws Exception {
-        // Constant
-        final int DEFAULT_MARGIN = 25;
+    private void SetDiagramAndSum() throws Exception {
+        if (this._output.toString().isBlank()) {
+            // Constant
+            final int DEFAULT_MARGIN = 25;
 
-        // Variable
-        String path_output = this._output.toString();
-        AnchorPane root = this._diagram;
-        File file = new File(path_output);
+            // Variable
+            String path_output = this._output.toString();
+            AnchorPane root = this._diagram;
+            File file = new File(path_output);
+            int makespan = 0, wjcj = 0, wjtj = 0, wjfj = 0;
 
-        int y = 30; // Default Pos
-        int nbr = 0; // Nb of rectangle
 
-        try {
-            Scanner reader = new Scanner(file);
-            while(reader.hasNextLine()) {
-                String [] data = reader.nextLine().split(" ");
-                int start = StrToInt(data[2]);
-                int end = StrToInt(data[3]);
+            int y = 30; // Default Pos
+            int nbr = 0; // Nb of rectangle
 
-                // Setup Rectangle
-                StackPane stack = new StackPane();
-                Text txt = new Text(data[0]);
-                Rectangle rec = new Rectangle(DEFAULT_MARGIN * (end - start), DEFAULT_MARGIN);
-                stack.getChildren().addAll(rec, txt);
-                stack.setLayoutX(DEFAULT_MARGIN * start);
-                stack.setLayoutY(DEFAULT_MARGIN * (nbr + 1));
+            try {
+                Scanner reader = new Scanner(file);
+                while (reader.hasNextLine()) {
+                    String[] data = reader.nextLine().split(" ");
+                    // Setup variable with data
+                    String id = data[0];
+                    int start = StrToInt(data[5]);
+                    int time = StrToInt(data[1]);
+                    // Variable for sum
+                    int end = start + time; // Cj
+                    int completion = Integer.max(0, end - StrToInt(data[3])); // Tj
+                    int response = end - StrToInt(data[2]); // Fj
+                    int weight = StrToInt(data[4]);
 
-                // Add to diagram
-                this._diagram.getChildren().add(stack);
+                    // Calculate sum
+                    makespan = Integer.max(makespan, end);
+                    wjcj += end * weight;
+                    wjtj += completion * weight;
+                    wjfj += response * weight;
 
+                    // Setup Rectangle
+                    StackPane stack = new StackPane();
+                    Text txt = new Text(data[0]);
+                    Rectangle rec = new Rectangle(DEFAULT_MARGIN * time, DEFAULT_MARGIN);
+                    stack.getChildren().addAll(rec, txt);
+                    stack.setLayoutX(DEFAULT_MARGIN * start);
+                    stack.setLayoutY(DEFAULT_MARGIN * (nbr + 1));
+                    nbr++;
+
+                    // Add to diagram
+                    this._diagram.getChildren().add(stack);
+
+                }
+
+                // Change Label for Sum
+                SetMakespan(makespan);
+                SetWjCj(wjcj);
+                SetWjTj(wjtj);
+                SetWjFj(wjfj);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
     private void CleanDiagram() {
         this._diagram.getChildren().clear();
-    }
-
-    private void SetMakeSpan() throws Exception {
-        if (this._output.toString().isBlank()) {
-
-            File file = new File(this._output.toString());
-            int makespan = 0;
-
-            try {
-
-                Scanner reader = new Scanner(file);
-                while (reader.hasNextLine()) {
-                    String[] data = reader.nextLine().split(" ");
-                    makespan = makespan + StrToInt(data[1]);
-                }
-                this._Makespan.setText(IntToStr(makespan));
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-        }
-        else
-            throw new Exception("ScheduleController <SetMakeSpan> : _output undefined.");
     }
 
     private int StrToInt(String str) throws Exception {

@@ -250,33 +250,33 @@ void saveSchedule( const Schedule * sched, char * filename ) {
 /////////////////////// makespan ///////////////////////
 
 long makespan( const Schedule * sched ) {
-    long s = 0;
     switch(sched -> structtype) {
         case OL : {
+            int m = 0;
             OList *L = sched->scheduledTasks;
             for (OLNode *element = L->head; element != NULL; element = element->succ) {
                 Task * task = element -> data;
-                s = s + task -> processingTime;
+                m = intmax(m, task -> releaseTime + task -> processingTime);
             }
-            return s;
+            return max;
         }
         case BST : {
             BSTree * T = sched->scheduledTasks;
             List * L = BSTreeToList(T);
             for (LNode * element = L->head; element != NULL; element = element->succ) {
                 Task * task = element -> data;
-                s = s + task -> processingTime;
+                m = intmax(m, task -> releaseTime + task -> processingTime);
             }
-            return s;
+            return m;
         }
         case EBST : {
             BSTree * T = sched->scheduledTasks;
             List * L = BSTreeToList(T);
             for (LNode * element = L->head; element != NULL; element = element->succ) {
                 Task * task = element -> data;
-                s = s + task -> processingTime;
+                m = intmax(m, task -> releaseTime + task -> processingTime);
             }
-            return s;
+            return m;
         }
         default :
             error("Schedule.c <makespan> : invalid data structure type.");
@@ -296,8 +296,9 @@ static long OLSumWjCj( const OList * scheduledTasks ) {
     int s = 0;
     OList * L = (OList *) scheduledTasks;
     for (OLNode * element = L->head; element != NULL; element = element->succ) {
-        Task * task = element -> data;
-        s = s + ( ( task -> deadline ) * ( task -> weight ) );
+        Task * T = element -> data;
+        int end = element -> key + T -> processingTime;
+        s += end * T -> weight;
     }
     return s;
 }
@@ -312,8 +313,10 @@ static long BSTSumWjCj( const BSTNode * curr ) {
     Task * T = curr -> data;
     if (T == NULL)
         return 0;
-    else
-        return (T -> deadline * T -> weight ) + BSTSumWjCj(curr->left) + BSTSumWjCj(curr -> right);
+    else {
+        int end = element -> key + T -> processingTime;
+        return (T -> weight * end) + BSTSumWjCj(curr -> left) + BSTSumWjCj(curr -> right);
+    }
 }
 
 long SumWjCj( const Schedule * sched ) {
@@ -342,7 +345,9 @@ static long OLSumWjFj( const OList * scheduledTasks ) {
     OList * L = (OList *) scheduledTasks;
     for (OLNode * element = L->head; element != NULL; element = element->succ) {
         Task * task = element -> data;
-        s = s + ( ( task -> releaseTime ) * ( task -> weight ) );
+        int end = task -> processingTime + element -> key;
+        int response = end -  task -> releaseTime;
+        s = s + ( response * task -> weight );
     }
     return s;
 }
@@ -357,8 +362,11 @@ static long BSTSumWjFj( const BSTNode * curr ) {
     Task * T = curr -> data;
     if (T == NULL)
         return 0;
-    else
-        return (T -> releaseTime * T -> weight ) + BSTSumWjCj(curr->left) + BSTSumWjCj(curr -> right);
+    else {
+        int end = task -> processingTime + curr -> key;
+        int response = end - T -> releaseTime;
+        return response * T -> weight + BSTSumWjFj(curr -> left) + BSTSumWjFj(curr -> right);
+    }
 }
 
 long SumWjFj( const Schedule * sched ) {
@@ -387,10 +395,9 @@ static long OLSumWjTj( const OList * scheduledTasks ) {
     OList * L = (OList *) scheduledTasks;
     for (OLNode * element = L->head; element != NULL; element = element->succ) {
         Task * task = element -> data;
-
-        int cj = element -> key + task -> processingTime;
-
-        s = s + ( intmax( 0, cj - (task -> deadline) ) * task -> weight );
+        int end = task -> processingTime + element -> key;
+        int completion = intmax(0, end -  task -> deadline);
+        s = s + ( completion * task -> weight );
     }
     return s;
 }
@@ -403,11 +410,12 @@ static long OLSumWjTj( const OList * scheduledTasks ) {
  */
 static long BSTSumWjTj( const BSTNode * curr ) {
     Task * T = curr -> data;
-    if ( T == NULL )
+    if (T == NULL)
         return 0;
     else {
-        int cj = element -> key + T -> processingTime;
-        return ( intmax(0, cj - (T -> deadline)) * (T -> weight) ) + BSTSumWjCj(curr->left) + BSTSumWjCj(curr->right);
+        int end = task -> processingTime + curr -> key;
+        int completion = intmax(0, end -  task -> deadline);
+        return completion * T -> weight + BSTSumWjTj(curr -> left) + BSTSumWjTj(curr -> right);
     }
 }
 
