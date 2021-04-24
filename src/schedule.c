@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include "utilities.h"
-#include "list.h"
-#include "olist.h"
-#include "bstree.h"
-#include "instance.h"
-#include "schedule.h"
+#include "../include/utilities.h"
+#include "../include/list.h"
+#include "../include/olist.h"
+#include "../include/bstree.h"
+#include "../include/instance.h"
+#include "../include/schedule.h"
 
 Schedule * newSchedule( DataStructure structtype, int backfilling ) {
     Schedule * sched = calloc( 1, sizeof( Schedule ) );

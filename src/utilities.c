@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "utilities.h"
+#include "../include/utilities.h"
 
 void error(char * msg) {
     fprintf(stderr, "%s\n", msg);

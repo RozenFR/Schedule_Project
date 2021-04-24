@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "utilities.h"
-#include "list.h"
-#include "bstree.h"
+#include "../include/utilities.h"
+#include "../include/list.h"
+#include "../include/bstree.h"
 #include <stdbool.h>
 /*********************************************************************
  * Arbre Binaire de Recherche (non-équilibré).
