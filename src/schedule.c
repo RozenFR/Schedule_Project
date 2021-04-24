@@ -49,7 +49,7 @@ void viewSchedule( Schedule * sched ) {
     }
 }
 
-void freeSchedule( Schedule * sched) {
+void freeSchedule( Schedule * sched ) {
     switch ( sched->structtype ) {
         case OL:
             freeOList( sched->scheduledTasks, 1, 0 );

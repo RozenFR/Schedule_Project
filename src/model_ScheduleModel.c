@@ -103,4 +103,8 @@ JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
     // Save Schedule
     saveSchedule(sched, csout);
 
+    // Free
+    freeList(I, 1);
+    freeSchedule(sched);
+
 }
