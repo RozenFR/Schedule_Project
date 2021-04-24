@@ -19,6 +19,8 @@ public class App extends Application {
         // Setup FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Schedule.fxml"));
         Parent view = loader.load();
+        view.getStylesheets().add("application.css");
+
         stage.setTitle("Scheduling");
 
         stage.setScene(new Scene(view));
