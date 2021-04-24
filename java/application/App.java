@@ -19,7 +19,7 @@ public class App extends Application {
         // Setup FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Schedule.fxml"));
         Parent view = loader.load();
-        view.getStylesheets().add("application.css");
+        view.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
         stage.setTitle("Scheduling");
 
