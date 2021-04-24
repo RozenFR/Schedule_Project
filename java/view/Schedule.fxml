@@ -49,13 +49,13 @@
                         <Font name="Arial Black" size="15.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="_rOL" mnemonicParsing="false" selected="true" text="OL">
+                  <RadioButton fx:id="_rOL" mnemonicParsing="false" onAction="#Exec_Schedule" selected="true" text="OL">
                      <toggleGroup>
                         <ToggleGroup fx:id="type" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="_rBST" mnemonicParsing="false" text="BST" toggleGroup="$type" />
-                  <RadioButton fx:id="_rEBST" mnemonicParsing="false" text="EBST" toggleGroup="$type" />
+                  <RadioButton fx:id="_rBST" mnemonicParsing="false" onAction="#Exec_Schedule" text="BST" toggleGroup="$type" />
+                  <RadioButton fx:id="_rEBST" mnemonicParsing="false" onAction="#Exec_Schedule" text="EBST" toggleGroup="$type" />
                </children>
                <padding>
                   <Insets left="20.0" right="20.0" />
@@ -71,14 +71,14 @@
                         <Font name="Arial Black" size="15.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="_rSPT" mnemonicParsing="false" selected="true" text="SPT">
+                  <RadioButton fx:id="_rSPT" mnemonicParsing="false" onAction="#Exec_Schedule" selected="true" text="SPT">
                      <toggleGroup>
                         <ToggleGroup fx:id="order" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="_rLPT" mnemonicParsing="false" text="LPT" toggleGroup="$order" />
-                  <RadioButton fx:id="_rWSPT" mnemonicParsing="false" text="WSPT" toggleGroup="$order" />
-                  <RadioButton fx:id="_rFCFS" mnemonicParsing="false" text="FCFS" toggleGroup="$order" />
+                  <RadioButton fx:id="_rLPT" mnemonicParsing="false" onAction="#Exec_Schedule" text="LPT" toggleGroup="$order" />
+                  <RadioButton fx:id="_rWSPT" mnemonicParsing="false" onAction="#Exec_Schedule" text="WSPT" toggleGroup="$order" />
+                  <RadioButton fx:id="_rFCFS" mnemonicParsing="false" onAction="#Exec_Schedule" text="FCFS" toggleGroup="$order" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="20.0">
@@ -88,12 +88,12 @@
                         <Font name="Arial Black" size="15.0" />
                      </font>
                   </Label>
-                  <RadioButton fx:id="_rbf" mnemonicParsing="false" selected="true" text="AVEC">
+                  <RadioButton fx:id="_rbf" mnemonicParsing="false" onAction="#Exec_Schedule" selected="true" text="AVEC">
                      <toggleGroup>
                         <ToggleGroup fx:id="backfilling" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="_rnbf" mnemonicParsing="false" text="SANS" toggleGroup="$backfilling" />
+                  <RadioButton fx:id="_rnbf" mnemonicParsing="false" onAction="#Exec_Schedule" text="SANS" toggleGroup="$backfilling" />
                </children>
                <VBox.margin>
                   <Insets />
@@ -111,7 +111,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="_Makespan" alignment="CENTER" contentDisplay="CENTER" text="1" textAlignment="CENTER">
+                        <Label fx:id="_Makespan" alignment="CENTER" contentDisplay="CENTER" text="0" textAlignment="CENTER">
                            <font>
                               <Font name="Times New Roman" size="28.0" />
                            </font>
@@ -125,7 +125,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="_WJCJ" alignment="CENTER" contentDisplay="CENTER" text="7" textAlignment="CENTER">
+                        <Label fx:id="_WJCJ" alignment="CENTER" contentDisplay="CENTER" text="0" textAlignment="CENTER">
                            <font>
                               <Font name="Times New Roman" size="28.0" />
                            </font>
@@ -139,7 +139,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="_WJFJ" alignment="CENTER" contentDisplay="CENTER" text="3">
+                        <Label fx:id="_WJFJ" alignment="CENTER" contentDisplay="CENTER" text="0">
                            <font>
                               <Font name="Times New Roman" size="28.0" />
                            </font>
@@ -153,7 +153,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="_WJTJ" alignment="CENTER" contentDisplay="CENTER" text="4">
+                        <Label fx:id="_WJTJ" alignment="CENTER" contentDisplay="CENTER" text="0">
                            <font>
                               <Font name="Times New Roman" size="28.0" />
                            </font>
