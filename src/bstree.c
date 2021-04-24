@@ -140,8 +140,8 @@ static BSTNode * rotateLeft( BSTNode * x ) {
     BSTNode * T2 = y -> left;
     y -> left = x;
     x -> right = T2;
-    x -> bfactor += -1 - max(y -> bfactor,0);
-    y -> bfactor += -1 + min(x -> bfactor,0);
+    x -> bfactor += -1 - intmax(y -> bfactor,0);
+    y -> bfactor += -1 + intmin(x -> bfactor,0);
     return y;
 }
 
@@ -164,8 +164,8 @@ static BSTNode * rotateRight( BSTNode * y ) {
     BSTNode * T2 = x -> right;
     x -> right = y;
     y -> left = T2;
-    y -> bfactor += 1 - min( x -> bfactor ,0 );
-    x -> bfactor += 1 + max( y -> bfactor ,0 );
+    y -> bfactor += 1 - intmin( x -> bfactor ,0 );
+    x -> bfactor += 1 + intmax( y -> bfactor ,0 );
     return x;
 }
 

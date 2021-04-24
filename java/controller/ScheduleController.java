@@ -48,11 +48,7 @@ public class ScheduleController {
 
     @FXML
     public void initialize() {
-        try {
-            Exec_Schedule();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     // Setter

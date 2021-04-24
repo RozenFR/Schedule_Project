@@ -142,7 +142,7 @@ static int OLFindStartingTime( const OList * scheduledTasks, const Task * task, 
         for ( OLNode * actuel = scheduledTasks ->head; actuel != NULL; actuel = actuel ->succ ) {
             int actuelTaskDateDebut = * ( int * ) actuel ->key;
             int actuelTaskProcessingTime = ( ( Task * ) actuel ->data ) ->processingTime;
-            taskDateDebut = max( actuelTaskDateDebut + actuelTaskProcessingTime, task ->releaseTime );
+            taskDateDebut = intmax( actuelTaskDateDebut + actuelTaskProcessingTime, task ->releaseTime );
         }
     }
     return taskDateDebut;

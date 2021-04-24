@@ -20,13 +20,13 @@ void error(char * msg);
  * @brief
  * Renvoyer la valeur maximale parmi les entiers a et b.
  */
-int max(int a, int b);
+int intmax(int a, int b);
 
 /**
  * @brief
  * Renvoyer la valeur minimale parmi les entiers a et b.
  */
-int min(int a, int b);
+int intmin(int a, int b);
 
 /**
  * @brief
