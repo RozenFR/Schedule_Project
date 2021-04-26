@@ -258,15 +258,15 @@ long makespan( const Schedule * sched ) {
         case BST : {
             BSTree * T = sched->scheduledTasks;
             BSTNode * node = BSTMax(T -> root);
-            Task * T = node -> data;
-            m = node -> key + T -> processingTime;
+            Task * task = (Task *) node -> data;
+            m = (int) node -> key + (int) task -> processingTime;
             return m;
         }
         case EBST : {
             BSTree * T = sched->scheduledTasks;
             BSTNode * node = BSTMax(T -> root);
-            Task * T = node -> data;
-            m = node -> key + T -> processingTime;
+            Task * task = (Task *) node -> data;
+            m = (int) node -> key + (int) task -> processingTime;
             return m;
         }
         default :
