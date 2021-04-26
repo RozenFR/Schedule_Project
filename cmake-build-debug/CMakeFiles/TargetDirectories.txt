@@ -1,0 +1,2 @@
+/mnt/c/Users/alexm/CLionProjects/Schedule_Project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/alexm/CLionProjects/Schedule_Project/cmake-build-debug/CMakeFiles/edit_cache.dir
