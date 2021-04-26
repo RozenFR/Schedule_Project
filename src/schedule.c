@@ -300,11 +300,11 @@ static long OLSumWjCj( const OList * scheduledTasks ) {
  * NB : fonction récursive
  */
 static long BSTSumWjCj( const BSTNode * curr ) {
-    Task * T = curr -> data;
-    if (T == NULL)
+    if (curr == NULL)
         return 0;
     else {
-        int end = *(int *) curr -> key + (int) T -> processingTime;
+        Task * T = curr -> data;
+        int end = (int) curr -> key + (int) T -> processingTime;
         return (T -> weight * end) + BSTSumWjCj(curr -> left) + BSTSumWjCj(curr -> right);
     }
 }
@@ -313,13 +313,10 @@ long SumWjCj( const Schedule * sched ) {
     switch ( sched->structtype ) {
         case OL:
             return OLSumWjCj( sched->scheduledTasks );
-            break;
         case BST:
             return BSTSumWjCj( ( ( BSTree * ) sched->scheduledTasks )->root );
-            break;
         case EBST:
             return BSTSumWjCj( ( ( BSTree * ) sched->scheduledTasks )->root );
-            break;
         default:
             error( "Schedule:SumWjCj : invalid data structure." );
             return -1;
@@ -352,10 +349,10 @@ static long OLSumWjFj( const OList * scheduledTasks ) {
  * NB : fonction récursive
  */
 static long BSTSumWjFj( const BSTNode * curr ) {
-    Task * T = curr -> data;
-    if (T == NULL)
+    if (curr == NULL)
         return 0;
     else {
+        Task * T = curr -> data;
         int end = T -> processingTime + *(int *) curr -> key;
         int response = end - T -> releaseTime;
         return response * T -> weight + BSTSumWjFj(curr -> left) + BSTSumWjFj(curr -> right);
@@ -366,13 +363,10 @@ long SumWjFj( const Schedule * sched ) {
     switch ( sched->structtype ) {
         case OL:
             return OLSumWjFj( sched->scheduledTasks );
-            break;
         case BST:
             return BSTSumWjFj( ( ( BSTree * ) sched->scheduledTasks )->root );
-            break;
         case EBST:
             return BSTSumWjFj( ( ( BSTree * ) sched->scheduledTasks )->root );
-            break;
         default:
             error( "Schedule:SumWjFj : invalid data structure." );
             return -1;
@@ -405,10 +399,10 @@ static long OLSumWjTj( const OList * scheduledTasks ) {
  * NB : fonction récursive
  */
 static long BSTSumWjTj( const BSTNode * curr ) {
-    Task * T = curr -> data;
-    if (T == NULL)
+    if (curr == NULL)
         return 0;
     else {
+        Task * T = curr -> data;
         int end = T -> processingTime + *(int *) curr -> key;
         int completion = intmax(0, end -  T -> deadline);
         return completion * T -> weight + BSTSumWjTj(curr -> left) + BSTSumWjTj(curr -> right);
@@ -419,13 +413,10 @@ long SumWjTj( const Schedule * sched ) {
     switch ( sched->structtype ) {
         case OL:
             return OLSumWjTj( sched->scheduledTasks );
-            break;
         case BST:
             return BSTSumWjTj( ( ( BSTree * ) sched->scheduledTasks )->root );
-            break;
         case EBST:
             return BSTSumWjTj( ( ( BSTree * ) sched->scheduledTasks )->root );
-            break;
         default:
             error( "Schedule:SumWjTj : invalid data structure." );
             return -1;
