@@ -1,8 +1,8 @@
-#include "list.h"
+#include "../include/list.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
-#include "utilities.h"
+#include "../include/utilities.h"
 
 /**
  * @brief

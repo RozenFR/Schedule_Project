@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "utilities.h"
+#include "../include/utilities.h"
 
 void error(char * msg) {
     fprintf(stderr, "%s\n", msg);
     exit(EXIT_FAILURE);
 }
 
-int max(int a, int b) {
+int intmax(int a, int b) {
     if (a >= b)
         return a;
     else
         return b;
 }
 
-int min(int a, int b) {
+int intmin(int a, int b) {
     if (a <= b)
         return a;
     else

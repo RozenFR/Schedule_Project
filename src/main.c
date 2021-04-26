@@ -1,11 +1,11 @@
-#include "olist.h"
-#include "list.h"
-#include "bstree.h"
-#include "utilities.h"
+#include "../include/olist.h"
+#include "../include/list.h"
+#include "../include/bstree.h"
+#include "../include/utilities.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "instance.h"
+#include "../include/instance.h"
 #include <string.h>
 //#include "schedule.h"
 /**

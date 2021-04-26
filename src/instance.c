@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "utilities.h"
-#include "list.h"
-#include "olist.h"
-#include "bstree.h"
-#include "instance.h"
+#include "../include/utilities.h"
+#include "../include/list.h"
+#include "../include/olist.h"
+#include "../include/bstree.h"
+#include "../include/instance.h"
 
 /***********************************************
  * TASK
