@@ -43,13 +43,12 @@ void freeList(List * L, int deleteData) {
 
 void viewList(const List * L) {
     if(L->numelm == 0)
-        printf("[ ]\n");
+        printf("Liste VIDE\n");
     else{
-        printf("[ ");
         for(LNode* aAfficher = L->head; aAfficher != NULL; aAfficher = aAfficher->succ){
             (L->viewData)(aAfficher->data);
         }
-        printf("]\n");
+        printf("\n");
     }
 }
 

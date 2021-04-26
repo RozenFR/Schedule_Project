@@ -365,19 +365,18 @@ BSTNode * BSTMax( BSTNode * node ) {
  * NB : fonction récursive.
  */
 static BSTNode * predecessor( BSTNode * curr, void * key, int ( * preceed )( const void *, const void * ) ) {
-    //"findSuccessor() : Le noeud de clef \"key\", qui a été donné en paramètre n'est pas présent dans l'arbre\n"
     assert( curr != NULL );
-    /**
-    BSTNode * max;
-    if ( ! preceed( curr -> key, key ) && ! preceed( key, curr -> key ) )
-        return curr -> left == NULL ? curr : curr -> left;
-    else if ( preceed( curr -> key, key ) )
-        max = predecessor( curr -> right, key, preceed );
-    else
-        max = predecessor( curr -> left, key, preceed );
-    if ( preceed( curr -> key, key ) || preceed( key, curr -> key ) )
-     */
-    return curr;
+    BSTNode * predessesseurPotentiel = NULL;
+    BSTNode * resultat;
+    if ( preceed ( curr->key, key ) ) {
+        predessesseurPotentiel = curr;
+        resultat = predecessor( curr->right, key, preceed );
+    } else if ( preceed ( key, curr->key ) ) {
+        resultat = predecessor( curr->left, key, preceed );
+    } else {
+        return curr->left != NULL ? BSTMax( curr->left ) : curr;
+    }
+    return predessesseurPotentiel != NULL && ! ( preceed ( resultat->key, key ) || preceed ( key, resultat->key ) ) ? predessesseurPotentiel : resultat;
 }
 
 /** FAIT
@@ -398,24 +397,17 @@ BSTNode * findPredecessor( const BSTree * T, const BSTNode * node ) {
  */
 static BSTNode * successor( BSTNode * curr, void * key, int ( * preceed )( const void *, const void * ) ) {
     assert( curr != NULL );
-    if ( preceed( key, curr -> key ) ) {
-        BSTNode * succ = successor( curr -> left, key, preceed );
-        if ( succ == NULL )
-            return curr;
-        else
-            return curr;
-    } else if ( preceed( curr -> key , key ) ) {
-        BSTNode * succ = successor( curr -> right, key, preceed );
-        if ( succ == NULL )
-            return succ;
-        else
-            return succ;
+    BSTNode * sucessorPotentiel = NULL;
+    BSTNode * resultat;
+    if ( preceed( curr->key, key ) ) {
+        resultat = successor( curr->right, key, preceed );
+    } else if ( preceed( key, curr->key ) ) {
+        sucessorPotentiel = curr;
+        resultat = successor( curr->left, key, preceed );
     } else {
-        if ( curr -> right == NULL )
-            return NULL;
-        else
-            return BSTMin( curr -> right );
+        return curr->right != NULL ? BSTMin( curr->right ) : curr;
     }
+    return sucessorPotentiel != NULL && ! ( preceed( resultat->key, key ) || preceed( key, resultat->key ) ) ? sucessorPotentiel : resultat;
 }
 
 /** FAIT

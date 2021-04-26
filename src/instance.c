@@ -37,7 +37,7 @@ void viewTask( const void * task ) {
     printf("PROC TIME : %d\t", ( ( Task * ) task ) -> processingTime );
     printf("REL TIME : %d\t", ( ( Task * ) task ) -> releaseTime );
     printf("DEADLINE : %d\t", ( ( Task * ) task ) -> deadline );
-    printf("WEIGHT : %d \n}", ( ( Task * ) task ) -> weight );
+    printf("WEIGHT : %d }\n", ( ( Task * ) task ) -> weight );
 }
 
 /************************************************

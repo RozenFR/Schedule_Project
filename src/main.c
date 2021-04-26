@@ -7,7 +7,7 @@
 #include <time.h>
 #include "../include/instance.h"
 #include <string.h>
-//#include "schedule.h"
+#include "schedule.h"
 /**
 ⢕⢕⢕⢑⠁⢁⣼⣿⣻⢿⣟⢿⡻⡙⡏⡏⣟⡽⡹⣹⢪⡻⢽⡫⠯⣻⢛⢿⣻⣿⣿⡿⣧⢍⠝⡍⡏⡎⡕⢵
 ⢕⢕⠸⡐⣠⣿⣗⢯⡺⡽⡸⡅⠕⢕⢐⠑⢕⠸⢙⢕⢱⢸⠸⢜⠴⡈⡜⡔⢅⢟⢞⣿⣿⣧⠨⡊⣜⢜⢜⡵
@@ -42,8 +42,7 @@ void testArbres( void );
 void testInstances( void );
 
 int main( void ) {
-
-    int choix = 1;
+    /**int choix = 1;
 
     printf("-Choix 1 : Listes Non Ordonnées\n-Choix 2 : Listes Ordonnées\n-Choix 3 : Arbres Binaires de Recherche\n-Choix 4 : Instances\n");
     scanf("%d", &choix );
@@ -65,7 +64,15 @@ int main( void ) {
             printf("Choix invalide...\n" );
             exit( EXIT_FAILURE );
         }
-    }
+    }*/
+    Instance I = readInstance("./data/exemple");
+    viewInstance( I );
+    reorderInstance( &I, EBST, SPT );
+    viewInstance( I );
+
+    Schedule *SOL = newSchedule(OL, 1 );
+    computeSchedule( SOL, I );
+    viewSchedule( SOL );
     return EXIT_SUCCESS;
 }
 
@@ -241,10 +248,9 @@ void testArbres( void )
         } break;
         case 3 : {
             printf("Test de la fonction : findPredecessor()\n\n");
-            for ( int i = 0; i < 10; i++ ) {
+            for ( int i = 1; i < 1000; i++ ) {
                 x = ( int * ) calloc (1, sizeof( int ) );
-                printf("Saisissez le noeud N°%d à insérer : ", i+1 );
-                scanf("%d", x );
+                *x = i;
                 EBSTreeInsert( T, x, x );
             }
             printf("Voici l'affichage infixé de l'arbre :\n");
@@ -261,8 +267,8 @@ void testArbres( void )
             printf("Bfactor du Fils Droit : %d\n", T->root->right->bfactor );
             BSTNode * node1 = findPredecessor( T, T->root );
             BSTNode * node2 = findSuccessor( T, T->root );
-            printf("Le prédecesseur de %d est %d\n", * ( ( int * ) T->root->right->key ), * ( ( int * ) node1->key ) );
-            printf("Le successeur de %d est %d\n", * ( ( int * ) T->root->right->key ), * ( ( int * ) node2->key ) );
+            printf("Le prédecesseur de %d est %d\n", * ( ( int * ) T->root->key ), * ( ( int * ) node1->key ) );
+            printf("Le successeur de %d est %d\n", * ( ( int * ) T->root->key ), * ( ( int * ) node2->key ) );
             freeBSTree( T,1,0 );
         } break;
         default : {
