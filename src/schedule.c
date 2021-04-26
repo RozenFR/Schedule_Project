@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 //#include <assert.h>
-#include "utilities.h"
-#include "list.h"
-#include "olist.h"
-#include "bstree.h"
-#include "instance.h"
-#include "schedule.h"
+#include "../include/utilities.h"
+#include "../include/list.h"
+#include "../include/olist.h"
+#include "../include/bstree.h"
+#include "../include/instance.h"
+#include "../include/schedule.h"
 
 Schedule * newSchedule( DataStructure structtype, int backfilling ) {
     Schedule * sched = calloc( 1, sizeof( Schedule ) );
@@ -175,13 +175,10 @@ int findStartingTime( const Schedule * sched, const Task * task ) {
     switch ( sched -> structtype ) {
         case OL:
             return OLFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling );
-            break;
         case BST:
             return BSTFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling );
-            break;
         case EBST:
             return BSTFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling );
-            break;
         default:
             error( "Schedule:findStartingTime : invalid data structure." );
             return -1;
@@ -254,26 +251,22 @@ long makespan( const Schedule * sched ) {
             OList *L = sched->scheduledTasks;
             for (OLNode *element = L->head; element != NULL; element = element->succ) {
                 Task * task = element -> data;
-                m = intmax(m, task -> releaseTime + task -> processingTime);
+                m = intmax(m, (int) element -> key + task -> processingTime);
             }
             return m;
         }
         case BST : {
             BSTree * T = sched->scheduledTasks;
-            List * L = BSTreeToList(T);
-            for (LNode * element = L->head; element != NULL; element = element->succ) {
-                Task * task = element -> data;
-                m = intmax(m, task -> releaseTime + task -> processingTime);
-            }
+            BSTNode * node = BSTMax(T -> root);
+            Task * T = node -> data;
+            m = node -> key + T -> processingTime;
             return m;
         }
         case EBST : {
             BSTree * T = sched->scheduledTasks;
-            List * L = BSTreeToList(T);
-            for (LNode * element = L->head; element != NULL; element = element->succ) {
-                Task * task = element -> data;
-                m = intmax(m, task -> releaseTime + task -> processingTime);
-            }
+            BSTNode * node = BSTMax(T -> root);
+            Task * T = node -> data;
+            m = node -> key + T -> processingTime;
             return m;
         }
         default :
