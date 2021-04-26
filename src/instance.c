@@ -128,7 +128,7 @@ static int lpt( const void * a, const void * b ) {
 static int wspt( const void * a, const void * b ) {
     Task * A = ( Task * ) a;
     Task * B = ( Task * ) b;
-    if ( ( ( A -> weight / A -> processingTime ) > ( B -> weight / B -> processingTime ) ) || ( ( A -> weight / A -> processingTime ) == ( B -> weight / B -> processingTime ) ) && A -> processingTime < B -> processingTime || ( A -> weight / A -> processingTime == B -> weight / B -> processingTime ) && A -> processingTime == B -> processingTime && A -> releaseTime < B -> releaseTime ) {
+    if ( ( ( A -> weight / A -> processingTime ) > ( B -> weight / B -> processingTime ) ) || ( ( ( ( ( A -> weight / A -> processingTime ) == ( B -> weight / B -> processingTime ) ) && ( A -> processingTime < B -> processingTime || ( ( ( A -> weight / A -> processingTime ) == ( B -> weight / B -> processingTime ) ) && ( ( ( A -> processingTime == B -> processingTime ) && ( A -> releaseTime < B -> releaseTime ) ) ) ) ) ) ) ) ) {
         return 1;
     } else {
         return 0;

@@ -42,13 +42,14 @@ BSTree * newBSTree( int ( * preceed )( const void *, const void * ),
  * Les clés sont comparées en utilisant la fonction preceed.
  * NB : fonction récursive.
  */
+ /**
 static BSTNode * insertBSTNodeIterative( BSTNode * curr, void * key, void * data, int ( * preceed )( const void *, const void * ) ) {
     BSTNode * nouveau = newBSTNode( key, data );
     BSTNode * root = curr;
     if ( curr == NULL ) {
         return nouveau;
     }
-    BSTNode * pere, * actuel = curr;
+    BSTNode * pere;
     while( curr != NULL ) {
         pere = curr;
         if ( preceed( curr->key, key ) == 1 ) {
@@ -66,7 +67,7 @@ static BSTNode * insertBSTNodeIterative( BSTNode * curr, void * key, void * data
     }
     return root;
 }
-
+*/
 static BSTNode * insertBSTNode( BSTNode * curr, void * key, void * data, int ( * preceed )( const void *, const void * ) ) {
     if ( curr == NULL ){
         return newBSTNode( key, data );

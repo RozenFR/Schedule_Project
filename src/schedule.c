@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-//#include <assert.h>
 #include "../include/utilities.h"
 #include "../include/list.h"
 #include "../include/olist.h"
@@ -149,13 +148,9 @@ static int OLFindStartingTime( const OList * scheduledTasks, const Task * task, 
  * NB : fonction récursive, l'ordre infixe est conseillé.
  */
 static int BSTFindBackfillingPosition( const BSTree * scheduledTasks, const BSTNode * curr, const Task * task ) {
-    if ( scheduledTasks->root == NULL ) {
-        return task->releaseTime;
-    } else {
-        int debutTacheAInserer = task->releaseTime;
-        int debutTachePrecedente = 0;
-        int processingTimeTachePrecedente = 0;
-    }
+    if( scheduledTasks->root != NULL && curr != NULL && task != NULL)
+        return 1;
+    return 0;
 }
 
 /**
@@ -167,8 +162,17 @@ static int BSTFindBackfillingPosition( const BSTree * scheduledTasks, const BSTN
  *      Utiliser la fonction récursive findBackfillingPosition.
  */
 static int BSTFindStartingTime( const BSTree * scheduledTasks, const Task * task, int backfilling ) {
-    /* A FAIRE */
-    return 0;
+    if (scheduledTasks->root != NULL) {
+        if (!backfilling) {
+            BSTNode * max = BSTMax(scheduledTasks->root);
+            return intmax( *(int *) max->key + ((Task *)max->data)->processingTime, task->releaseTime );
+        } else {
+            return 0;
+        }
+    } else {
+        return task->releaseTime;
+    }
+
 }
 
 int findStartingTime( const Schedule * sched, const Task * task ) {
@@ -202,7 +206,8 @@ void computeSchedule( Schedule * sched, const Instance I ) {
  * NB : Procédure itérative
  */
 static void OLSaveSchedule( const OList * scheduledTasks, FILE * fd ) {
-    /* A FAIRE */
+    if( scheduledTasks->head != NULL && fd != NULL )
+        viewOList( scheduledTasks );
 }
 
 /**
@@ -213,7 +218,8 @@ static void OLSaveSchedule( const OList * scheduledTasks, FILE * fd ) {
  *      Pensez à un parcours infixe.
  */
 static void BSTSaveSchedule( const BSTNode * curr, FILE * fd ) {
-    /* A FAIRE */
+    if ( curr != NULL && fd != NULL )
+        return;
 }
 
 void saveSchedule( const Schedule * sched, char * filename ) {
@@ -249,29 +255,28 @@ long makespan( const Schedule * sched ) {
     switch(sched -> structtype) {
         case OL : {
             OList *L = sched->scheduledTasks;
-            for (OLNode *element = L->head; element != NULL; element = element->succ) {
-                Task * task = element -> data;
-                m = intmax(m, (int) element -> key + task -> processingTime);
-            }
-            return m;
+            return L->tail != NULL ? *(int *)L->tail->key + ((Task *)L->tail->data)->processingTime : 0;
         }
         case BST : {
             BSTree * T = sched->scheduledTasks;
-            BSTNode * node = BSTMax(T -> root);
-            Task * task = (Task *) node -> data;
-            m = (int) node -> key + (int) task -> processingTime;
-            return m;
+            if ( T->root != NULL ) {
+                BSTNode * node = BSTMax(T->root);
+                return *(int *)node->key + ((Task *)node->data)->processingTime;
+            } else {
+                return 0;
+            }
         }
         case EBST : {
             BSTree * T = sched->scheduledTasks;
-            BSTNode * node = BSTMax(T -> root);
-            Task * task = (Task *) node -> data;
-            m = (int) node -> key + (int) task -> processingTime;
-            return m;
+            if ( T->root != NULL ) {
+                BSTNode * node = BSTMax(T->root);
+                return *(int *)node->key + ((Task *)node->data)->processingTime;
+            } else {
+                return 0;
+            }
         }
         default :
             error("Schedule.c <makespan> : invalid data structure type.");
-            return -1;
     }
 }
 
@@ -300,12 +305,12 @@ static long OLSumWjCj( const OList * scheduledTasks ) {
  * NB : fonction récursive
  */
 static long BSTSumWjCj( const BSTNode * curr ) {
-    Task * T = curr -> data;
-    if (T == NULL)
+    if (curr == NULL)
         return 0;
     else {
-        int end = *(int *) curr -> key + (int) T -> processingTime;
-        return (T -> weight * end) + BSTSumWjCj(curr -> left) + BSTSumWjCj(curr -> right);
+        long sumWjCjLeft = BSTSumWjCj( curr->left );
+        long sumWjCjRight = BSTSumWjCj( curr->right );
+        return ( *(int *)curr->key + ((Task *)curr->data)->processingTime ) * ((Task *)curr->data)->weight + sumWjCjLeft + sumWjCjRight;
     }
 }
 
@@ -352,13 +357,12 @@ static long OLSumWjFj( const OList * scheduledTasks ) {
  * NB : fonction récursive
  */
 static long BSTSumWjFj( const BSTNode * curr ) {
-    Task * T = curr -> data;
-    if (T == NULL)
+    if (curr == NULL)
         return 0;
     else {
-        int end = T -> processingTime + *(int *) curr -> key;
-        int response = end - T -> releaseTime;
-        return response * T -> weight + BSTSumWjFj(curr -> left) + BSTSumWjFj(curr -> right);
+        long sumWjFjLeft = BSTSumWjFj( curr->left );
+        long sumWjFjRight = BSTSumWjFj( curr->right );
+        return ( *(int *)curr->key + ((Task *)curr->data)->processingTime - ((Task *)curr->data)->releaseTime ) * ((Task *)curr->data)->weight + sumWjFjLeft + sumWjFjRight;
     }
 }
 
@@ -405,13 +409,12 @@ static long OLSumWjTj( const OList * scheduledTasks ) {
  * NB : fonction récursive
  */
 static long BSTSumWjTj( const BSTNode * curr ) {
-    Task * T = curr -> data;
-    if (T == NULL)
+    if (curr == NULL)
         return 0;
     else {
-        int end = T -> processingTime + *(int *) curr -> key;
-        int completion = intmax(0, end -  T -> deadline);
-        return completion * T -> weight + BSTSumWjTj(curr -> left) + BSTSumWjTj(curr -> right);
+        long sumWjTjLeft = BSTSumWjTj( curr->left );
+        long sumWjTjRight = BSTSumWjTj( curr->right );
+        return intmax( *(int *)curr->key + ((Task *)curr->data)->processingTime - ((Task *)curr->data)->deadline, 0 ) * ((Task *)curr->data)->weight + sumWjTjLeft + sumWjTjRight;
     }
 }
 
