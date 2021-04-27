@@ -251,7 +251,6 @@ void saveSchedule( const Schedule * sched, char * filename ) {
 /////////////////////// makespan ///////////////////////
 
 long makespan( const Schedule * sched ) {
-    int m = 0;
     switch(sched -> structtype) {
         case OL : {
             OList *L = sched->scheduledTasks;
@@ -278,11 +277,12 @@ long makespan( const Schedule * sched ) {
         default :
             error("Schedule.c <makespan> : invalid data structure type.");
     }
+    return 0;
 }
 
 /////////////////////// SumWjCj ///////////////////////
 
-/**
+/** FAIT
  * @brief
  * Calculer la "somme pondérée de temps de fin" de l'ordonnancement
  * représenté par la liste ordonnée scheduledTasks.
@@ -298,7 +298,7 @@ static long OLSumWjCj( const OList * scheduledTasks ) {
     return s;
 }
 
-/**
+/** FAIT
  * @brief
  * Calculer la "somme pondérée de temps de fin" de l'ordonnancement
  * représenté par l'arbre binaire de recherche raciné au nœud curr.
@@ -333,7 +333,7 @@ long SumWjCj( const Schedule * sched ) {
 
 /////////////////////// SumWjFj ///////////////////////
 
-/**
+/** FAIT
  * @brief
  * Calculer la "somme pondérée de temps de réponse" de l'ordonnancement
  * représenté par la liste ordonnée scheduledTasks.
@@ -350,7 +350,7 @@ static long OLSumWjFj( const OList * scheduledTasks ) {
     return s;
 }
 
-/**
+/** FAIT
  * @brief
  * Calculer la "somme pondérée de temps de réponse" de l'ordonnancement
  * représenté par l'arbre binaire de recherche raciné au nœud curr.
@@ -385,7 +385,7 @@ long SumWjFj( const Schedule * sched ) {
 
 /////////////////////// SumWjTj ///////////////////////
 
-/**
+/** FAIT
  * @brief
  * Calculer la "somme pondérée de temps de retard" de l'ordonnancement
  * représenté par la liste ordonnée scheduledTasks.
@@ -402,7 +402,7 @@ static long OLSumWjTj( const OList * scheduledTasks ) {
     return s;
 }
 
-/**
+/** FAIT
  * @brief
  * Calculer la "somme pondérée de temps de retard" de l'ordonnancement
  * représenté par l'arbre binaire de recherche raciné au nœud curr.
