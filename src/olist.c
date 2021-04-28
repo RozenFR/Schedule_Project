@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "../include/utilities.h"
 
+
 /**
  * @brief
  * Liste doublement chaînée ordonnée

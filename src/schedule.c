@@ -8,6 +8,7 @@
 #include "../include/instance.h"
 #include "../include/schedule.h"
 
+
 Schedule * newSchedule( DataStructure structtype, int backfilling ) {
     Schedule * sched = (Schedule *) calloc( 1, sizeof( Schedule ) );
 

@@ -4,6 +4,7 @@
 #include <time.h>
 #include "../include/utilities.h"
 #include "../include/list.h"
+
 /*
  * Construire et initialiser un nouveau nœud d'une liste doublement chaînée.
  * Renvoie le nouveau nœud créé.

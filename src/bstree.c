@@ -5,6 +5,7 @@
 #include "../include/list.h"
 #include "../include/bstree.h"
 #include <stdbool.h>
+
 /*********************************************************************
  * Arbre Binaire de Recherche (non-équilibré).
  *********************************************************************/
