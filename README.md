@@ -7,6 +7,10 @@ Rozen & Gyumi
 # Informations
 Le programme tourne avec la version JAVA SE 16 et JAVAFX 16.
 
+Modification du fichier utilities.c et utilities.h :
+- Remplacement de min par intmin
+- Remplacement de max par intmax
+
 ## Windows
 
 Si le programme tourne sous window, vous devrez supprimer le fichier .so situé dans le fichier java/lib.

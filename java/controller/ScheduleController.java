@@ -80,13 +80,6 @@ public class ScheduleController {
         File selectedFile = file.showOpenDialog(null);
         if (selectedFile != null)
             GetOutput().setText(selectedFile.toString());
-
-        try {
-            Exec_Schedule();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void SetMakespan(int makespan) throws Exception {
@@ -182,6 +175,7 @@ public class ScheduleController {
     @FXML
     public void Exec_Schedule() throws Exception {
         CleanDiagram();
+
         if (GetInput().toString().isBlank())
             throw new NullPointerException("Exec_Schedule() : Input Path is not nullable");
         if (GetOutput().toString().isBlank())
