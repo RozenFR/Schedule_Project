@@ -171,7 +171,7 @@ void reorderInstance( Instance * I,  DataStructure structtype, Order order ) {
                 case BST : {
                     BSTree * resultBSTree = newBSTree( &spt, &viewTask, &viewTask, &freeTask, &freeTask );
                     for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
-                        BSTreeInsert( resultBSTree, nodeActuel ->data, nodeActuel -> data );
+                        BSTreeInsert( resultBSTree, nodeActuel -> data, nodeActuel -> data );
                     freeList( * I, 0 );
                     * I = BSTreeToList( resultBSTree );
                 } break;
