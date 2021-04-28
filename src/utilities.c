@@ -23,7 +23,7 @@ int intmin(int a, int b) {
 }
 
 void viewInt(const void *i) {
-    printf("%d ", *((int*)i));
+    printf("%d", *((int*)i));
 }
 
 void freeInt(void * i) {

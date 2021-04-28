@@ -34,11 +34,11 @@ void freeTask( void * task ) {
 }
 
 void viewTask( const void * task ) {
-    printf("{ ID : %s\t", ( ( Task * ) task ) -> id );
-    printf("PROC TIME : %d\t", ( ( Task * ) task ) -> processingTime );
-    printf("REL TIME : %d\t", ( ( Task * ) task ) -> releaseTime );
-    printf("DEADLINE : %d\t", ( ( Task * ) task ) -> deadline );
-    printf("WEIGHT : %d }\n", ( ( Task * ) task ) -> weight );
+    printf("%s ", ( ( Task * ) task ) -> id );
+    printf("%d ", ( ( Task * ) task ) -> processingTime );
+    printf("%d ", ( ( Task * ) task ) -> releaseTime );
+    printf("%d ", ( ( Task * ) task ) -> deadline );
+    printf("%d \n", ( ( Task * ) task ) -> weight );
 }
 
 /************************************************
@@ -165,22 +165,25 @@ void reorderInstance( Instance * I,  DataStructure structtype, Order order ) {
                     OList * orderedOList = newOList( &spt, &viewTask, &viewTask, &freeTask, &freeTask );
                     for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                         OListInsert( orderedOList, nodeActuel -> data, nodeActuel -> data );
-                    freeList( * I, 0 );
-                    * I = OListToList( orderedOList );
+                    freeInstance( *I , 0 );
+                    * I = ( Instance ) OListToList( orderedOList );
+                    freeOList( orderedOList, 0, 0 );
                 } break;
                 case BST : {
                     BSTree * resultBSTree = newBSTree( &spt, &viewTask, &viewTask, &freeTask, &freeTask );
                     for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                         BSTreeInsert( resultBSTree, nodeActuel ->data, nodeActuel -> data );
-                    freeList( * I, 0 );
+                    freeInstance( * I, 0 );
                     * I = BSTreeToList( resultBSTree );
+                    freeBSTree( resultBSTree, 0, 0 );
                 } break;
                 case EBST : {
                     BSTree * resultEquilibreBSTree = newEBSTree( &spt, &viewTask, &viewTask, &freeTask, &freeTask );
                     for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                         EBSTreeInsert( resultEquilibreBSTree, nodeActuel -> data, nodeActuel -> data );
-                    freeList( * I, 0 );
+                    freeInstance( * I, 0 );
                     * I = BSTreeToList( resultEquilibreBSTree );
+                    freeBSTree( resultEquilibreBSTree, 0, 0 );
                 } break;
                 default:{
                     error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");
@@ -192,22 +195,25 @@ void reorderInstance( Instance * I,  DataStructure structtype, Order order ) {
                         OList * orderedOList = newOList( &lpt, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             OListInsert( orderedOList, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = OListToList( orderedOList );
+                        freeOList( orderedOList, 0, 0 );
                     } break;
                     case BST : {
                         BSTree * resultBSTree = newBSTree( &lpt, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             BSTreeInsert( resultBSTree, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = BSTreeToList( resultBSTree );
+                        freeBSTree( resultBSTree, 0, 0 );
                     } break;
                     case EBST : {
                         BSTree * resultEquilibreBSTree = newEBSTree( &lpt, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             EBSTreeInsert( resultEquilibreBSTree, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = BSTreeToList( resultEquilibreBSTree );
+                        freeBSTree( resultEquilibreBSTree, 0, 0 );
                     } break;
                     default:{
                         error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");
@@ -220,22 +226,25 @@ void reorderInstance( Instance * I,  DataStructure structtype, Order order ) {
                         OList * orderedOList = newOList( &wspt, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             OListInsert( orderedOList, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = OListToList( orderedOList );
+                        freeOList( orderedOList, 0, 0 );
                     } break;
                     case BST : {
                         BSTree * resultBSTree = newBSTree( &wspt, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             BSTreeInsert( resultBSTree, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = BSTreeToList( resultBSTree );
+                        freeBSTree( resultBSTree, 0, 0 );
                     } break;
                     case EBST : {
                         BSTree * resultEquilibreBSTree = newEBSTree( &wspt, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             EBSTreeInsert( resultEquilibreBSTree, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = BSTreeToList( resultEquilibreBSTree );
+                        freeBSTree( resultEquilibreBSTree, 0, 0 );
                     } break;
                     default:{
                         error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");
@@ -248,22 +257,25 @@ void reorderInstance( Instance * I,  DataStructure structtype, Order order ) {
                         OList * orderedOList = newOList( &fcfs, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             OListInsert( orderedOList, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = OListToList( orderedOList );
+                        freeOList( orderedOList, 0, 0 );
                     } break;
                     case BST : {
                         BSTree * resultBSTree = newBSTree( &fcfs, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             BSTreeInsert( resultBSTree, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = BSTreeToList( resultBSTree );
+                        freeBSTree( resultBSTree, 0, 0 );
                     } break;
                     case EBST : {
                         BSTree * resultEquilibreBSTree = newEBSTree( &fcfs, &viewTask, &viewTask, &freeTask, &freeTask );
                         for ( LNode * nodeActuel = ( * I ) -> head ; nodeActuel != NULL ; nodeActuel = nodeActuel -> succ )
                             EBSTreeInsert( resultEquilibreBSTree, nodeActuel -> data, nodeActuel -> data );
-                        freeList( * I, 0 );
+                        freeInstance( * I, 0 );
                         * I = BSTreeToList( resultEquilibreBSTree );
+                        freeBSTree( resultEquilibreBSTree, 0, 0 );
                     } break;
                     default : {
                         error("reorderInstance() : la structure de donnée utilisée dans les tris des tâches est différente de OL - BST - EBST\n");

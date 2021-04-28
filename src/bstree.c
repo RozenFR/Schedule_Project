@@ -43,30 +43,30 @@ BSTree * newBSTree( int ( * preceed )( const void *, const void * ),
  * Les clés sont comparées en utilisant la fonction preceed.
  * NB : fonction récursive.
  */
- /**
+/**
 static BSTNode * insertBSTNodeIterative( BSTNode * curr, void * key, void * data, int ( * preceed )( const void *, const void * ) ) {
-    BSTNode * nouveau = newBSTNode( key, data );
-    BSTNode * root = curr;
-    if ( curr == NULL ) {
-        return nouveau;
-    }
-    BSTNode * pere;
-    while( curr != NULL ) {
-        pere = curr;
-        if ( preceed( curr->key, key ) == 1 ) {
-            curr = curr -> right;
-        } else if ( preceed( key, curr -> key ) == 1 ) {
-            curr = curr -> left;
-        } else {
-            error("insertBSTNodeIterative() : tentative d'insétion d'un noeud avec une \"key\" déjà présente" );
-        }
-    }
-    if ( preceed( pere -> data, data ) == 1 ) {
-        pere -> right = nouveau;
-    } else {
-        pere -> left = nouveau;
-    }
-    return root;
+   BSTNode * nouveau = newBSTNode( key, data );
+   BSTNode * root = curr;
+   if ( curr == NULL ) {
+       return nouveau;
+   }
+   BSTNode * pere;
+   while( curr != NULL ) {
+       pere = curr;
+       if ( preceed( curr->key, key ) == 1 ) {
+           curr = curr -> right;
+       } else if ( preceed( key, curr -> key ) == 1 ) {
+           curr = curr -> left;
+       } else {
+           error("insertBSTNodeIterative() : tentative d'insétion d'un noeud avec une \"key\" déjà présente" );
+       }
+   }
+   if ( preceed( pere -> data, data ) == 1 ) {
+       pere -> right = nouveau;
+   } else {
+       pere -> left = nouveau;
+   }
+   return root;
 }
 */
 static BSTNode * insertBSTNode( BSTNode * curr, void * key, void * data, int ( * preceed )( const void *, const void * ) ) {
@@ -286,9 +286,6 @@ void freeBSTree( BSTree * T, int deleteKey, int deleteData ) {
  */
 static void inorderView( BSTNode * curr, void ( * viewKey )( const void * ), void ( * viewData )( const void * ) ) {
     LNode * topOfStack = NULL;
-    if ( curr == NULL ) {
-        printf( "Arbre VIDE\n" );
-    }
     List * stack = newList( viewKey, NULL );
     while ( 1 ) {
         if ( curr != NULL ) {
@@ -301,6 +298,8 @@ static void inorderView( BSTNode * curr, void ( * viewKey )( const void * ), voi
                 topOfStack = listRemoveFirst( stack );
                 curr = ( BSTNode * ) topOfStack -> data;
                 free( topOfStack );//Attention! listRemoveFirst() laisse des fuites de mémoire
+                viewKey( curr -> key );
+                printf(" ");
                 viewData( curr -> data );//quand le maillon qu'on a "pop" n'est pas utilisé par une autre liste
                 curr = curr -> right;
             }
@@ -427,7 +426,7 @@ bool isBSTree( const BSTNode * curr, int ( * preceed )( const void * , const voi
     } else {
         return(
                 curr -> left == NULL ? true : isBSTree( curr -> left, preceed ) && preceed( curr -> left -> key, curr -> key )
-                                            && curr->right == NULL ? true : isBSTree( curr -> right, preceed ) && preceed( curr -> key, curr -> right -> key )
+                                              && curr->right == NULL ? true : isBSTree( curr -> right, preceed ) && preceed( curr -> key, curr -> right -> key )
 
         );
     }

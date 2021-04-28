@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-//#include <assert.h>
 #include "../include/utilities.h"
 #include "../include/list.h"
 #include "../include/olist.h"
@@ -91,7 +90,7 @@ void addTaskToSchedule( Schedule * sched, int startingTime, Task * task ) {
  * Compute schedule
  *****************************************************************************/
 
-/**
+/** FAIT
  * @brief
  * Vérifier si on peut faire du backfilling avec la tâche task dans l'ordonnancement
  * représenté par la liste ordonnée scheduledTasks.
@@ -106,20 +105,20 @@ static int OLFindBackfillingPosition( const OList * scheduledTasks, const Task *
         int debutTacheAInserer = task->releaseTime;
         int debutDeLaTachePrecedente = 0;
         int processingTimeTachePrecedente = 0;
-            for ( OLNode * actuel = scheduledTasks->head; actuel != NULL; actuel = actuel->succ ) {
-                debutTacheAInserer = intmax( debutDeLaTachePrecedente + processingTimeTachePrecedente, debutTacheAInserer );
-                if ( debutTacheAInserer + task->processingTime <= *(int *)actuel->key ) {
-                    return debutTacheAInserer;
-                }
-                debutDeLaTachePrecedente = *(int *)actuel->key;
-                processingTimeTachePrecedente = ((Task *)actuel->data)->processingTime;
+        for ( OLNode * actuel = scheduledTasks->head; actuel != NULL; actuel = actuel->succ ) {
+            debutTacheAInserer = intmax( debutDeLaTachePrecedente + processingTimeTachePrecedente, debutTacheAInserer );
+            if ( debutTacheAInserer + task->processingTime <= *(int *)actuel->key ) {
+                return debutTacheAInserer;
+            }
+            debutDeLaTachePrecedente = *(int *)actuel->key;
+            processingTimeTachePrecedente = ((Task *)actuel->data)->processingTime;
         }
         return -1;
     }
 
 }
 
-/**
+/** FAIT
  * @brief
  * Trouver la date de début de la tâche task si on l'ajoute
  * dans la structure scheduledTasks de type liste ordonnée.
@@ -130,7 +129,7 @@ static int OLFindStartingTime( const OList * scheduledTasks, const Task * task, 
     if ( scheduledTasks -> head == NULL ) {
         return task -> releaseTime;
     } else if ( ! backfilling ) {
-            return intmax( *(int *)(scheduledTasks->tail->key) + ((Task *)scheduledTasks->tail->data)->processingTime, task->releaseTime );
+        return intmax( *(int *)(scheduledTasks->tail->key) + ((Task *)scheduledTasks->tail->data)->processingTime, task->releaseTime );
     } else {
         int backfillingStartingTime = OLFindBackfillingPosition( scheduledTasks, task );
         if ( backfillingStartingTime == -1 ) {
@@ -141,7 +140,7 @@ static int OLFindStartingTime( const OList * scheduledTasks, const Task * task, 
     }
 }
 
-/**
+/** FAIT
  * @brief
  * Vérifier si on peut faire du backfilling avec la tâche task dans l'ordonnancement
  * représenté par le sous-arbre raciné à curr de l'arbre binaire de recherche scheduledTasks.
@@ -172,7 +171,7 @@ static int BSTFindBackfillingPosition( const BSTree * scheduledTasks, const BSTN
     }
 }
 
-/**
+/** FAIT
  * @brief
  * Trouver la date de début de la tâche task si on l'ajoute
  * dans la structure scheduledTasks de type arbre binaire de recherche.
@@ -193,7 +192,7 @@ static int BSTFindStartingTime( const BSTree * scheduledTasks, const Task * task
                 return resultatFindBackfilling;
             } else {
                 BSTNode * maxNode = BSTMax( scheduledTasks->root );
-                return intmax( *(int *)maxNode->key + ((Task *)maxNode->data)->processingTime, task->processingTime );
+                return intmax( *(int *)maxNode->key + ((Task *)maxNode->data)->processingTime, task->releaseTime );
             }
         }
     }
@@ -223,17 +222,29 @@ void computeSchedule( Schedule * sched, const Instance I ) {
  * Save schedule
  *****************************************************************************/
 
-/**
+/** FAIT
  * @brief
  * Sauvegarder l'ordonnancement représenté par la liste ordonnée scheduledTasks
  * dans le ficher indiqué par le descripteur fd.
  * NB : Procédure itérative
  */
 static void OLSaveSchedule( const OList * scheduledTasks, FILE * fd ) {
-    /* A FAIRE */
+    if ( fd != NULL ) {
+        if ( scheduledTasks != NULL) {
+            for ( OLNode * aAfficher = scheduledTasks -> head; aAfficher != NULL; aAfficher = aAfficher -> succ ) {
+                fprintf( fd,"%s ", ((Task *)aAfficher->data)->id );
+                fprintf( fd, "%d ", ((Task *)aAfficher->data)->processingTime );
+                fprintf( fd, "%d ", ((Task *)aAfficher->data)->releaseTime );
+                fprintf( fd, "%d ", ((Task *)aAfficher->data)->deadline );
+                fprintf( fd, "%d ", ((Task *)aAfficher->data)->weight );
+                fprintf( fd, "%d", *(int *)aAfficher->key );
+                fprintf( fd, "\n" );
+            }
+        }
+    }
 }
 
-/**
+/** FAIT
  * @brief
  * Sauvegarder l'ordonnancement représenté par le sous-arbre raciné au nœud curr
  * dans le ficher indiqué par le descripteur fd.
@@ -241,7 +252,35 @@ static void OLSaveSchedule( const OList * scheduledTasks, FILE * fd ) {
  *      Pensez à un parcours infixe.
  */
 static void BSTSaveSchedule( const BSTNode * curr, FILE * fd ) {
-    /* A FAIRE */
+    if ( fd != NULL ) {
+        if ( curr != NULL ) {
+            LNode * topOfStack = NULL;
+            List * stack = newList( viewInt, NULL );
+            while ( 1 ) {
+                if ( curr != NULL ) {
+                    listInsertFirst( stack, ( void * ) curr );
+                    curr = curr -> left;
+                } else {
+                    if ( stack -> numelm == 0 ) {
+                        break;
+                    } else {
+                        topOfStack = listRemoveFirst( stack );
+                        curr = ( BSTNode * ) topOfStack -> data;
+                        free( topOfStack );//Attention! listRemoveFirst() laisse des fuites de mémoire
+                        fprintf( fd,"%s ", ((Task *)curr->data)->id );
+                        fprintf( fd, "%d ", ((Task *)curr->data)->processingTime );
+                        fprintf( fd, "%d ", ((Task *)curr->data)->releaseTime );
+                        fprintf( fd, "%d ", ((Task *)curr->data)->deadline );
+                        fprintf( fd, "%d ", ((Task *)curr->data)->weight );
+                        fprintf( fd, "%d ", *(int *)curr->key );
+                        fprintf( fd, "\n" );//quand le maillon qu'on a "pop" n'est pas utilisé par une autre liste
+                        curr = curr -> right;
+                    }
+                }
+            }
+            freeList( stack, 0 );
+        }
+    }
 }
 
 void saveSchedule( const Schedule * sched, char * filename ) {
@@ -370,17 +409,17 @@ static long OLSumWjFj( const OList * scheduledTasks ) {
  * représenté par l'arbre binaire de recherche raciné au nœud curr.
  * NB : fonction récursive
  */
-    static long BSTSumWjFj( const BSTNode * curr ) {
-        if (curr == NULL)
-            return 0;
-        else {
-            long sumWjFjLeft = BSTSumWjFj( curr->left );
-            long sumWjFjRight = BSTSumWjFj( curr->right );
-            return ( *(int *)curr->key + ((Task *)curr->data)->processingTime
-            - ((Task *)curr->data)->releaseTime )
-            * ((Task *)curr->data)->weight + sumWjFjLeft + sumWjFjRight;
-        }
+static long BSTSumWjFj( const BSTNode * curr ) {
+    if (curr == NULL)
+        return 0;
+    else {
+        long sumWjFjLeft = BSTSumWjFj( curr->left );
+        long sumWjFjRight = BSTSumWjFj( curr->right );
+        return ( *(int *)curr->key + ((Task *)curr->data)->processingTime
+                 - ((Task *)curr->data)->releaseTime )
+               * ((Task *)curr->data)->weight + sumWjFjLeft + sumWjFjRight;
     }
+}
 
 long SumWjFj( const Schedule * sched ) {
     switch ( sched->structtype ) {

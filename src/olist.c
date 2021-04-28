@@ -116,16 +116,12 @@ void freeOList( OList * L, int deleteKey, int deleteData ) {
  * (+) viewData pour les données
  */
 void viewOList( const OList * L ) {
-    if ( L -> numelm == 0 ) {
-        printf("Liste VIDE\n");
-    }
-    else {
+    if ( L -> numelm != 0 ) {
         for ( OLNode * aAfficher = L -> head; aAfficher != NULL; aAfficher = aAfficher -> succ ) {
             L -> viewKey( aAfficher -> key );
-        }
-        printf("\n" );
-        for ( OLNode * aAfficher = L -> head; aAfficher != NULL; aAfficher = aAfficher -> succ ) {
+            printf(" ");
             L -> viewData( aAfficher -> data );
+            printf("\n");
         }
     }
 }

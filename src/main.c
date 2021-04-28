@@ -72,16 +72,18 @@ int main(void) {
     }*/
     Instance I = readInstance("./data/exemple");
     //viewInstance( I );
-    reorderInstance(&I, OL, SPT);
+    reorderInstance(&I, EBST, SPT);
     //viewInstance( I );
 
-    Schedule *SOL = newSchedule(OL, 1);
+    Schedule *SOL = newSchedule(EBST, 1);
     computeSchedule(SOL, I);
-    viewSchedule(SOL);
+    //viewSchedule(SOL);
+    saveSchedule( SOL, "./data/output_EBST");
     //printf("Makespan=%ld\n", makespan(SOL));
     //printf("SumWjCj=%ld\n", SumWjCj(SOL));
     //printf("SumWjFj=%ld\n", SumWjFj(SOL));
     //printf("SumWjTj=%ld\n", SumWjTj(SOL));
+    freeSchedule( SOL );
     return EXIT_SUCCESS;
 }
 
