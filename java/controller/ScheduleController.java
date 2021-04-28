@@ -60,7 +60,8 @@ public class ScheduleController {
             throw new NullPointerException("SetSchedule NullPointerException : Order need to be between 0 and 3 included.");
         if (bf != 0 && bf != 1)
             throw new NullPointerException("SetSchedule NullPointerException : BackFilling need to be 0 or 1.");
-
+        System.out.println(input);
+        System.out.println(output);
         new ScheduleModel().getSchedule(input, output, dt, ord, bf);
     }
 
@@ -184,32 +185,32 @@ public class ScheduleController {
         if (GetOL().isSelected()) {
             if (GetSPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 0, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 0, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 0, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 0, 0);
                 else
                     throw new Exception("Exec_Schedule() OLSPT : Selection out of range.");}
             else if (GetLPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 1, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 1, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 1, 0);
+                    SetSchedule(GetInput().toString(), GetOutput().getText(), 0, 1, 0);
                 else
                     throw new Exception("Exec_Schedule() OLLPT : Selection out of range.");
             }
             else if (GetWSPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 2, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 2, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 2, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 2, 0);
                 else
                     throw new Exception("Exec_Schedule() OLWSPT : Selection out of range.");
             }
             else if (GetFCFS().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 3, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 3, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 0, 3, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 3, 0);
                 else
                     throw new Exception("Exec_Schedule() OLFCFS : Selection out of range.");
             }
@@ -219,32 +220,32 @@ public class ScheduleController {
         else if (GetBST().isSelected()) {
             if (GetSPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 0, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 0, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 0, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 0, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTSPT : Selection out of range.");}
             else if (GetLPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 1, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 1, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 1, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 1, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTLPT : Selection out of range.");
             }
             else if (GetWSPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 2, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 2, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 2, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 2, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTWSPT : Selection out of range.");
             }
             else if (GetFCFS().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 3, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 3, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 1, 3, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 1, 3, 0);
                 else
                     throw new Exception("Exec_Schedule() BSTFCFS : Selection out of range.");
             }
@@ -254,33 +255,33 @@ public class ScheduleController {
         else if (GetEBST().isSelected()) {
             if (GetSPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 0, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 0, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 0, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 0, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTSPT : Selection out of range.");
             }
             else if (GetLPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 1, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 1, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 1, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 1, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTLPT : Selection out of range.");
             }
             else if (GetWSPT().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 2, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 2, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 2, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 2, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTWSPT : Selection out of range.");
             }
             else if (GetFCFS().isSelected()) {
                 if (GetBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 3, 1);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 3, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().toString(), 2, 3, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 2, 3, 0);
                 else
                     throw new Exception("Exec_Schedule() EBSTFCFS : Selection out of range.");
             }

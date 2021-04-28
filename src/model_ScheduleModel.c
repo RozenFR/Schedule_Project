@@ -98,7 +98,7 @@ JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
     }
 
     // Compute Schedule
-    computeSchedule(sched, I);
+    computeSchedule(sched, &I);
 
     // Save Schedule
     saveSchedule(sched, csout);
