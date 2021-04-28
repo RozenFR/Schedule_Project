@@ -71,16 +71,16 @@ int main(void) {
     }*/
     Instance I = readInstance("./data/exemple");
     //viewInstance( I );
-    reorderInstance(&I, EBST, SPT);
+    reorderInstance(&I, OL, SPT);
     //viewInstance( I );
 
-    Schedule *SOL = newSchedule(BST, 0);
+    Schedule *SOL = newSchedule(OL, 1);
     computeSchedule(SOL, I);
     viewSchedule(SOL);
-    printf("Makespan=%ld\n", makespan(SOL));
-    printf("SumWjCj=%ld\n", SumWjCj(SOL));
-    printf("SumWjFj=%ld\n", SumWjFj(SOL));
-    printf("SumWjTj=%ld\n", SumWjTj(SOL));
+    //printf("Makespan=%ld\n", makespan(SOL));
+    //printf("SumWjCj=%ld\n", SumWjCj(SOL));
+    //printf("SumWjFj=%ld\n", SumWjFj(SOL));
+    //printf("SumWjTj=%ld\n", SumWjTj(SOL));
     return EXIT_SUCCESS;
 }
 
