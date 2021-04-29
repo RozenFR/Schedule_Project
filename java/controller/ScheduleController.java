@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.ScheduleModel;
@@ -364,11 +365,12 @@ public class ScheduleController {
 
                     Text txt = new Text(data[0]);
                     txt.setFill(Color.WHITE);
+                    txt.setFont(Font.font(14));
                     Rectangle rec = new Rectangle(DEFAULT_MARGIN * time + DEFAULT_MARGIN, DEFAULT_MARGIN);
                     rec.setFill(Color.rgb(r, g, b, 1));
                     stack.getChildren().addAll(rec, txt);
                     stack.setLayoutX(DEFAULT_MARGIN * start);
-                    stack.setLayoutY(DEFAULT_MARGIN * (nbr + 1));
+                    stack.setLayoutY(DEFAULT_MARGIN * nbr + 25);
                     nbr++;
 
                     // Add to diagram
