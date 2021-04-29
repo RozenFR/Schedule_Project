@@ -3,8 +3,11 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -13,6 +16,7 @@ import model.ScheduleModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ScheduleController {
 
@@ -26,6 +30,7 @@ public class ScheduleController {
     @FXML private Label _WJTJ;
 
     @FXML private AnchorPane _diagram;
+    @FXML private TableView _Table;
 
     // Choix de la structure et du modèle d'ordre
     @FXML private RadioButton _rOL;
@@ -75,12 +80,15 @@ public class ScheduleController {
     }
 
     @FXML
-    private void SetOutput() {
+    private void SetOutput() throws Exception {
         FileChooser file = new FileChooser();
         file.setTitle("Selection du fichier Sortant.");
         File selectedFile = file.showOpenDialog(null);
         if (selectedFile != null)
             GetOutput().setText(selectedFile.toString());
+
+        if (!GetInput().getText().isBlank())
+            Exec_Schedule();
     }
 
     private void SetMakespan(int makespan) throws Exception {
@@ -110,6 +118,10 @@ public class ScheduleController {
     // Getter
     public AnchorPane GetDiagram() {
         return this._diagram;
+    }
+
+    public TableView GetTable() {
+        return this._Table;
     }
     
     public Label GetInput() {
@@ -296,22 +308,32 @@ public class ScheduleController {
     }
 
     // Diagram
-    private void SetDiagramAndSum() throws Exception {
-        if (GetOutput().toString().isBlank()) {
+    @FXML
+    public void SetDiagramAndSum() throws Exception {
+        if (!GetOutput().getText().isBlank()) {
             // Constant
-            final int DEFAULT_MARGIN = 25;
+            final int DEFAULT_MARGIN = 30;
 
             // Variable
-            String path_output = GetOutput().toString();
-            File file = new File(path_output);
+            String path_output = GetOutput().getText();
+
             int makespan = 0, wjcj = 0, wjtj = 0, wjfj = 0;
+            int r = 0, g = 0, b= 0;
 
             int nbr = 0; // Nb of rectangle
 
+            System.out.println("Make diagram, path : " + path_output);
+
             try {
+
+                File file = new File(path_output);
+
                 Scanner reader = new Scanner(file);
+
+                System.out.println("SetDiagramAndSum <Status> : Entering Loop.");
+
                 while (reader.hasNextLine()) {
-                    String[] data = reader.nextLine().split(" ");
+                    String [] data = reader.nextLine().split(" ");
 
                     // Setup variable with data
                     String id = data[0];
@@ -329,10 +351,20 @@ public class ScheduleController {
                     wjtj += completion * weight;
                     wjfj += response * weight;
 
+                    do {
+                        r = ThreadLocalRandom.current().nextInt(0, 256);
+                        g = ThreadLocalRandom.current().nextInt(0, 256);
+                        b = ThreadLocalRandom.current().nextInt(0, 256);
+                    } while (r == 255 && g == 255 && b == 255);
+
                     // Setup Rectangle
+                    System.out.println("Rectangle Input ID Number : " + id);
+
                     StackPane stack = new StackPane();
+
                     Text txt = new Text(data[0]);
-                    Rectangle rec = new Rectangle(DEFAULT_MARGIN * time, DEFAULT_MARGIN);
+                    Rectangle rec = new Rectangle(DEFAULT_MARGIN * time + DEFAULT_MARGIN, DEFAULT_MARGIN);
+                    rec.setFill(Color.rgb(r, g, b, 1));
                     stack.getChildren().addAll(rec, txt);
                     stack.setLayoutX(DEFAULT_MARGIN * start);
                     stack.setLayoutY(DEFAULT_MARGIN * (nbr + 1));
@@ -343,6 +375,17 @@ public class ScheduleController {
 
                 }
 
+                // Setup Column
+                GetTable().getColumns().clear();
+                for (int i = 0; i != makespan + 1; i++) {
+                    TableColumn column = new TableColumn(IntToStr(i));
+                    column.setMinWidth(DEFAULT_MARGIN);
+                    column.setMaxWidth(DEFAULT_MARGIN);
+                    column.setPrefWidth(DEFAULT_MARGIN);
+
+                    GetTable().getColumns().add(column);
+                }
+
                 // Change Label for Sum
                 SetMakespan(makespan);
                 SetWjCj(wjcj);
@@ -350,8 +393,12 @@ public class ScheduleController {
                 SetWjFj(wjfj);
 
             } catch (FileNotFoundException e) {
+                System.out.println("SetDiagramAnSum <FileNotFoundException> : File is not found.");
                 e.printStackTrace();
             }
+        }
+        else {
+            throw new Exception("SetDiagramAndSum <variable> : Output is undefined");
         }
     }
 
