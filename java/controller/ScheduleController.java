@@ -1,12 +1,10 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -31,7 +29,7 @@ public class ScheduleController {
     @FXML private Label _WJTJ;
 
     @FXML private AnchorPane _diagram;
-    @FXML private TableView _Table;
+    @FXML private HBox _ViewContent;
 
     // Choix de la structure et du modèle d'ordre
     @FXML private RadioButton _rOL;
@@ -92,28 +90,36 @@ public class ScheduleController {
             Exec_Schedule();
     }
 
-    private void SetMakespan(int makespan) throws Exception {
-        if (makespan < 0)
+    private void SetMakespan(long makespan) throws Exception {
+        if (makespan < 0) {
+            GetMakespan().setText("Erreur de calcul ...");
             throw new Exception("SetMakespan <variable> : makespan can't be negative.");
-        GetMakespan().setText(IntToStr(makespan));
+        }
+        GetMakespan().setText(LongToStr(makespan));
     }
 
-    private void SetWjCj(int wjcj) throws Exception {
-        if (wjcj < 0)
+    private void SetWjCj(long wjcj) throws Exception {
+        if (wjcj < 0) {
+            GetWjCj().setText("Erreur de calcul ...");
             throw new Exception("SetWjCj <variable> : wjcj can't be negative.");
-        GetWjCj().setText(IntToStr(wjcj));
+        }
+        GetWjCj().setText(LongToStr(wjcj));
     }
 
-    private void SetWjTj(int wjtj) throws Exception {
-        if (wjtj < 0)
+    private void SetWjTj(long wjtj) throws Exception {
+        if (wjtj < 0) {
+            GetWjTj().setText("Erreur de calcul ...");
             throw new Exception("SetWjTj <variable> : wjtj can't be negative.");
-        GetWjTj().setText(IntToStr(wjtj));
+        }
+        GetWjTj().setText(LongToStr(wjtj));
     }
 
-    private void SetWjFj(int wjfj) throws Exception {
-        if (wjfj < 0)
+    private void SetWjFj(long wjfj) throws Exception {
+        if (wjfj < 0) {
+            GetWjFj().setText("Erreur de calcul ...");
             throw new Exception("SetWjFj <variable> : wjfj can't be negative.");
-        GetWjFj().setText(IntToStr(wjfj));
+        }
+        GetWjFj().setText(LongToStr(wjfj));
     }
 
     // Getter
@@ -121,8 +127,8 @@ public class ScheduleController {
         return this._diagram;
     }
 
-    public TableView GetTable() {
-        return this._Table;
+    public HBox GetViewContent() {
+        return this._ViewContent;
     }
     
     public Label GetInput() {
@@ -207,7 +213,7 @@ public class ScheduleController {
                 if (GetBF().isSelected())
                     SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 1, 1);
                 else if (GetNBF().isSelected())
-                    SetSchedule(GetInput().toString(), GetOutput().getText(), 0, 1, 0);
+                    SetSchedule(GetInput().getText(), GetOutput().getText(), 0, 1, 0);
                 else
                     throw new Exception("Exec_Schedule() OLLPT : Selection out of range.");
             }
@@ -318,8 +324,8 @@ public class ScheduleController {
             // Variable
             String path_output = GetOutput().getText();
 
-            int makespan = 0, wjcj = 0, wjtj = 0, wjfj = 0;
-            int r = 0, g = 0, b= 0;
+            long makespan = 0, wjcj = 0, wjtj = 0, wjfj = 0;
+            int r = 0, g = 0, b = 0;
 
             int nbr = 0; // Nb of rectangle
 
@@ -338,16 +344,16 @@ public class ScheduleController {
 
                     // Setup variable with data
                     String id = data[0];
-                    int start = StrToInt(data[5]);
-                    int time = StrToInt(data[1]);
-                    int weight = StrToInt(data[4]);
+                    long start = StrToLong(data[5]);
+                    long time = StrToLong(data[1]);
+                    long weight = StrToLong(data[4]);
                     // Variable for sum
-                    int end = start + time; // Cj
-                    int completion = Integer.max(0, end - StrToInt(data[3])); // Tj
-                    int response = end - StrToInt(data[2]); // Fj
+                    long end = start + time; // Cj
+                    long completion = Long.max(0, end - StrToLong(data[3])); // Tj
+                    long response = end - StrToLong(data[2]); // Fj
 
                     // Calculate sum
-                    makespan = Integer.max(makespan, end);
+                    makespan = Long.max(makespan, end);
                     wjcj += end * weight;
                     wjtj += completion * weight;
                     wjfj += response * weight;
@@ -359,6 +365,7 @@ public class ScheduleController {
                     } while (r == 255 && g == 255 && b == 255);
 
                     // Setup Rectangle
+                    System.out.println("Rectangle number : " + nbr);
                     System.out.println("Rectangle Input ID Number : " + id);
 
                     StackPane stack = new StackPane();
@@ -370,24 +377,39 @@ public class ScheduleController {
                     rec.setFill(Color.rgb(r, g, b, 1));
                     stack.getChildren().addAll(rec, txt);
                     stack.setLayoutX(DEFAULT_MARGIN * start);
-                    stack.setLayoutY(DEFAULT_MARGIN * nbr + 25);
+                    stack.setLayoutY(DEFAULT_MARGIN * (nbr + 1));
                     nbr++;
 
                     // Add to diagram
                     GetDiagram().getChildren().add(stack);
 
                 }
+                System.out.println("Out of Diagram Loop");
 
                 // Setup Column
-                GetTable().getColumns().clear();
-                for (int i = 0; i != makespan + 1; i++) {
-                    TableColumn column = new TableColumn(IntToStr(i));
-                    column.setMinWidth(DEFAULT_MARGIN);
-                    column.setMaxWidth(DEFAULT_MARGIN);
-                    column.setPrefWidth(DEFAULT_MARGIN);
+                GetViewContent().getChildren().clear();
+                if (nbr < 200) {
+                    for (int i = 0; i <= makespan + 1; i++) {
+                        Label label = new Label(IntToStr(i));
+                        label.setMaxWidth(DEFAULT_MARGIN);
+                        label.setMinWidth(DEFAULT_MARGIN);
+                        label.setPrefWidth(DEFAULT_MARGIN);
+                        label.setMaxHeight(DEFAULT_MARGIN);
+                        label.setMinHeight(DEFAULT_MARGIN);
+                        label.setPrefHeight(DEFAULT_MARGIN);
 
-                    GetTable().getColumns().add(column);
+                        label.setAlignment(Pos.CENTER);
+                        label.getStyleClass().add("column");
+
+                        GetViewContent().getChildren().add(label);
+                    }
                 }
+                else {
+
+                    Label label = new Label("L'axe est trop grande pour être affiché. Cependant vous pouvez toujours voir les données.");
+                    GetViewContent().getChildren().add(label);
+                }
+
 
                 // Change Label for Sum
                 SetMakespan(makespan);
@@ -409,12 +431,16 @@ public class ScheduleController {
         GetDiagram().getChildren().clear();
     }
 
-    private int StrToInt(String str) throws Exception {
+    private long StrToLong(String str) throws Exception {
         if (str.isEmpty())
-            throw new NullPointerException("StrToInt : str is not nullable.");
+            throw new NullPointerException("StrToLong : str is not nullable.");
         if (str.contains("-"))
-            throw new Exception("StrToInt : Conversion only available for positive value.");
-        return Integer.parseInt(str);
+            throw new Exception("StrToLong : Conversion only available for positive value.");
+        return Long.parseLong(str);
+    }
+
+    private String LongToStr(long i) {
+        return Long.toString(i);
     }
 
     private String IntToStr(int i) {
