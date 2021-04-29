@@ -5,7 +5,7 @@ import java.io.File;
 public class ScheduleModel {
 
     static {
-        System.loadLibrary("schedulelibrary");
+        System.loadLibrary("libschedulelibrary");
     }
 
     public ScheduleModel() {
