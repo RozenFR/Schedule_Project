@@ -1,3 +1,14 @@
+# Ad
+Installer JETBRAINS :
+- CLion
+- Intellij IDEA
+- WebStorm
+- PHPStorm
+- PyCharm
+- Android Studio
+
+Logiciel professionnel pour assurer un bon développement.
+
 # Scheduling Project
 Ce projet a été créer par 2 étudiant de l'université UFR de Metz en France
 
