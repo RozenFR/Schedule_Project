@@ -363,6 +363,7 @@ public class ScheduleController {
                     StackPane stack = new StackPane();
 
                     Text txt = new Text(data[0]);
+                    txt.setFill(Color.WHITE);
                     Rectangle rec = new Rectangle(DEFAULT_MARGIN * time + DEFAULT_MARGIN, DEFAULT_MARGIN);
                     rec.setFill(Color.rgb(r, g, b, 1));
                     stack.getChildren().addAll(rec, txt);
