@@ -1,7 +1,11 @@
 package controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.*;
@@ -10,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.ScheduleModel;
 
 import java.io.File;
@@ -364,18 +369,41 @@ public class ScheduleController {
                         b = ThreadLocalRandom.current().nextInt(0, 256);
                     } while (r == 255 && g == 255 && b == 255);
 
-                    // Setup Rectangle
+                    // Debug Rectangle
                     System.out.println("Rectangle number : " + nbr);
                     System.out.println("Rectangle Input ID Number : " + id);
 
+                    // Set StackPane to contain Button and Rectangle
                     StackPane stack = new StackPane();
-
-                    Text txt = new Text(data[0]);
-                    txt.setFill(Color.WHITE);
-                    txt.setFont(Font.font(14));
+                    // Setup Rectangle
                     Rectangle rec = new Rectangle(DEFAULT_MARGIN * time + DEFAULT_MARGIN, DEFAULT_MARGIN);
                     rec.setFill(Color.rgb(r, g, b, 1));
-                    stack.getChildren().addAll(rec, txt);
+
+                    // Setup Button for Rectangle:ID
+                    Button btn = new Button(id);
+                    btn.setStyle("-fx-text-fill: red;");
+                    btn.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            VBox root = new VBox();
+                            root.getChildren().addAll(
+                                    new Label("ID : " + id),
+                                    new Label("Date de Commencement : " + LongToStr(start)),
+                                    new Label("Processing Time : " + LongToStr(time)),
+                                    new Label("Date de fin : " + LongToStr(end)),
+                                    new Label("Poids : " + LongToStr(weight)),
+                                    new Label("Tj : " + LongToStr(completion)),
+                                    new Label("Fj : " + LongToStr(response))
+                            );
+                            Stage stage = new Stage();
+                            stage.setTitle("Tache ID : " + id);
+                            stage.setScene(new Scene(root, 300, 150));
+                            stage.show();
+                        }
+                    });
+
+                    // Add To StackPane
+                    stack.getChildren().addAll(rec, btn);
                     stack.setLayoutX(DEFAULT_MARGIN * start);
                     stack.setLayoutY(DEFAULT_MARGIN * (nbr + 1));
                     nbr++;
