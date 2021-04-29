@@ -342,11 +342,11 @@ long makespan( const Schedule * sched ) {
  * représenté par la liste ordonnée scheduledTasks.
  */
 static long OLSumWjCj( const OList * scheduledTasks ) {
-    int s = 0;
+    long s = 0;
     OList * L = (OList *) scheduledTasks;
     for (OLNode * element = L->head; element != NULL; element = element->succ) {
         Task * T = element -> data;
-        int end = *(int *)element ->key + (int) T -> processingTime;
+        long end = *(int *)element ->key + T -> processingTime;
         s += end * T -> weight;
     }
     return s;
@@ -392,12 +392,12 @@ long SumWjCj( const Schedule * sched ) {
  * représenté par la liste ordonnée scheduledTasks.
  */
 static long OLSumWjFj( const OList * scheduledTasks ) {
-    int s = 0;
+    long s = 0;
     OList * L = (OList *) scheduledTasks;
     for (OLNode * element = L->head; element != NULL; element = element->succ) {
         Task * task = element -> data;
-        int end = task -> processingTime + *(int *) element -> key;
-        int response = end -  task -> releaseTime;
+        long end = task -> processingTime + *(int *) element -> key;
+        long response = end -  task -> releaseTime;
         s = s + ( response * task -> weight );
     }
     return s;
@@ -443,12 +443,12 @@ long SumWjFj( const Schedule * sched ) {
  * représenté par la liste ordonnée scheduledTasks.
  */
 static long OLSumWjTj( const OList * scheduledTasks ) {
-    int s = 0;
+    long s = 0;
     OList * L = (OList *) scheduledTasks;
     for (OLNode * element = L->head; element != NULL; element = element->succ) {
         Task * task = element -> data;
-        int end = task -> processingTime + *(int *) element -> key;
-        int completion = intmax(0, end -  task -> deadline);
+        long end = task -> processingTime + *(int *) element -> key;
+        long completion = intmax(0, end -  task -> deadline);
         s = s + ( completion * task -> weight );
     }
     return s;
