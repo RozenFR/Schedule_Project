@@ -22,6 +22,9 @@ Modification du fichier utilities.c et utilities.h :
 - Remplacement de min par intmin
 - Remplacement de max par intmax
 
+Modification du fichier schedule.h et schedule.c :
+- Remplacement de makespan par Makespan
+
 ## Windows
 
 Si le programme tourne sous window, vous devrez supprimer le fichier .so situé dans le fichier java/lib.

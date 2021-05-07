@@ -75,7 +75,7 @@ void saveSchedule(const Schedule * sched, char* filename);
  * @brief
  * Calculer le "makespan" de l'ordonnancement sched.
  */
-long makespan(const Schedule * sched);
+long Makespan(const Schedule * sched);
 
 /**
  * @brief

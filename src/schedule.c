@@ -311,7 +311,7 @@ void saveSchedule( const Schedule * sched, char * filename ) {
 
 /////////////////////// makespan ///////////////////////
 
-long makespan( const Schedule * sched ) {
+long Makespan( const Schedule * sched ) {
     switch(sched -> structtype) {
         case OL : {
             OList *L = sched->scheduledTasks;
@@ -331,7 +331,6 @@ long makespan( const Schedule * sched ) {
             error("Schedule.c <makespan> : invalid data structure type.");
             return -1;
     }
-    return 0;
 }
 
 /////////////////////// SumWjCj ///////////////////////
