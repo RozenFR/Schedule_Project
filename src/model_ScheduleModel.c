@@ -29,16 +29,16 @@ JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
         case 0: // OL
             switch(ord) {
                 case 0: // SPT
-                    reorderInstance( &I, OL, SPT );
+                    I = reorderInstance( I, OL, SPT );
                     break;
                 case 1: // LPT
-                    reorderInstance( &I, OL, LPT );
+                    I = reorderInstance( I, OL, LPT );
                     break;
                 case 2: // WSPT
-                    reorderInstance( &I, OL, WSPT );
+                    I = reorderInstance( I, OL, WSPT );
                     break;
                 case 3: // FCFS
-                    reorderInstance( &I, OL, FCFS );
+                    I = reorderInstance( I, OL, FCFS );
                     break;
                 default:
                     error( "Erreur <getSchedule()>: L'ordre doit être soit SPT, LPT, WSPT, FCFS. " );
@@ -51,16 +51,16 @@ JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
         case 1: // BST
             switch(ord) {
                 case 0: // SPT
-                    reorderInstance( &I, BST, SPT );
+                    I = reorderInstance( I, BST, SPT );
                     break;
                 case 1: // LPT
-                    reorderInstance( &I, BST, LPT );
+                    I = reorderInstance( I, BST, LPT );
                     break;
                 case 2: // WSPT
-                    reorderInstance( &I, BST, WSPT );
+                    I = reorderInstance( I, BST, WSPT );
                     break;
                 case 3: // FCFS
-                    reorderInstance( &I, BST, FCFS );
+                    I = reorderInstance( I, BST, FCFS );
                     break;
                 default:
                     error( "Erreur <getSchedule()>: L'ordre doit être soit SPT, LPT, WSPT, FCFS. " );
@@ -73,16 +73,16 @@ JNIEXPORT void JNICALL Java_model_ScheduleModel_getSchedule
         case 2: // EBST
             switch(ord) {
                 case 0: // SPT
-                    reorderInstance( &I, EBST, SPT );
+                    I = reorderInstance( I, EBST, SPT );
                     break;
                 case 1: // LPT
-                    reorderInstance( &I, EBST, LPT );
+                    I = reorderInstance( I, EBST, LPT );
                     break;
                 case 2: // WSPT
-                    reorderInstance( &I, EBST, WSPT );
+                    I = reorderInstance( I, EBST, WSPT );
                     break;
                 case 3: // FCFS
-                    reorderInstance( &I, EBST, FCFS );
+                    I = reorderInstance( I, EBST, FCFS );
                     break;
                 default:
                     error( "Erreur <getSchedule()>: L'ordre doit être soit SPT, LPT, WSPT, FCFS. " );

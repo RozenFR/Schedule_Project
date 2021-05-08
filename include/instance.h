@@ -91,6 +91,6 @@ typedef enum {SPT, LPT, WSPT, FCFS} Order;
  * NB : l'argument I est en entrée/sortie.
  *      N'oubliez pas à libérer la mémoire de l'instance de l'entrée.
  */
-void reorderInstance(Instance * I, DataStructure structtype, Order order);
+Instance reorderInstance(Instance I, DataStructure structtype, Order order);
 
 #endif // _INSTANCE_

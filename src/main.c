@@ -549,122 +549,122 @@ void testInstances500() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            I = reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            I = reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            I = reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            I = reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            I = reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            I = reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            I = reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            I = reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            I = reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            I = reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            I = reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            I = reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            I = reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            I = reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            I = reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            I = reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -748,122 +748,122 @@ void testInstances1000() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            I = reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            I = reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            I = reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            I = reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            I = reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            I = reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            I = reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            I = reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            I = reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            I = reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            I = reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            I = reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            I = reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            I = reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            I = reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            I = reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -947,122 +947,122 @@ void testInstances1500() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            I = reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            I = reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            I = reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            I = reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            I = reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            I = reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            I = reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            I = reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            I = reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            I = reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            I = reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            I = reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            I = reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            I = reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            I = reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            I = reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -1146,122 +1146,122 @@ void testInstances2000() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            I = reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            I = reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            I = reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            I = reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -1345,122 +1345,122 @@ void testInstances2500() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -1544,122 +1544,122 @@ void testInstances3000() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -1743,122 +1743,122 @@ void testInstances3500() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -1942,122 +1942,122 @@ void testInstances4000() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -2141,122 +2141,122 @@ void testInstances4500() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -2340,122 +2340,122 @@ void testInstances5000() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -2539,122 +2539,122 @@ void testInstances5500() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -2738,122 +2738,122 @@ void testInstances6000() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -2937,122 +2937,122 @@ void testInstances6500() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
@@ -3136,122 +3136,122 @@ void testInstances7000() {
     clock_t beginReorder = clock();
     switch (choix) {
         case 1: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 2: {
-            reorderInstance(&I, OL, SPT);
+            reorderInstance(I, OL, SPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 3:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 4:{
-            reorderInstance(&I, OL, LPT);
+            reorderInstance(I, OL, LPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 5: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 1);
             break;
         }
         case 6: {
-            reorderInstance(&I, OL, WSPT);
+            reorderInstance(I, OL, WSPT);
             sched = newSchedule(OL, 0);
             break;
         }
         case 7:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 1);
             break;
         }
         case 8:{
-            reorderInstance(&I, OL, FCFS);
+            reorderInstance(I, OL, FCFS);
             sched = newSchedule(OL, 0);
             break;
         }
         case 9: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 10: {
-            reorderInstance(&I, BST, SPT);
+            reorderInstance(I, BST, SPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 11:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 12:{
-            reorderInstance(&I, BST, LPT);
+            reorderInstance(I, BST, LPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 13:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 1);
             break;
         }
         case 14:{
-            reorderInstance(&I, BST, WSPT);
+            reorderInstance(I, BST, WSPT);
             sched = newSchedule(BST, 0);
             break;
         }
         case 15:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 1);
             break;
         }
         case 16:{
-            reorderInstance(&I, BST, FCFS);
+            reorderInstance(I, BST, FCFS);
             sched = newSchedule(BST, 0);
             break;
         }
         case 17:{
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 18: {
-            reorderInstance(&I, EBST, SPT);
+            reorderInstance(I, EBST, SPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 19:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 20:{
-            reorderInstance(&I, EBST, LPT);
+            reorderInstance(I, EBST, LPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 21:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 22:{
-            reorderInstance(&I, EBST, WSPT);
+            reorderInstance(I, EBST, WSPT);
             sched = newSchedule(EBST, 0);
             break;
         }
         case 23:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 1);
             break;
         }
         case 24:{
-            reorderInstance(&I, EBST, FCFS);
+            reorderInstance(I, EBST, FCFS);
             sched = newSchedule(EBST, 0);
             break;
         }
