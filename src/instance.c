@@ -159,7 +159,7 @@ static int fcfs( const void * a, const void * b ) {
 
 Instance reorderInstance( Instance I,  DataStructure structtype, Order order ) {
 
-    Instance nI = I;
+    Instance nI;
 
     switch ( order ) {
         case SPT : {

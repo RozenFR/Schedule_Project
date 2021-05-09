@@ -341,14 +341,15 @@ long Makespan( const Schedule * sched ) {
  * représenté par la liste ordonnée scheduledTasks.
  */
 static long OLSumWjCj( const OList * scheduledTasks ) {
-    long s = 0;
-    OList * L = (OList *) scheduledTasks;
-    for (OLNode * element = L->head; element != NULL; element = element->succ) {
-        Task * T = element -> data;
-        long end = *(int *)element ->key + T -> processingTime;
-        s += end * T -> weight;
-    }
-    return s;
+   long somme = 0;
+   int cj, wj, temp;
+   for(OLNode * actuel = scheduledTasks->head; actuel != NULL; actuel = actuel->succ){
+       cj = *(int *)actuel->key + ((Task *)actuel->data)->processingTime;
+       wj = ((Task *)actuel->data)->weight;
+       temp = cj * wj;
+       somme = temp + somme;
+   }
+    return somme;
 }
 
 /** FAIT
@@ -391,15 +392,18 @@ long SumWjCj( const Schedule * sched ) {
  * représenté par la liste ordonnée scheduledTasks.
  */
 static long OLSumWjFj( const OList * scheduledTasks ) {
-    long s = 0;
-    OList * L = (OList *) scheduledTasks;
-    for (OLNode * element = L->head; element != NULL; element = element->succ) {
-        Task * task = element -> data;
-        long end = task -> processingTime + *(int *) element -> key;
-        long response = end -  task -> releaseTime;
-        s = s + ( response * task -> weight );
+    int temp, cj, rj, weight;
+    long sum = 0;
+    for(OLNode * actuel = scheduledTasks->head; actuel != NULL; actuel = actuel->succ){
+        cj = *((int *)actuel->key) +  ((Task *)actuel->data)->processingTime;
+        rj = ((Task *)actuel->data)->releaseTime;
+        temp =  cj-rj;
+        weight = ((Task*)actuel->data)->weight;
+        sum += temp * weight;
+
     }
-    return s;
+
+    return sum;
 }
 
 /** FAIT
@@ -442,15 +446,17 @@ long SumWjFj( const Schedule * sched ) {
  * représenté par la liste ordonnée scheduledTasks.
  */
 static long OLSumWjTj( const OList * scheduledTasks ) {
-    long s = 0;
-    OList * L = (OList *) scheduledTasks;
-    for (OLNode * element = L->head; element != NULL; element = element->succ) {
-        Task * task = element -> data;
-        long end = task -> processingTime + *(int *) element -> key;
-        long completion = intmax(0, end -  task -> deadline);
-        s = s + ( completion * task -> weight );
+    long somme = 0;
+    int cj, wj, dj, max, temp;
+    for(OLNode * actuel = scheduledTasks->head; actuel != NULL; actuel = actuel->succ){
+        cj = *(int *)actuel->key + ((Task *)actuel->data)->processingTime;
+        wj = ((Task *)actuel->data)->weight;
+        dj = ((Task *)actuel->data)->deadline;
+        max = intmax(cj - dj, 0);
+        temp = max * wj;
+        somme += temp;
     }
-    return s;
+    return somme;
 }
 
 /** FAIT
