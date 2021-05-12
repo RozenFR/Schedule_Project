@@ -68,6 +68,7 @@ void testInstances7000();
  ***********************************************/
 
 int main(void) {
+
     int choix = 1;
 
     printf("-Choix 1 : Listes Non Ordonnées\n"
@@ -104,6 +105,7 @@ int main(void) {
  * Fonctions
  ***********************************************/
 
+// Test Liste
 void testListesDoublementChaineesNonOrdonnees() {
     void ( *ptrViewInt )(const void *i);
     void ( *ptrFreeInt )(void *i);
@@ -334,89 +336,20 @@ void testListesDoublementChaineesOrdonnees() {
     }
 }
 
-void testInstances() {
-
-    int choice;
-    printf("\n-Choix 1 : Instance 500\n"
-           "-Choix 2 : Instance 1000\n"
-           "-Choix 3 : Instance 1500\n"
-           "-Choix 4 : Instance 2000\n"
-           "-Choix 5 : Instance 2500\n"
-           "-Choix 6 : Instance 3000\n"
-           "-Choix 7 : Instance 3500\n"
-           "-Choix 8 : Instance 4000\n"
-           "-Choix 9 : Instance 4500\n"
-           "-Choix 10 : Instance 5000\n"
-           "-Choix 11 : Instance 5500\n"
-           "-Choix 12 : Instance 6000\n"
-           "-Choix 13 : Instance 6500\n"
-           "-Choix 14 : Instance 7000\n");
-    scanf("%d", &choice);
-
-    switch (choice) {
-        case 1: {
-            testInstances500();
-            break;
-        }
-        case 2: {
-            testInstances1000();
-            break;
-        }
-        case 3: {
-            testInstances1500();
-            break;
-        }
-        case 4: {
-            testInstances2000();
-            break;
-        }
-        case 5: {
-            testInstances2500();
-            break;
-        }
-        case 6: {
-            testInstances3000();
-            break;
-        }
-        case 7: {
-            testInstances3500();
-            break;
-        }
-        case 8: {
-            testInstances4000();
-            break;
-        }
-        case 9: {
-            testInstances4500();
-            break;
-        }
-        case 10: {
-            testInstances5000();
-            break;
-        }
-        case 11: {
-            testInstances5500();
-            break;
-        }
-        case 12: {
-            testInstances6000();
-            break;
-        }
-        case 13: {
-            testInstances6500();
-            break;
-        }
-        case 14: {
-            testInstances7000();
-            break;
-        }
-        default:
-            error("Invalid Selection.");
-
-    }
+// TestInsert
+void testInsertOL() {
 
 }
 
+void testInsertBST() {
+
+}
+
+void testInsertEBST() {
+
+}
+
+// Test Arbre
 void testArbres() {
     void ( *ptrViewInt )(const void *i);
     int ( *ptrCmp )(const void *a, const void *b);
@@ -510,6 +443,89 @@ void testArbres() {
     }
 }
 
+// Test Instance
+void testInstances() {
+
+    int choice;
+    printf("\n-Choix 1 : Instance 500\n"
+           "-Choix 2 : Instance 1000\n"
+           "-Choix 3 : Instance 1500\n"
+           "-Choix 4 : Instance 2000\n"
+           "-Choix 5 : Instance 2500\n"
+           "-Choix 6 : Instance 3000\n"
+           "-Choix 7 : Instance 3500\n"
+           "-Choix 8 : Instance 4000\n"
+           "-Choix 9 : Instance 4500\n"
+           "-Choix 10 : Instance 5000\n"
+           "-Choix 11 : Instance 5500\n"
+           "-Choix 12 : Instance 6000\n"
+           "-Choix 13 : Instance 6500\n"
+           "-Choix 14 : Instance 7000\n");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1: {
+            testInstances500();
+            break;
+        }
+        case 2: {
+            testInstances1000();
+            break;
+        }
+        case 3: {
+            testInstances1500();
+            break;
+        }
+        case 4: {
+            testInstances2000();
+            break;
+        }
+        case 5: {
+            testInstances2500();
+            break;
+        }
+        case 6: {
+            testInstances3000();
+            break;
+        }
+        case 7: {
+            testInstances3500();
+            break;
+        }
+        case 8: {
+            testInstances4000();
+            break;
+        }
+        case 9: {
+            testInstances4500();
+            break;
+        }
+        case 10: {
+            testInstances5000();
+            break;
+        }
+        case 11: {
+            testInstances5500();
+            break;
+        }
+        case 12: {
+            testInstances6000();
+            break;
+        }
+        case 13: {
+            testInstances6500();
+            break;
+        }
+        case 14: {
+            testInstances7000();
+            break;
+        }
+        default:
+            error("Invalid Selection.");
+
+    }
+
+}
 void testInstances500() {
     clock_t beginRead = clock();
     Instance I = readInstance("./data/instance_0500_1");
@@ -518,6 +534,7 @@ void testInstances500() {
     clock_t beginView = clock();
     viewInstance(I);
     clock_t endView = clock();
+
     Schedule * sched;
     int choix = 0;
     printf("-Choix 1 : OL-SPT-BF\n"

@@ -29,6 +29,13 @@ Modification du fichier schedule.h et schedule.c :
 
 Si le programme tourne sous window, vous devrez supprimer le fichier .so situé dans le fichier java/lib.
 
+Pour lancer le programme :
+```shell
+# Pour lancer l'application faire :
+javac --module-path="PATH TO JAVAFX LIB" --add-modules javafx.controls,javafx.fxml application/App.java
+java -Djava.library.path=./lib --module-path="PATH TO JAVAFX LIB" --add-modules javafx.controls,javafx.fxml application/App.java
+```
+
 ## Linux
 
 Si le programme tourne sous linux, vous devrez supprimer le fichier .dll situé dans le fichier java/lib.

@@ -369,14 +369,10 @@ public class ScheduleController {
                         b = ThreadLocalRandom.current().nextInt(0, 256);
                     } while (r == 255 && g == 255 && b == 255);
 
-                    // Debug Rectangle
-                    System.out.println("Rectangle number : " + nbr);
-                    System.out.println("Rectangle Input ID Number : " + id);
-
                     // Set StackPane to contain Button and Rectangle
                     StackPane stack = new StackPane();
                     // Setup Rectangle
-                    Rectangle rec = new Rectangle(DEFAULT_MARGIN * time + DEFAULT_MARGIN, DEFAULT_MARGIN);
+                    Rectangle rec = new Rectangle(DEFAULT_MARGIN * time, DEFAULT_MARGIN);
                     rec.setFill(Color.rgb(r, g, b, 1));
 
                     // Setup Button for Rectangle:ID
@@ -417,7 +413,7 @@ public class ScheduleController {
                 // Setup Column
                 GetViewContent().getChildren().clear();
                 if (nbr < 200) {
-                    for (int i = 0; i <= makespan + 1; i++) {
+                    for (int i = 1; i <= makespan + 1; i++) {
                         Label label = new Label(IntToStr(i));
                         label.setMaxWidth(DEFAULT_MARGIN);
                         label.setMinWidth(DEFAULT_MARGIN);
