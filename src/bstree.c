@@ -78,7 +78,7 @@ static BSTNode * insertBSTNode( BSTNode * curr, void * key, void * data, int ( *
         } else if ( preceed( key, curr -> key ) == 1 ) {
             curr -> left = insertBSTNode( curr -> left, key, data, preceed );
         } else {
-            error( "insertBSTNode() : tentative d'insétion d'un noeud avec une \"key\" déjà présente" );
+            error( "insertBSTNode() : tentative d'insertion d'un noeud avec une \"key\" déjà présente" );
         }
         return curr;
     }
@@ -206,7 +206,7 @@ static BSTNode * insertEBSTNode( BSTNode * curr, void * key, void * data, int ( 
             curr -> bfactor += 1;
         }
     } else {
-        error("Dans insertEBSTNode () : tentative d'insétion d'un noeud avec une \"key\" déjà présente" );
+        error("Dans insertEBSTNode () : tentative d'insertion d'un noeud avec une \"key\" déjà présente" );
     }
 
 
