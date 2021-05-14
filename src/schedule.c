@@ -72,13 +72,13 @@ void addTaskToSchedule( Schedule * sched, int startingTime, Task * task ) {
     *stime = startingTime;
     switch ( sched -> structtype ) {
         case OL:
-            OListInsert( sched -> scheduledTasks, stime, task );
+            OListInsert( sched -> scheduledTasks, stime, task ); // O(N)
             break;
         case BST:
-            BSTreeInsert( sched -> scheduledTasks, stime, task );
+            BSTreeInsert( sched -> scheduledTasks, stime, task ); // O(N)
             break;
         case EBST:
-            EBSTreeInsert( sched -> scheduledTasks, stime, task );
+            EBSTreeInsert( sched -> scheduledTasks, stime, task ); // O(log_2(N))
             break;
         default:
             error( "Schedule:addTaskToSchedule : invalid data structure." );
@@ -201,11 +201,11 @@ static int BSTFindStartingTime( const BSTree * scheduledTasks, const Task * task
 int findStartingTime( const Schedule * sched, const Task * task ) {
     switch ( sched -> structtype ) {
         case OL:
-            return OLFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling );
+            return OLFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling ); // O(N)
         case BST:
-            return BSTFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling );
+            return BSTFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling ); // O(N)
         case EBST:
-            return BSTFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling );
+            return BSTFindStartingTime( sched -> scheduledTasks, task, sched -> backfilling ); // O(log_2(N))
         default:
             error( "Schedule:findStartingTime : invalid data structure." );
             return -1;
@@ -213,7 +213,7 @@ int findStartingTime( const Schedule * sched, const Task * task ) {
 }
 
 void computeSchedule( Schedule * sched, const Instance I ) {
-    for ( LNode * curr = I -> head; curr; curr = curr -> succ ) {
+    for ( LNode * curr = I -> head; curr; curr = curr -> succ ) { // O(N)
         addTaskToSchedule( sched, findStartingTime( sched, curr -> data ), curr -> data );
     }
 }

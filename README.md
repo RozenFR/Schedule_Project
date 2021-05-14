@@ -16,7 +16,8 @@ Ce projet a été créer par 2 étudiant de l'université UFR de Metz en France
 Rozen & Gyumi
 
 # Informations
-Le programme tourne avec la version JAVA SE 16 et JAVAFX 16.
+Le programme a été tourné avec la version JAVA SE 16 et JAVAFX 16.
+Fonctionne aussi avec Java SE 11 et JAVAFX 11.
 
 Modification du fichier utilities.c et utilities.h :
 - Remplacement de min par intmin
@@ -24,6 +25,18 @@ Modification du fichier utilities.c et utilities.h :
 
 Modification du fichier schedule.h et schedule.c :
 - Remplacement de makespan par Makespan
+
+Makefile et CMake
+- Le makefile présent dans le projet est uniquement présent pour faire tourner la partie C
+```shell
+make clean run
+```
+- le CMake présent dans le projet permet de créer un exécutable et les librairy C pour le java
+```shell
+cd out
+cmake ..
+cmake --build .
+```
 
 ## Windows
 

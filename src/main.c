@@ -288,7 +288,7 @@ void testListesDoublementChaineesOrdonnees() {
             for (int i = 0; i < 1000; i++) {
                 printf("Saississez un entier pour la key N°%d\n", i + 1);
                 key = (int *) calloc(1, sizeof(int));
-                key = (int *) i;
+                key = &i;
                 scanf("%d", key);
                 printf("Saississez un entier pour la data N°%d\n", i + 1);
                 data = (int *) calloc(1, sizeof(int));
